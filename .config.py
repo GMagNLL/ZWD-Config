@@ -6,16 +6,7 @@ __version__ = '0.9'
 __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
 # Github https://github.com/Xdwnff-04x/VPS-Config
-# Este progama foi feito pra configurar sua VPS perfeitamente.
-# Sobre: este script edita no meio do arquivo /etc/ssh/sshd_config
-# Substituindo Port 22 por 22 e 443. sem precisar deletar ou escrever
-# no final do arquivo, evitando erros futuros.
-# Para configurar o squid ele indentifica se á pasta squid e squid ou squid3
-# configurando assim qualquer VPS.
-
-# Aviso: este script não é um Gerenciador de VPS..
-# foi feito somente para configurala.
-
+# este script é o primeiro scriot de configura vps em python.
 """
  Copyright 2017 Config of copyright .Zwdeff
 
@@ -67,7 +58,8 @@ __main__ = '\n\033[36m1\033[92m) = Configurar VPS\n\033[m'\
           +'\033[36m5\033[92m) = Adicionar Banner\n\033[m'\
           +'\033[36m6\033[92m) = Remover Banner\n\033[m'\
           +'\033[36m7\033[92m) = Adicionar usuario\n\033[m'\
-          +'\033[36m8\033[92m) = Remover usuario\n\033[m'\
+          +'\033[36m8\033[92m) = Redefinir usuario\n\033[m'\
+          +'\033[36m9\033[92m) = Remover usuario\n\033[m'\
           +'\033[36m0\033[92m) = Sair\n\n\n\033[m'
 # 1 = Beta.
 # 2 = Beta.
@@ -77,9 +69,10 @@ __main__ = '\n\033[36m1\033[92m) = Configurar VPS\n\033[m'\
 # 6 = Beta.
 # 7 = Beta.
 # 8 = Beta.
+# 9 = Beta.
 # 0 = True.
 __info__ = f2+'Author:\033[36m %s\n\033[m' %(__author__)\
-          +f2+'Version:\033[36m %s\033[m\n' %(__version__)
+          +f2+'Version:\033[36m %s\033[m\n\n' %(__version__)
 __Banner__ = f2+'^-------------------------------------_\n'\
                +' {= Config VPS /SSH/SQUID3 =}\n\033[m'
 print (__Banner__)
@@ -89,19 +82,21 @@ print ('\033[92mIP:\033[96m %s\033[m' %(__ip__))
 def case():
   try:
      print (__main__)
-     
      w = input(f6+' :: _\033[92m'+' ')
+     
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5'\
-      or w != '6' or w != '7' or w != '8' or w != '0':
+      or w != '6' or w != '7' or w != '8' or w != '9' or w != '0':
         if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6'\
-         or w == '7' or w == '8' or w == '0':          
+         or w == '7' or w == '8' or w == '9' or w == '0':          
            if w == '1':
               t = path.isfile('/usr/bin/ssh')
               s = path.isfile('/usr/sbin/squid3')
               if path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
-                 system('''echo 'Olá anqui fica armazenado todas as senhas\
+                 system('''echo 'Ola anqui fica armazenado todas as senhas\
                   criadas por este progama.' > /etc/setup/senhas/except''')
+              if path.isfile('/etc/setup/limite/lm') == False:
+                 system('touch /etc/setup/limite/lm')
               if t == True:
                  system('apt-get autoremove ssh -y')
                  system('apt-get update && apt-get install ssh -y')
@@ -185,12 +180,13 @@ def case():
                  system('cd /etc && service squid3 restart')
                  print (f2+'Portas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(1)
-              print (f2+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print (f2+'Crie um usuario e teste.\033[m')
+              print (f6+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
+              print (f6+'Crie um usuario e teste.\033[m')
               sleep(2)
               case()
+              
            if w == '2':
-              rc = input(f2+' Deseja Remover todas as alteracoes '\
+              rc = input(f6+' Deseja Remover todas as alteracoes '\
                         +'feitas ..\n por este script. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = path.isfile('/usr/bin/ssh')
@@ -202,7 +198,7 @@ def case():
                     system('apt-get update && apt-get install ssh -y')
                  if s == True:
                     system('apt-get autoremove squid3 -y')
-                 print ('\nConcluido.. Pode reconfigurar sua vps com um script da \n'\
+                 print (f6+'\nConcluido.. Pode reconfigurar sua vps com um script da \n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
@@ -212,6 +208,7 @@ def case():
                  print (f1+'\nSaindo..\033[m')
                  sleep(2)
                  exit()
+                 
            if w == '3':
               if path.isfile('/etc/squid3/domains/domain') == False\
                or path.isfile('/etc/squid/domains/domain') == False:
@@ -225,7 +222,7 @@ def case():
               else:
                  system('cat /etc/squid3/domains/domain')
               def dom():
-                  do = input(f2+'\nAdicionar Domain\033[96m :: _\033[92m'+' ')
+                  do = input(f6+'\nAdicionar Domain\033[96m :: _\033[92m'+' ')
                   if do == '0':
                      case()
                   if path.isfile('/etc/squid3/domains/domain') == True:
@@ -247,6 +244,7 @@ def case():
                      print (f2+'Domain: %s Adicionado.. [0] Para Home.' % (do))
                      dom()
               dom()
+              
            if w == '4':
               if path.isfile('/etc/squid/domains/domain') == False:
                  system('touch /etc/squid/domains/domain')
@@ -258,7 +256,7 @@ def case():
               else:
                  system('cat /etc/squid3/domains/domain')
               def delet():
-                  de = input(f2+'\nDeletar Domain\033[96m :: _\033[92m'+' ')
+                  de = input(f6+'\nDeletar Domain\033[96m :: _\033[92m'+' ')
                   if de == '0':
                      case()
                   if path.isfile('/etc/squid/domains/domain') == True:
@@ -294,7 +292,7 @@ def case():
                  for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                      sys.stdout.write(line.replace('#Banner /etc/issue.net',\
                       'Banner /etc/Banner'))
-              nb = input(f3+'Adicionar mensagem\033[96m :: _ '+' ')
+              nb = input(f6+' Adicionar ao Banner\033[96m :: _ '+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
               system('cd /etc && service ssh restart')
               print (f2+'Banner:\033[97m %s \033[92m\nAdicionado com Sucesso.\033[m' % (nb))
@@ -302,7 +300,7 @@ def case():
               case()
               
            if w == '6':
-              rb = input(f2+' Deseja deletar o Banner por completo .. '\
+              rb = input(f6+' Deseja deletar o Banner por completo .. '\
                         +'\n ficarar como de fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rb == 'Y' or rb == 'y':
                  if path.isfile('/etc/Banner') == True:
@@ -314,7 +312,7 @@ def case():
                         sys.stdout.write(line.replace('Banner /etc/Banner',\
                          '#Banner /etc/issue.net'))
                     system('cd /etc && service ssh restart')
-                    print (f2+'Concluido .. Banner Retirado.\033[m')
+                    print (f6+'Concluido .. Banner Retirado.\033[m')
                     sleep(2)
                     case()
               if rb == 'n' or rb == 'N':
@@ -324,13 +322,14 @@ def case():
               if path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
               def user():
-                  n = input(f2+'Nome do usuario\033[96m :: _\033[92m'+' ')
-                  if path.isfile('/etc/setup/senhas/%s') == True:
+                  n = input(f6+' Nome do usuario\033[96m :: _\033[92m'+' ')
+                  if path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Erro: o usuario %s ja existe.\033[m' %(n))
                      user()
-                  sn = input(f2+'Senha Para '+n+'\033[96m :: _\033[92m'+' ')
-                  dx = input(f2+'Quantos dias '+n\
+                  sn = input(f6+' Senha Para '+n+'\033[96m :: _\033[92m'+' ')
+                  dx = input(f6+' Quantos dias '+n\
                              +' deve durar\033[96m :: _\033[92m'+' ')
+                  lm = input(f6+' Maximo de conexoes simultaneas\033[96m :: _\033[92m'+' ')
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d -p "+sn+"\
@@ -339,23 +338,98 @@ def case():
                          \necho 'Senha: "+sn+"\n\
                          \necho 'Expira: $da\n\
                          \necho '"+sn+"' > /etc/setup/senhas/"+u)
+                  system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
+                  system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
+                   %(n,lm))
+                   
                   case()
               user()
               
-           if w == '8':
+           if w == '9':
               def dex():
-                  df = input(f2+'Qual usuario voce deseja deletar.\033[96m :: _\033[92m'+' ')
+                  df = input(f6+' Qual usuario voce deseja deletar.\033[96m :: _\033[92m'+' ')
                   if df == '0':
                      case()
                   if path.isfile('/etc/setup/senhas/%s' %(df)) == False:
-                     print (f1+'Erro: o usuario %s nao existe.\033[m' %(df))
+                     print (f1+'Erro: o usuario %s nao existe.. ou nao\n'%(df)\
+                          +'foi criado por este progama.\033[m')
                      dex()
                   system('userdel --force %s > /dev/null 2>/dev/null' %(df))
                   system('rm -rf /etc/setup/senhas/%s' %(df))
-                  print (f2+'Usuario %s excluido com exito.. [0] Para Home.\033[m')
+                  d = open('/etc/setup/limite/'+df).read()
+                  d = d+'\n'
+                  def delete():
+                      sn = '/etc/security/limits.conf'
+                      f = open(sn)
+                      otput = []
+                      for line in f:
+                          if not d in line:
+                             otput.append(line)
+                      f.close()
+                      f = open(sn, 'w')
+                      f.writelines(otput)
+                      f.close()
+                  delete()
+                  system('rm -rf /etc/setup/limite/'+df)
+                  print (f2+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
                   sleep(2)
                   dex()
               dex()
+              
+           if w == '8':
+              def rdf():
+                   main = '\n\033[36m1\033[92m) = Alterar senha\033[m'\
+                         +'\n\033[36m2\033[92m) = Mudar data de expiracao\033[m'\
+                         +'\n\033[36m3\033[92m) = Mudar limite de logins\033[m'\
+                         +'\n\033[36m0\033[92m) = Home\n\n\033[m'
+                   rd = input(f6+' Qual usuario voce deseja redefinir\033[96m :: _\033[92m'+' ')
+                   if rd == '0':
+                      case()
+                   if path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
+                      print (f1+'Erro: o usuario %s nao existe.\033[m' %(rd))
+                      rdf()
+                   print (main)
+                   md = input(f6+' :: _\033[92m'+' ')
+                   if md == '0':
+                      case()
+                   if md == '1':
+                      sna = input(f6+' Nova senha para '+rd+'\033[96m :: _\033[92m'+' ')
+                      system('(echo "'+sna+'" ; echo "'+sna\
+                            +'" ) |passwd '+rd+' > /dev/null 2>/dev/null')
+                      system('rm -rf /etc/setup/senhas/'+rd)
+                      system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
+                      print (f2+'Concluido. nova senha aplicada para %s' %(rd))
+                      case()
+                   if md == '2':
+                      print (f1+'Utileze-a no formato ano/mes/dia\033[m\n')
+                      dt = input('Qual a nova data para '+rd+'\033[96m :: _\033[92m'+' ')
+                      system('chage -E '+dt+' '+rd+' 2> /dev/null')
+                      print (f2+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
+                      case()
+                   if md == '3':
+                      mt = input(f6+' Qual o novo limite para '+rd+'\033[96m :: _\033[92m'+' ')
+                      d = open('/etc/setup/limite/'+rd).read()
+                      d = d+'\n'
+                      def delete():
+                          sn = '/etc/security/limits.conf'
+                          f = open(sn)
+                          otput = []
+                          for line in f:
+                              if not d in line:
+                                 otput.append(line)
+                          f.close()
+                          f = open(sn, 'w')
+                          f.writelines(otput)
+                          f.close()
+                      delete()
+                      system('rm -rf /etc/setup/limite/'+rd)
+                      system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(rd,mt,rd))
+                      system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
+                       %(rd,mt))
+                      print (f2+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
+                      %(mt,rd))
+                      case()
+              rdf()
            if w == '0':
               print (f1+' Saindo..\033[m')
               sleep(2)
