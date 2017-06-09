@@ -93,7 +93,7 @@ def case():
          or w == '7' or w == '8' or w == '9' or w == '0' or w == 'm' or w == 'M'\
           or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
            if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
-              print ('\033[92m\nMonitor do Sistema ..\n\033[m')
+              print ('\033[92m\n{= Monitor do Sistema =} ..\033[m')
               system('''OS=`uname -s` && REV=`uname -r` && MACH=`uname -m` &&
               if [ "${OS}" = "SunOS" ]; then
                   OS=Solaris
@@ -419,7 +419,7 @@ def case():
                          \necho 'Usuario: "+n+"\n\
                          \necho 'Senha: "+sn+"\n\
                          \necho 'Expira: $da\n\
-                         \necho '"+sn+"' > /etc/setup/senhas/"+u)
+                         \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                    %(n,lm))
