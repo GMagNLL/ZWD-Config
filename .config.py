@@ -170,6 +170,7 @@ def case():
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
               s = os.path.isfile('/usr/sbin/squid3')
+              system('mkdir /etc/setup/senhas')
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
                  system('''echo 'Ola anqui fica armazenado todas as senhas\
@@ -185,7 +186,14 @@ def case():
                  
               system('apt-get install squid3 -y')
               sleep(2)
-  
+              if os.path.isfile('/etc/squid/squid.conf.save') == True\
+               or os.path.isfile('/etc/squid3/squid.conf.save') == True:
+               	 if os.path.isfile('/etc/squid/squid.conf.save') == True:
+               	    system('rm -rf /etc/squid3/squid.conf.save')
+               	    system('touch /etc/squid3/squid.conf')
+               	 else:
+               	    system('rm -rf /etc/squid/squid.conf.save')
+               	    system('touch /etc/squid/squid.conf')
               if os.path.isfile('/etc/squid/squid.conf') == False\
                and os.path.isfile('/etc/squid3/squid.conf') == False:
                  print (f1+'Erro: Ocorreu um erro na instalacao do squid3.\033[m')
