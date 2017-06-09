@@ -26,6 +26,12 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 from os import system
 from sys import *
 from time import *
+
+if sys.version_info.major < 3:
+   print (f1+'Erro: Progama suportado somente em Python3\033[m')
+   sleep(2)
+   exit()
+   
 from urllib.request import *
 import fileinput
 import sys, re, os
@@ -38,11 +44,6 @@ f4 = '\033[94m'
 f5 = '\033[95m'
 f6 = '\033[36m'
 f7 = '\033[97m'
-
-if sys.version_info.major < 3:
-   print (f1+'Erro: Progama suportado somente em Python3\033[m')
-   sleep(2)
-   exit()
 
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
@@ -196,8 +197,9 @@ def case():
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  print (f2+'Configurando Portas SQUID IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
-                 if os.path.isfile('/etc/squid/domains') == False:
-                    system('touch /etc/squid/domains')
+                 system('mkdir /etc/squid/domains')
+                 if os.path.isfile('/etc/squid/domains/domain') == False:
+                    system('touch /etc/squid/domains/domain')
                     system('''echo '.vivo.com.br\n.claro.com.br\n.oi.com.br\
                            \n.tim.com.br' >> /etc/squid/domains/domain''')
                     system('touch /etc/squid/domains/.claro.com.br')
@@ -222,8 +224,9 @@ def case():
               else:
                  print (f2+'Configurando Portas SQUID3 IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
-                 if os.path.isfile('/etc/squid3/domains') == False:
-                    system('touch /etc/squid3/domains')
+                 system('mkdir /etc/squid3/domains')
+                 if os.path.isfile('/etc/squid3/domains/domain') == False:
+                    system('touch /etc/squid3/domains/domain')
                     system('''echo '.vivo.com.br\n.claro.com.br\n.oi.com.br\
                            \n.tim.com.br' >> /etc/squid3/domains/domain''')
                     system('touch /etc/squid3/domains/.claro.com.br')
@@ -257,10 +260,12 @@ def case():
                  sleep(2)
                  print (f2+'Reiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
+                 sleep(1)
                  print (f2+'Portas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
                  print (f2+'Reiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
+                 sleep(1)
                  print (f2+'Portas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(1)
               print (f6+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
