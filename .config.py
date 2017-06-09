@@ -174,6 +174,7 @@ def case():
                  system('touch /etc/setup/senhas/except')
                  system('''echo 'Ola anqui fica armazenado todas as senhas\
                   criadas por este progama.' > /etc/setup/senhas/except''')
+                  
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('touch /etc/setup/limite/lm')
               if t == True:
@@ -265,8 +266,8 @@ def case():
               case()
               
            if w == '2':
-              rc = input(f6+' Deseja Remover todas as alteracoes '\
-                        +'feitas ..\n por este script. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rc = input(f6+' Deseja Remover todas as alteracoes feitas por este\n'
+                       +' script. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
@@ -282,7 +283,7 @@ def case():
                  sleep(2)
                  case()
               if rc == 'n' or rc == 'N':
-                case()
+                 case()
               if rc == '0':
                  print (f1+'\nSaindo..\033[m')
                  sleep(2)
@@ -334,6 +335,7 @@ def case():
                  system('cat /etc/squid/domains/domain')
               else:
                  system('cat /etc/squid3/domains/domain')
+                 
               def delet():
                   de = input(f6+'\nDeletar Domain\033[96m :: _\033[92m'+' ')
                   if de == '0':
@@ -362,6 +364,7 @@ def case():
                      system('cd /etc && service squid3 restart')
                      print (f2+'\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
+              delet()
                      
            if w == '5':
               if os.path.isfile('/etc/Banner') == False:
@@ -379,8 +382,8 @@ def case():
               case()
               
            if w == '6':
-              rb = input(f6+' Deseja deletar o Banner por completo .. '\
-                        +'\n ficarar como de fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rb = input(f6+' Deseja deletar o Banner por completo. ficarar como\n'\
+                        +' de fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rb == 'Y' or rb == 'y':
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
@@ -464,6 +467,10 @@ def case():
                    rd = input(f6+' Qual usuario voce deseja redefinir\033[96m :: _\033[92m'+' ')
                    if rd == '0':
                       case()
+                   if os.path.isfile('/etc/setup/senhas/except') == False:
+                      print (f1+' Erro: nao e posivel redefinir um usuario que nao\n'\
+                            +' foi criado por este script.\033[m')
+                      rdf()
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
                       print (f1+'Erro: o usuario %s nao existe.\033[m' %(rd))
                       rdf()
