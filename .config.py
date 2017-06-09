@@ -22,19 +22,16 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
   See the License for the specific language governing permissions and
   limitations under the License.
 """
-
+import time
 from os import system
 from sys import *
 from time import *
-
+import fileinput
+import sys, re, os
 if sys.version_info.major < 3:
    print (f1+'Erro: Progama suportado somente em Python3\033[m')
    sleep(2)
    exit()
-   
-from urllib.request import *
-import fileinput
-import sys, re, os
 
 f0 = '\033[90m'
 f1 = '\033[91m'
@@ -44,11 +41,13 @@ f4 = '\033[94m'
 f5 = '\033[95m'
 f6 = '\033[36m'
 f7 = '\033[97m'
-
+  
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
 print ('Conectando .. via python%s /%s' % (v,H))
 sleep(1)
+
+from urllib.request import *
 url = str(urlopen('http://ipv4.icanhazip.com/').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
 
@@ -94,7 +93,7 @@ def case():
          or w == '7' or w == '8' or w == '9' or w == '0' or w == 'm' or w == 'M'\
           or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
            if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
-              print ('\033[92m\nMonitor do Sistema ..\n\033[m')
+              print ('\033[92m\nMonitor do Sistema ..\033[m')
               system('''OS=`uname -s` && REV=`uname -r` && MACH=`uname -m` &&
               if [ "${OS}" = "SunOS" ]; then
                   OS=Solaris
@@ -151,6 +150,7 @@ def case():
                     \ninternal=$(hostname -i)
                     \necho '\033[92mIP Interno:'$set $internal '\033[m' ''')
               print (f2+'IP Externo: %s\033[m' %(__ip__))
+              
               system('''set=$(tput sgr0)\
                     \nfree -h | grep -v + > /tmp/ramcache
                     \necho '\033[92mUso da Ram:'$set &&
@@ -210,7 +210,7 @@ def case():
                     system('touch /etc/squid/squid.conf')
                     system('''echo '# ACL DE CONEXÃO\n\nacl accept src '''+__ip__\
                           +'''\nacl ip url_regex -i '''+__ip__\
-                          +'''\nacl payload dstdomain -i "/etc/squid3/domains/domain"\n'\
+                          +'''\nacl payload dstdomain -i "/etc/squid/domains/domain"\n'\
                             > /etc/squid3/squid.conf''')
                     system('''echo '# PORTAS DE ACESSO\n\nhttp_port 80\nhttp_port 8080\
                            \nhttp_port 8799\nhttp_port 3128\n\n# Nome do servidor\
@@ -279,11 +279,14 @@ def case():
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
+                 d = os.path.isfile('/usr/sbin/squid')
                  if os.path.isfile('/etc/setup/senhas/except') == True:
                     system('rm -rf /etc/setup')
                  if t == True:
                     system('apt-get autoremove ssh -y')
                     system('apt-get update && apt-get install ssh -y')
+                 if d == True:
+                    system('apt-get autoremove squid -y')
                  if s == True:
                     system('apt-get autoremove squid3 -y')
                  print (f6+'\nConcluido.. Pode reconfigurar sua vps com um script da \n'\
@@ -425,7 +428,7 @@ def case():
                          \necho 'Usuario: "+n+"\n\
                          \necho 'Senha: "+sn+"\n\
                          \necho 'Expira: $da\n\
-                         \necho '"+sn+"' > /etc/setup/senhas/"+u)
+                         \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                    %(n,lm))
@@ -435,7 +438,7 @@ def case():
               
            if w == '9':
               def dex():
-                  df = input(f6+' Qual usuario voce deseja deletar.\033[96m :: _\033[92m'+' ')
+                  df = input(f6+' Que usuario voce deseja deletar.\033[96m :: _\033[92m'+' ')
                   if df == '0':
                      case()
                   if os.path.isfile('/etc/setup/senhas/%s' %(df)) == False:
@@ -517,6 +520,7 @@ def case():
                       print (f2+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
                       %(mt,rd))
                       case()
+                      
               rdf()
            if w == '0':
               print (f1+' Saindo..\033[m')
@@ -525,7 +529,7 @@ def case():
         else:
             w = input(f6+' :: _\033[92m'+' ')
   except KeyboardInterrupt:
-     print (f1+'\nSaindo..\033[m')
+     print (f1+'\nSaindo ..\033[m')
      sleep(2)
      exit()
 if __name__ == '__main__':
