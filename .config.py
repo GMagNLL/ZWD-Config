@@ -22,16 +22,22 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
   See the License for the specific language governing permissions and
   limitations under the License.
 """
+
+import sys
 import time
-from os import system
+import os, re
+from os import *
 from sys import *
 from time import *
-import fileinput
-import sys, re, os
+
 if sys.version_info.major < 3:
    print (f1+'Erro: Progama suportado somente em Python3\033[m')
    sleep(2)
    exit()
+ 
+import fileinput
+import simplejson
+from urllib.request import *
 
 f0 = '\033[90m'
 f1 = '\033[91m'
@@ -47,11 +53,11 @@ H = strftime('%d/%m/%Y %H:%M:%S')
 print ('Conectando .. via python%s /%s' % (v,H))
 sleep(1)
 
-from urllib.request import *
 url = str(urlopen('http://ipv4.icanhazip.com/').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
-
-__main__ = '\n\033[36mM\033[92m) = Monitor do Sistema\n\033[m'\
+  
+__main__ = '\n\033[36mI\033[92m) = Informacoes do IP\n\033[m'\
+          +'\033[36mM\033[92m) = Monitor do Sistema\n\033[m'\
           +'\033[36m1\033[92m) = Configurar VPS\n\033[m'\
           +'\033[36m2\033[92m) = Desconfigurar /SSH/SQUID3\n\033[m'\
           +'\033[36m3\033[92m) = Adicionar Domain\n\033[m'\
@@ -62,6 +68,7 @@ __main__ = '\n\033[36mM\033[92m) = Monitor do Sistema\n\033[m'\
           +'\033[36m8\033[92m) = Redefinir usuario\n\033[m'\
           +'\033[36m9\033[92m) = Remover usuario\n\033[m'\
           +'\033[36m0\033[92m) = Sair\n\n\n\033[m'
+# I = True.
 # M = True.
 # 1 = Beta.
 # 2 = Beta.
@@ -86,14 +93,14 @@ def case():
      print (__main__)
      w = input(f6+' :: _\033[92m'+' ')
      
-     while w != '1' or w != '2' or w != '3' or w != '4' or w != '5'\
-      or w != '6' or w != '7' or w != '8' or w != '9' or w != '0' or w != 'm'\
-       or w != 'M' or w != 'monitor' or w != 'Monitor' or w != 'MONITOR':
-        if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6'\
-         or w == '7' or w == '8' or w == '9' or w == '0' or w == 'm' or w == 'M'\
-          or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
+     while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6'\
+      or w != '7' or w != '8' or w != '9' or w != '0' or w != 'm' or w != 'M'\
+       or w != 'monitor' or w != 'Monitor' or w != 'MONITOR' or w != 'i' or w != 'I':
+        if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6' or w == '7'\
+         or w == '8' or w == '9' or w == '0' or w == 'm' or w == 'M' or w == 'monitor'\
+          or w == 'Monitor' or w == 'MONITOR' or w == 'i' or w == 'I':
            if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
-              print ('\033[92m\nMonitor do Sistema ..\033[m')
+              print ('\033[36m\n Monitor do Sistema ..\033[m')
               system('''OS=`uname -s` && REV=`uname -r` && MACH=`uname -m` &&
               if [ "${OS}" = "SunOS" ]; then
                   OS=Solaris
@@ -125,61 +132,89 @@ def case():
                       | tr "\n" ' ' | sed s/VERSION.*//`]"
                   fi
                   OSSTR="${OS} ${DIST} ${REV}(${PSUEDONAME}${MACH})"
-                  echo '\033[92mVersao do OS:' $OSSTR
+                  echo '\033[92m Versao do OS:' $OSSTR
               fi''')
               system('''set=$(tput sgr0)\
                      \nso=$(uname -o)\
-                     \necho '\033[92mSistema Operacional:'$set $so '\033[m' ''')
+                     \necho '\033[92m Sistema Operacional:'$set $so '\033[m' ''')
               if os.path.isfile('/etc/debian_version') == True:
                  system('''set=$(tput sgr0)\
                        \ndbv=$(cat /etc/debian_version)\
-                       \necho '\033[92mVersao Debian:'$set $dbv '\033[m' ''')
+                       \necho '\033[92m Versao Debian:'$set $dbv '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \narchitecture=$(uname -m)
-                    \necho '\033[92mArquitetura:'$set $architecture '\033[m' ''')
+                    \necho '\033[92m Arquitetura:'$set $architecture '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \nkernel=$(uname -r)
-                    \necho '\033[92mLiberacao do Kernel:' $set $kernel '\033[m' ''')
+                    \necho '\033[92m Kernel:' $set $kernel '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \nserv=$(cat /etc/resolv.conf | sed '1 d' | awk '{print $2}')\
-                    \necho '\033[92mServidor DNS:'$set $serv '\033[m' ''')
+                    \necho '\033[92m Servidor DNS:'$set $serv '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \nhostname=$(hostname)
-                    \necho '\033[92mHostname:'$set $hostname '\033[m' ''')
+                    \necho '\033[92m Hostname:'$set $hostname '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \ninternal=$(hostname -i)
-                    \necho '\033[92mIP Interno:'$set $internal '\033[m' ''')
-              print (f2+'IP Externo: %s\033[m' %(__ip__))
-              
+                    \necho '\033[92m IP Interno:'$set $internal '\033[m' ''')
+              print (f2+' IP Externo: %s\033[m' %(__ip__))
               system('''set=$(tput sgr0)\
                     \nfree -h | grep -v + > /tmp/ramcache
-                    \necho '\033[92mUso da Ram:'$set &&
-                     cat /tmp/ramcache | grep -v 'Swap' ''')
+                    \necho '\033[92mRam:'$set && cat /tmp/ramcache''')
               system('''set=$(tput sgr0)\
-                    \necho '\033[92m Swap Usages:'$set &&
-                     cat /tmp/ramcache | grep -v 'Mem' ''')
-              system('''set=$(tput sgr0)\
-                    \nload=$(top -n 1 -b | grep 'load average:' | awk '{print $12 $13 $14}')
-                    \necho '\033[92mCarga media:'$set $load '\033[m' ''')
+                    \nload=$(top -n 1 -b | grep 'load average:' | awk '{print $11 $12 $13 $14}')
+                    \necho '\033[92m Carga media:'$set $load '\033[m' ''')
               system('''set=$(tput sgr0)\
                     \nwho>/tmp/who
-                     \necho '\033[92mUsuarios Logados:'$set && cat /tmp/who ''')
+                     \necho '\033[92m Usuarios Logados:'$set && cat /tmp/who ''')
               system('''set=$(tput sgr0)\
                     \ntime=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)
-                    \necho '\033[92mTempo de atividade:' $set $time''')
+                    \necho '\033[92m Tempo de atividade:' $set $time''')
+              w = input(f6+'\n :: _\033[92m'+' ')
+           if w == 'i' or w == 'I':
+              url = 'http://ip-api.com/json/%s' % (__ip__)
+              req = urlopen(url).read()
+              json_data = simplejson.loads(req)
+              if ':' not in json_data:
+                  web = json_data['query']
+                  lat = json_data['lat']
+                  lon = json_data['lon']
+                  con = json_data['country']
+                  coc = json_data['countryCode']
+                  hos = json_data['as']
+                  isp = json_data['isp']
+                  rgc = json_data['region']
+                  rgn = json_data['regionName']
+                  cyt = json_data['city']
+                  tif = json_data['timezone']
+                  zii = json_data['zip']
+                  sta = json_data['status']
+                  print (f2+'\n IPAddress:\033[36m %s\033[m' % (web))
+                  print (' Pais:\033[36m %s\033[m' % (con))
+                  print (' Pais Code:\033[36m %s\033[m' % (coc))
+                  print (' Hospedado por:\033[36m %s\033[m' % (hos))
+                  print (' Provedor:\033[36m %s\033[m' % (isp))
+                  print (' Cidade:\033[36m %s\033[m' % (cyt))
+                  print (' Regiao:\033[36m %s\033[m' % (rgn))
+                  print (' Regiao Code:\033[36m %s\033[m' % (rgc))
+                  print (' Fuso horario:\033[36m %s\033[m' % (tif))
+                  if json_data['zip'] == '':
+                     zii = 'Null'
+                  print (' Zip:\033[36m %s\033[m' % (zii))
+                  print (' Status:\033[36m %s\033[m' % (sta))
+                  print (' Lat/Long:\033[36m %s, %s\033[m' % (lat,lon))
               w = input(f6+'\n :: _\033[92m'+' ')
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
               s = os.path.isfile('/usr/sbin/squid3')
               d = os.path.isfile('/usr/sbin/squid')
-              system('mkdir /etc/setup')
-              system('mkdir /etc/setup/senhas')
-              system('mkdir /etc/setup/limite')
               if os.path.isfile('/etc/setup/senhas/except') == False:
+                 system('mkdir /etc/setup')
+                 system('mkdir /etc/setup/senhas')
                  system('touch /etc/setup/senhas/except')
                  system('''echo 'Ola anqui fica armazenado todas as senhas\
                   criadas por este progama.' > /etc/setup/senhas/except''')
               if os.path.isfile('/etc/setup/limite/lm') == False:
+                 system('mkdir /etc/setup/limite')
                  system('touch /etc/setup/limite/lm')
               if t == True:
                  system('apt-get autoremove ssh -y')
@@ -274,8 +309,8 @@ def case():
               case()
               
            if w == '2':
-              rc = input(f6+' Deseja Remover todas as alteracoes '\
-                        +'feitas ..\n por este script. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rc = input(f6+' Deseja Remover todas as alteracoes feitas por este\n'\
+                  +' script. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
@@ -289,8 +324,8 @@ def case():
                     system('apt-get autoremove squid -y')
                  if s == True:
                     system('apt-get autoremove squid3 -y')
-                 print (f6+'\nConcluido.. Pode reconfigurar sua vps com um script da \n'\
-                       +'sua Preferencia. Desculpe desapontalo(a).\033[m')
+                 print (f6+'\nConcluido.. Pode reconfigurar sua vps com um script da\n'\
+                       +' sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
               if rc == 'n' or rc == 'N':
@@ -391,8 +426,8 @@ def case():
               case()
               
            if w == '6':
-              rb = input(f6+' Deseja deletar o Banner por completo .. '\
-                        +'\n ficarar como de fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rb = input(f6+' Deseja deletar o Banner por completo ficarar como de\n'\
+                        +' fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
               if rb == 'Y' or rb == 'y':
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
@@ -477,7 +512,7 @@ def case():
                    if rd == '0':
                       case()
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
-                      print (f1+'Erro: o usuario %s nao existe.\033[m' %(rd))
+                      print (f1+' Erro: o usuario %s nao existe ..\033[m' %(rd))
                       rdf()
                    print (main)
                    md = input(f6+' :: _\033[92m'+' ')
