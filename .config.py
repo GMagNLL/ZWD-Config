@@ -210,6 +210,8 @@ def case():
               d = os.path.isfile('/usr/sbin/squid')
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('mkdir /etc/setup')
+                 system('mkdir /etc/setup/limits')
+                 system('cp /etc/security/limits.conf /etc/setup/limits')
                  system('mkdir /etc/setup/senhas')
                  system('touch /etc/setup/senhas/except')
                  system('''echo 'Ola anqui fica armazenado todas as senhas'''\
@@ -313,18 +315,17 @@ def case():
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
-              system('''echo '\nPort 22' >> /etc/ssh/sshd_config''')
               print ('\033[32mReiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
  
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  sleep(2)
-                 print ('\033[32mReiniciando Servidor SQUID.\033[m')
+                 print ('\033[36mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(1)
-                 print ('\033[33mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[36mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
-                 print ('\033[32mReiniciando Servidor SQUID3.\033[m')
+                 print ('\033[36mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(1)
                  print ('\033[36mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
@@ -341,7 +342,16 @@ def case():
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
                  d = os.path.isfile('/usr/sbin/squid')
+                 if os.path.isfile('/etc/squid/domains/domain') == True:
+                    system('rm -rf /etc/squid/domains')
+                 else
+                    system('rm -rf /etc/squid3/domains')
                  if os.path.isfile('/etc/setup/senhas/except') == True:
+                    for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
+                     inplace=1)):
+                        sys.stdout.write(line.replace('Port 443\n', ''))
+                    system('rm -rf  /etc/security/limits.conf')
+                    system('cp /etc/setup/limits/limits.conf /etc/security')
                     system('rm -rf /etc/setup')
                  if t == True:
                     system('apt-get autoremove ssh -y')
@@ -351,7 +361,7 @@ def case():
                  if s == True:
                     system('apt-get autoremove squid3 -y')
                  print (f6+'\nConcluido.. Pode reconfigurar sua vps com um script da\n'\
-                       +' sua Preferencia. Desculpe desapontalo(a).\033[m')
+                       +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
               if rc == 'n' or rc == 'N':
