@@ -69,12 +69,12 @@ __main__ = '\n\033[36mI\033[92m)\033[96m =\033[92m Informacoes do IP\n\033[m'\
           +'\033[36m0\033[92m)\033[96m =\033[92m Sair\n\n\n\033[m'
 # I = True.
 # M = True.
-# 1 = Beta.
-# 2 = Beta.
-# 3 = Beta.
+# 1 = True.
+# 2 = True.
+# 3 = True.
 # 4 = Beta.
-# 5 = Beta.
-# 6 = Beta.
+# 5 = True.
+# 6 = True.
 # 7 = Beta.
 # 8 = Beta.
 # 9 = Beta.
@@ -90,7 +90,7 @@ print ('\033[92mIP:\033[96m %s\033[m' %(__ip__))
 def case():
   try:
      print (__main__)
-     w = input(f6+' :: _\033[92m'+' ')
+     w = input(f6+' :: _\033[96m'+' ')
      
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6'\
       or w != '7' or w != '8' or w != '9' or w != '0' or w != 'm' or w != 'M'\
@@ -202,7 +202,7 @@ def case():
               system('''set=$(tput sgr0)\
                     \ntime=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)
                     \necho '\033[92mTempo de atividade:' $set $time''')
-              w = input(f6+'\n :: _\033[92m'+' ')
+              w = input(f6+'\n :: _\033[96m'+' ')
               
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
@@ -309,7 +309,7 @@ def case():
                     system('''echo 'http_access allow payload' >> /etc/squid3/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid3/squid.conf''')
                     
-                    print (f2+'Portas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[36mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
               print ('\033[36mConfigurando Portas SSH.\033[m')
               sleep(2)
@@ -322,22 +322,22 @@ def case():
                  sleep(2)
                  print ('\033[36mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
-                 sleep(1)
+                 sleep(2)
                  print ('\033[36mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
                  print ('\033[36mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
-                 sleep(1)
+                 sleep(2)
                  print ('\033[36mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
-              sleep(1)
+              sleep(3)
               print (f6+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
               print (f6+'Crie um usuario e teste.\033[m')
               sleep(2)
               case()
               
            if w == '2':
-              rc = input(f6+' Deseja Remover todas as alteracoes feitas por este\n'\
-                  +' script. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rc = input(f6+' Deseja Remover todas as alteracoes feitas por\n este\n'\
+                  +' script. [y/n] :: _\033[96m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
@@ -384,7 +384,7 @@ def case():
               else:
                  system('cat /etc/squid3/domains/domain')
               def dom():
-                  do = input(f6+'\nAdicionar Domain\033[96m :: _\033[92m'+' ')
+                  do = input(f6+' Adicionar Domain :: _\033[96m'+' ')
                   if do == '0':
                      case()
                   if os.path.isfile('/etc/squid3/domains/domain') == True:
@@ -392,33 +392,35 @@ def case():
                         print (f1+'Erro: o domain %s ja existe.\033[m' %(do))
                         dom()
                      system('''echo '%s' >> /etc/squid3/domains/domain''' % (do))
-                     system('''echo '%s' >> /etc/squid3/domains''' % (do))
+                     system('''touch /etc/squid3/domains/%s''' % (do))
                      system('cd /etc && service squid3 restart')
-                     print (f2+'Domain: %s Adicionado [0] Para Home.' % (do))
+                     print ('\033[36mDomain: %s Adicionado [0] Para Home.' % (do))
                      dom()
                   else:
                      if os.path.isfile('/etc/squid/domains/%s' %(do)) == True:
                         print (f1+'Erro: o domain %s ja existe.\033[m' %(do))
                         dom()
                      system('''echo '%s' >> /etc/squid/domains/domain''' % (do))
-                     system('''echo '%s' >> /etc/squid/domains''' % (do))
+                     system('''touch /etc/squid/domains/%s''' % (do))
                      system('cd /etc && service squid restart')
-                     print (f2+'Domain: %s Adicionado.. [0] Para Home.' % (do))
+                     print ('\033[36mDomain: %s Adicionado.. [0] Para Home.' % (do))
                      dom()
               dom()
               
            if w == '4':
-              if os.path.isfile('/etc/squid/domains/domain') == False:
-                 system('touch /etc/squid/domains/domain')
-              if os.path.isfile('/etc/squid3/domains/domain') == False:
-                 system('touch /etc/squid3/domains/domain')
+              if os.path.isfile('/etc/squid/domains/domain') == False\
+               or os.path.isfile('/etc/squid3/domains/domain') == False:
+                 if os.path.isfile('/etc/squid3/squid.conf') == True:
+                    system('touch /etc/squid3/domains/domain')
+                 else:
+                    system('touch /etc/squid/domains/domain')
               print (f2+'Domains do arquivo:\033[36m')
               if os.path.isfile('/etc/squid/domains/domain') == True:
                  system('cat /etc/squid/domains/domain')
               else:
                  system('cat /etc/squid3/domains/domain')
               def delet():
-                  de = input(f6+'\nDeletar Domain\033[96m :: _\033[92m'+' ')
+                  de = input(f6+' Deletar Domain :: _\033[96m'+' ')
                   if de == '0':
                      case()
                   if os.path.isfile('/etc/squid/domains/domain') == True:
@@ -431,7 +433,7 @@ def case():
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
                      system('cd /etc && service squid restart')
-                     print (f2+'\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
+                     print ('\033[36m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
                      delet()
                   else:
                      if os.path.isfile('/etc/squid3/domains/%s' %(de)) == False:
@@ -443,7 +445,7 @@ def case():
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
                      system('cd /etc && service squid3 restart')
-                     print (f2+'\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
+                     print ('\033[36m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
                      
@@ -458,13 +460,14 @@ def case():
               nb = input(f6+' Adicionar ao Banner\033[96m :: _ '+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
               system('cd /etc && service ssh restart')
-              print (f2+'Banner:\033[97m %s \033[92m\nAdicionado com Sucesso.\033[m' % (nb))
+              print ('\033[36mBanner:\033[96m %s \033[36m\nAdicionado com Sucesso.\033[m'\
+               % (nb))
               sleep(2)
               case()
               
            if w == '6':
-              rb = input(f6+' Deseja deletar o Banner por completo ficarar como de\n'\
-                        +' fabrica. [y/n]\n\033[96m :: _\033[92m'+' ')
+              rb = input(f6+' Deseja deletar o Banner por completo ficarar\n como de'\
+                        +' fabrica. [y/n] :: _\033[96m'+' ')
               if rb == 'Y' or rb == 'y':
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
@@ -489,17 +492,19 @@ def case():
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Erro: o usuario %s ja existe.\033[m' %(n))
                      user()
-                  sn = input(f6+' Senha Para '+n+'\033[96m :: _\033[92m'+' ')
+                  sn = input(f6+' Senha Para '+n+' :: _\033[96m'+' ')
                   dx = input(f6+' Quantos dias '+n\
-                             +' deve durar\033[96m :: _\033[92m'+' ')
-                  lm = input(f6+' Maximo de conexoes simultaneas\033[96m :: _\033[92m'+' ')
+                             +' deve durar :: _\033[96m'+' ')
+                  lm = input(f6+' Maximo de conexoes simultaneas :: _\033[96m'+' ')
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
-                         \nuseradd -M -s /bin/false "+n+" -e $d -p "+sn+"\
-                         \necho '\nConcluido .. usuario criado.'\n\
-                         \necho 'Usuario: "+n+"'\
-                         \necho 'Senha: "+sn+"'\
-                         \necho 'Expira: '$da\
+                         \nuseradd -M -s /bin/false "+n+" -e $d\
+                         \n(echo '"+sn+"' ; echo '"+sn+"' ) |passwd "+rd\
+                         +" > /dev/null 2>/dev/null\
+                         \necho '\033[96m\nConcluido .. usuario criado.'\n\
+                         \necho '\033[36mUsuario:\033[96m "+n+"'\
+                         \necho '\033[36mSenha:\033[96m "+sn+"'\
+                         \necho '\033[36mExpira:\033[96m '$da'\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
@@ -510,7 +515,7 @@ def case():
               
            if w == '9':
               def dex():
-                  df = input(f6+' Que usuario voce deseja deletar.\033[96m :: _\033[92m'+' ')
+                  df = input(f6+' Que usuario voce deseja deletar. :: _\033[96m'+' ')
                   if df == '0':
                      case()
                   if os.path.isfile('/etc/setup/senhas/%s' %(df)) == False:
@@ -534,7 +539,7 @@ def case():
                       f.close()
                   delete()
                   system('rm -rf /etc/setup/limite/'+df)
-                  print (f2+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
+                  print (f6+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
                   sleep(2)
                   dex()
               dex()
@@ -545,7 +550,7 @@ def case():
                          +'\n\033[36m2\033[92m) = Mudar data de expiracao\033[m'\
                          +'\n\033[36m3\033[92m) = Mudar limite de logins\033[m'\
                          +'\n\033[36m0\033[92m) = Home\n\n\033[m'
-                   rd = input(f6+' Qual usuario voce deseja redefinir\033[96m :: _\033[92m'+' ')
+                   rd = input(f6+' Qual usuario voce deseja redefinir :: _\033[96m'+' ')
                    if rd == '0':
                       case()
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
@@ -561,16 +566,16 @@ def case():
                             +'" ) |passwd '+rd+' > /dev/null 2>/dev/null')
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
-                      print (f2+'Concluido. nova senha aplicada para %s' %(rd))
+                      print (f6+'Concluido. nova senha aplicada para %s' %(rd))
                       case()
                    if md == '2':
                       print (f1+'Utileze-a no formato ano/mes/dia\033[m\n')
                       dt = input('Qual a nova data para '+rd+'\033[96m :: _\033[92m'+' ')
                       system('chage -E '+dt+' '+rd+' 2> /dev/null')
-                      print (f2+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
+                      print (f6+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
                       case()
                    if md == '3':
-                      mt = input(f6+' Qual o novo limite para '+rd+'\033[96m :: _\033[92m'+' ')
+                      mt = input(f6+' Qual o novo limite para '+rd+' :: _\033[96m'+' ')
                       d = open('/etc/setup/limite/'+rd).read()
                       d = d+'\n'
                       def delete():
@@ -589,7 +594,7 @@ def case():
                       system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                        %(rd,mt))
-                      print (f2+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
+                      print (f6+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
                       %(mt,rd))
                       case()
                       
