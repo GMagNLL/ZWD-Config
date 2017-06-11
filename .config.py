@@ -77,7 +77,7 @@ __main__ = '\n\033[36mI\033[92m)\033[96m =\033[92m Informacoes do IP\n\033[m'\
 # 6 = True.
 # 7 = Beta.
 # 8 = Beta.
-# 9 = Beta.
+# 9 = True.
 # 0 = True.
 __info__ = f2+' Author:\033[92m %s\n\033[m' %(__author__)\
           +f2+' Version:\033[92m %s\033[m\n\n' %(__version__)
@@ -219,7 +219,6 @@ def case():
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('mkdir /etc/setup/limite')
                  system('touch /etc/setup/limite/lm')
-              print ('\033[m')
               if t == True:
                  system('apt-get autoremove ssh -y')
                  system('apt-get update && apt-get install ssh -y')
@@ -337,7 +336,7 @@ def case():
               case()
               
            if w == '2':
-              rc = input(f6+'\nDeseja Remover todas as alteracoes feitas por este '\
+              rc = input(f6+'\nDeseja Remover todas as alteracoes feitas por este\n'\
                   +' script. [y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
@@ -362,7 +361,6 @@ def case():
                     system('rm -rf  /etc/security/limits.conf')
                     system('cp /etc/setup/limits/limits.conf /etc/security')
                     system('rm -rf /etc/setup')
-                 print ('\033[m')
                  if t == True:
                     system('apt-get autoremove ssh -y')
                     system('apt-get update && apt-get install ssh -y')
@@ -460,7 +458,7 @@ def case():
                      sleep(2)
                      print ('\033[m')
                      system('cd /etc && service squid3 restart')
-                     print ('\033[92m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
+                     print ('\033[36m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
                      
@@ -472,11 +470,10 @@ def case():
                  for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                      sys.stdout.write(line.replace('#Banner /etc/issue.net',\
                       'Banner /etc/Banner'))
-              nb = input(f6+'\nAdicionar ao Banner\033[92m :: _ '+' ')
+              nb = input(f6+'\nAdicionar ao Banner :: _ \033[92m'+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
-              print ('\033[m')
               system('cd /etc && service ssh restart')
-              print ('\033[36mBanner:\033[92m %s \033[92m\nAdicionado com Sucesso.\033[m'\
+              print ('\033[36mBanner:\033[96m %s \033[36m\nAdicionado com Sucesso.\033[m'\
                % (nb))
               sleep(2)
               case()
@@ -504,7 +501,7 @@ def case():
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
               def user():
-                  n = input(f6+'\nNome do usuario\033[92m :: _\033[92m'+' ')
+                  n = input(f6+'\nNome do usuario :: _\033[92m'+' ')
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Erro: o usuario %s ja existe.\033[m' %(n))
                      user()
@@ -515,13 +512,13 @@ def case():
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d\
-                         \n(echo '"+sn+"' ; echo '"+sn+"' ) |passwd "+sn\
-                         +" > /dev/null 2>/dev/null\
                          \necho '\033[92m\nConcluido .. usuario criado.'\n\
                          \necho '\033[36mUsuario:\033[92m "+n+"'\
                          \necho '\033[36mSenha:\033[92m "+sn+"'\
                          \necho '\033[36mExpira:\033[92m '$da'\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
+                  system('(echo "'+sn+'" ; echo "'+sn\
+                        +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                    %(n,lm))
@@ -531,11 +528,11 @@ def case():
               
            if w == '9':
               def dex():
-                  df = input(f6+' Que usuario voce deseja deletar. :: _\033[92m'+' ')
+                  df = input(f6+'\nQue usuario voce deseja deletar. :: _\033[92m'+' ')
                   if df == '0':
                      case()
                   if os.path.isfile('/etc/setup/senhas/%s' %(df)) == False:
-                     print (f1+'Erro: o usuario %s nao existe.. ou nao\n'%(df)\
+                     print (f1+'Erro: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
                      dex()
                   system('userdel --force %s > /dev/null 2>/dev/null' %(df))
@@ -566,7 +563,10 @@ def case():
                          +'\n\033[36m2\033[92m) = Mudar data de expiracao\033[m'\
                          +'\n\033[36m3\033[92m) = Mudar limite de logins\033[m'\
                          +'\n\033[36m0\033[92m) = Home\n\n\033[m'
-                   rd = input(f6+' Qual usuario voce deseja redefinir :: _\033[92m'+' ')
+                   # 1 = True.
+                   # 2 = True.
+                   # 3 = True.
+                   rd = input(f6+'\nQue usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
                       case()
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
@@ -577,7 +577,7 @@ def case():
                    if md == '0':
                       case()
                    if md == '1':
-                      sna = input(f6+' Nova senha para '+rd+'\033[92m :: _\033[92m'+' ')
+                      sna = input(f6+'\nNova senha para '+rd+' :: _\033[92m'+' ')
                       system('(echo "'+sna+'" ; echo "'+sna\
                             +'" ) |passwd '+rd+' > /dev/null 2>/dev/null')
                       system('rm -rf /etc/setup/senhas/'+rd)
@@ -586,7 +586,7 @@ def case():
                       case()
                    if md == '2':
                       print (f1+'Utileze-a no formato ano/mes/dia\033[m\n')
-                      dt = input('Qual a nova data para '+rd+'\033[92m :: _\033[92m'+' ')
+                      dt = input('Qual a nova data para '+rd+' :: _\033[92m'+' ')
                       system('chage -E '+dt+' '+rd+' 2> /dev/null')
                       print (f6+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
                       case()
