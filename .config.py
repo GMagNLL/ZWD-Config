@@ -228,9 +228,15 @@ def case():
               system('apt-get install squid3 -y')
               sleep(2)
   
-              if os.path.isfile('/etc/squid/squid.conf') == False:
+              if os.path.isfile('/etc/squid/squid.conf') == False\
+               and os.path.isfile('/etc/squid3/squid.conf') == True:
+                 system('touch /etc/squid3/squid.conf')
+              if os.path.isfile('/etc/squid3/squid.conf') == False\
+               and os.path.isfile('/etc/squid/squid.conf') == True:
                  system('touch /etc/squid/squid.conf')
               if os.path.isfile('/etc/squid/squid.conf') == True:
+                 system('rm -rf /etc/squid/squid.conf')
+                 system('touch /etc/squid/squid.conf')
                  print (f2+'Configurando Portas SQUID IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid/domains')
@@ -258,6 +264,8 @@ def case():
                     print (f2+'Portas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
               else:
+                 system('rm -rf /etc/squid3/squid.conf')
+                 system('touch /etc/squid3/squid.conf')
                  print (f2+'Configurando Portas SQUID3 IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid3/domains')
@@ -288,7 +296,7 @@ def case():
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
-                  system('''echo '\nPort 22' >> /etc/ssh/sshd_config''')
+              system('''echo '\nPort 22' >> /etc/ssh/sshd_config''')
               print (f2+'Reiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
  
@@ -410,6 +418,7 @@ def case():
                      system('cd /etc && service squid3 restart')
                      print (f2+'\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
+              delet()
                      
            if w == '5':
               if os.path.isfile('/etc/Banner') == False:
