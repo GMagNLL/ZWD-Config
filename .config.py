@@ -344,7 +344,7 @@ def case():
                  d = os.path.isfile('/usr/sbin/squid')
                  if os.path.isfile('/etc/squid/domains/domain') == True:
                     system('rm -rf /etc/squid/domains')
-                 else
+                 else:
                     system('rm -rf /etc/squid3/domains')
                  if os.path.isfile('/etc/setup/senhas/except') == True:
                     for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
