@@ -224,7 +224,7 @@ def case():
                  system('apt-get autoremove squid -y')
               if s == True:
                  system('apt-get autoremove squid3 -y')
-                 
+
               system('apt-get install squid3 -y')
               sleep(2)
   
@@ -250,16 +250,25 @@ def case():
                     system('touch /etc/squid/domains/.oi.com.br')
                     system('rm -rf /etc/squid/squid.conf')
                     system('touch /etc/squid/squid.conf')
-                    system('''echo '# ACL DE CONEXÃO\n\nacl accept src '''+__ip__\
-                          +'''\nacl ip url_regex -i '''+__ip__\
-                          +'''\nacl payload dstdomain -i "/etc/squid/domains/domain"\n'\
-                            > /etc/squid3/squid.conf''')
-                    system('''echo '# PORTAS DE ACESSO\n\nhttp_port 80\nhttp_port 8080\
-                           \nhttp_port 8799\nhttp_port 3128\n\n# Nome do servidor\
-                           \n\nvisible_hname ZWDConfig\n\n# ACCEPT ACL\
-                           \n\nhttp_access allow accept\nhttp_access allow ip\
-                           \nhttp_access allow payload\nhttp_access deny all'\
+                    
+                    system('''echo '# ACL DE CONEXAO\n' >> /etc/squid/squid.conf''')
+                    system('''echo 'acl accept src %s' >> /etc/squid/squid.conf''' %(__ip___))
+                    system('''echo 'acl ip url_regex -i %s' >> /etc/squid/squid.conf'''\
+                    %(__ip___))
+                    system('''echo 'acl payload dstdomain -i "/etc/squid/domains/domain"\n'\
                             >> /etc/squid/squid.conf''')
+                    system('''echo '\n# PORTAS DE ACESSO\n' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_port 80' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_port 8080' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_port 8799' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_port 3128' >> /etc/squid/squid.conf''')
+                    system('''echo '\n# Nome do servidor\n' >> /etc/squid/squid.conf''')
+                    system('''echo 'visible_hostname ZWDConfig' >> /etc/squid/squid.conf''')
+                    system('''echo '\n# ACCEPT ACL\n' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_access allow accept' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_access allow ip' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_access allow payload' >> /etc/squid/squid.conf''')
+                    system('''echo 'http_access deny all' >> /etc/squid/squid.conf''')
                                
                     print ('\033[32mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
@@ -279,16 +288,24 @@ def case():
                     system('touch /etc/squid3/domains/.oi.com.br')
                     system('rm -rf /etc/squid3/squid.conf')
                     system('touch /etc/squid3/squid.conf')
-                    system('''echo '# ACL DE CONEXÃO\n\nacl accept src '''+__ip__\
-                          +'''\nacl ip url_regex -i '''+__ip__\
-                          +'''\nacl payload dstdomain -i "/etc/squid3/domains/domain"\n'\
-                            > /etc/squid3/squid.conf''')
-                    system('''echo '# PORTAS DE ACESSO\n\nhttp_port 80\nhttp_port 8080\
-                           \nhttp_port 8799\nhttp_port 3128\n\n# Nome do servidor\
-                           \n\nvisible_hname ZWDConfig\n\n# ACCEPT ACL\
-                           \n\nhttp_access allow accept\nhttp_access allow ip\
-                           \nhttp_access allow payload\nhttp_access deny all'\
+                    system('''echo '# ACL DE CONEXAO\n' >> /etc/squid3/squid.conf''')
+                    system('''echo 'acl accept src %s' >> /etc/squid3/squid.conf''' %(__ip___))
+                    system('''echo 'acl ip url_regex -i %s' >> /etc/squid3/squid.conf'''\
+                    %(__ip___))
+                    system('''echo 'acl payload dstdomain -i "/etc/squid3/domains/domain"\n'\
                             >> /etc/squid3/squid.conf''')
+                    system('''echo '\n# PORTAS DE ACESSO\n' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_port 80' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_port 8080' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_port 8799' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_port 3128' >> /etc/squid3/squid.conf''')
+                    system('''echo '\n# Nome do servidor\n' >> /etc/squid3/squid.conf''')
+                    system('''echo 'visible_hostname ZWDConfig' >> /etc/squid3/squid.conf''')
+                    system('''echo '\n# ACCEPT ACL\n' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_access allow accept' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_access allow ip' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_access allow payload' >> /etc/squid3/squid.conf''')
+                    system('''echo 'http_access deny all' >> /etc/squid3/squid.conf''')
                                
                     print (f2+'Portas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
@@ -305,12 +322,12 @@ def case():
                  print ('\033[32mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(1)
-                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[33mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
                  print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(1)
-                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[36mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(1)
               print (f6+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
               print (f6+'Crie um usuario e teste.\033[m')
@@ -470,9 +487,9 @@ def case():
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d -p "+sn+"\
                          \necho '\nConcluido .. usuario criado.'\n\
-                         \necho 'Usuario: "+n+"\n'\
-                         \necho 'Senha: "+sn+"\n'\
-                         \necho 'Expira: $da\n'\
+                         \necho 'Usuario: "+n+"'\
+                         \necho 'Senha: "+sn+"'\
+                         \necho 'Expira: '$da\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
