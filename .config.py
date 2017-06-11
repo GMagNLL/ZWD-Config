@@ -49,24 +49,24 @@ f7 = '\033[97m'
   
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
-print ('Conectando .. via python%s /%s' % (v,H))
+print ('\033[92mConectando .. via python%s /%s\033[m' % (v,H))
 sleep(1)
 
 url = str(urlopen('http://check-host.net/ip').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
   
-__main__ = '\n\033[36mI\033[92m) = Informacoes do IP\n\033[m'\
-          +'\033[36mM\033[92m) = Monitor do Sistema\n\033[m'\
-          +'\033[36m1\033[92m) = Configurar VPS\n\033[m'\
-          +'\033[36m2\033[92m) = Desconfigurar /SSH/SQUID3\n\033[m'\
-          +'\033[36m3\033[92m) = Adicionar Domain\n\033[m'\
-          +'\033[36m4\033[92m) = Remover Domain\n\033[m'\
-          +'\033[36m5\033[92m) = Adicionar Banner\n\033[m'\
-          +'\033[36m6\033[92m) = Remover Banner\n\033[m'\
-          +'\033[36m7\033[92m) = Adicionar usuario\n\033[m'\
-          +'\033[36m8\033[92m) = Redefinir usuario\n\033[m'\
-          +'\033[36m9\033[92m) = Remover usuario\n\033[m'\
-          +'\033[36m0\033[92m) = Sair\n\n\n\033[m'
+__main__ = '\n\033[36mI\033[92m)\033[96m =\033[92m Informacoes do IP\n\033[m'\
+          +'\033[36mM\033[92m)\033[96m =\033[92m Monitor do Sistema\n\033[m'\
+          +'\033[36m1\033[92m)\033[96m =\033[92m Configurar VPS\n\033[m'\
+          +'\033[36m2\033[92m)\033[96m =\033[92m Desconfigurar /SSH/SQUID3\n\033[m'\
+          +'\033[36m3\033[92m)\033[96m =\033[92m Adicionar Domain\n\033[m'\
+          +'\033[36m4\033[92m)\033[96m =\033[92m Remover Domain\n\033[m'\
+          +'\033[36m5\033[92m)\033[96m =\033[92m Adicionar Banner\n\033[m'\
+          +'\033[36m6\033[92m)\033[96m =\033[92m Remover Banner\n\033[m'\
+          +'\033[36m7\033[92m)\033[96m =\033[92m Adicionar usuario\n\033[m'\
+          +'\033[36m8\033[92m)\033[96m =\033[92m Redefinir usuario\n\033[m'\
+          +'\033[36m9\033[92m)\033[96m =\033[92m Remover usuario\n\033[m'\
+          +'\033[36m0\033[92m)\033[96m =\033[92m Sair\n\n\n\033[m'
 # I = True.
 # M = True.
 # 1 = Beta.
@@ -81,8 +81,8 @@ __main__ = '\n\033[36mI\033[92m) = Informacoes do IP\n\033[m'\
 # 0 = True.
 __info__ = f2+'Author:\033[36m %s\n\033[m' %(__author__)\
           +f2+'Version:\033[36m %s\033[m\n\n' %(__version__)
-__Banner__ = f2+'^-------------------------------------_\n'\
-               +' {= Config VPS /SSH/SQUID3 =}\n\033[m'
+__Banner__ = '\033[36m^-------------------------------------_\033[32m\n'\
+            +' {= Config VPS /SSH/SQUID3 =}\n\033[m'
 print (__Banner__)
 print (__info__)
 print ('\033[92mIP:\033[96m %s\033[m' %(__ip__))
@@ -212,8 +212,8 @@ def case():
                  system('mkdir /etc/setup')
                  system('mkdir /etc/setup/senhas')
                  system('touch /etc/setup/senhas/except')
-                 system('''echo 'Ola anqui fica armazenado todas as senhas\
-                  criadas por este progama.' > /etc/setup/senhas/except''')
+                 system('''echo 'Ola anqui fica armazenado todas as senhas'''\
+                       +'''criadas por este progama.' > /etc/setup/senhas/except''')
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('mkdir /etc/setup/limite')
                  system('touch /etc/setup/limite/lm')
@@ -411,7 +411,7 @@ def case():
                         print (f1+'Erro: o domain %s nao existe.\033[m' %(de))
                         delet()
                      system('rm -rf /etc/squid3/domains/%s' %(de))
-                     for i, line in enumerate(fileinput.input('/etc/squid3/domains',\
+                     for i, line in enumerate(fileinput.input('/etc/squid3/domains/domain',\
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
@@ -469,10 +469,10 @@ def case():
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d -p "+sn+"\
-                         \necho 'Concluido .. usuario criado.'\n\
-                         \necho 'Usuario: "+n+"\n\
-                         \necho 'Senha: "+sn+"\n\
-                         \necho 'Expira: $da\n\
+                         \necho '\nConcluido .. usuario criado.'\n\
+                         \necho 'Usuario: "+n+"\n'\
+                         \necho 'Senha: "+sn+"\n'\
+                         \necho 'Expira: $da\n'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
