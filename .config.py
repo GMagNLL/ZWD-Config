@@ -79,9 +79,9 @@ __main__ = '\n\033[36mI\033[92m)\033[96m =\033[92m Informacoes do IP\n\033[m'\
 # 8 = Beta.
 # 9 = Beta.
 # 0 = True.
-__info__ = f2+'Author:\033[36m %s\n\033[m' %(__author__)\
-          +f2+'Version:\033[36m %s\033[m\n\n' %(__version__)
-__Banner__ = '\033[36m^-------------------------------------_\033[32m\n'\
+__info__ = f2+' Author:\033[96m %s\n\033[m' %(__author__)\
+          +f2+' Version:\033[96m %s\033[m\n\n' %(__version__)
+__Banner__ = '\033[36m^-------------------------------------_\033[92m\n'\
             +' {= Config VPS /SSH/SQUID3 =}\n\033[m'
 print (__Banner__)
 print (__info__)
@@ -136,7 +136,7 @@ def case():
               print ('\033[36m\n Monitor do Sistema ..\033[m')
               system('''OS=`uname -s` && REV=`uname -r` && MACH=`uname -m` &&
               if [ "${OS}" = "SunOS" ]; then
-                  OS=Solaris
+                 OS=Solaris
                   ARCH=`uname -p`
                   OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
               elif [ "${OS}" = "AIX" ]; then
@@ -237,7 +237,7 @@ def case():
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  system('rm -rf /etc/squid/squid.conf')
                  system('touch /etc/squid/squid.conf')
-                 print (f2+'Configurando Portas SQUID IP:\033[96m %s\033[m' %(__ip__))
+                 print (f2+'Configurando Portas SQUID IP:\033[36m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid/domains')
                  if os.path.isfile('/etc/squid/domains/domain') == False:
@@ -261,12 +261,12 @@ def case():
                            \nhttp_access allow payload\nhttp_access deny all'\
                             >> /etc/squid/squid.conf''')
                                
-                    print (f2+'Portas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[32mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
               else:
                  system('rm -rf /etc/squid3/squid.conf')
                  system('touch /etc/squid3/squid.conf')
-                 print (f2+'Configurando Portas SQUID3 IP:\033[96m %s\033[m' %(__ip__))
+                 print ('\033[32mConfigurando Portas SQUID3 IP:\033[36m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid3/domains')
                  if os.path.isfile('/etc/squid3/domains/domain') == False:
@@ -292,25 +292,25 @@ def case():
                                
                     print (f2+'Portas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
-              print (f2+'Configurando Portas SSH.\033[m')
+              print ('\033[32mConfigurando Portas SSH.\033[m')
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
               system('''echo '\nPort 22' >> /etc/ssh/sshd_config''')
-              print (f2+'Reiniciando Servidor SSH.\033[m')
+              print ('\033[32mReiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
  
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  sleep(2)
-                 print (f2+'Reiniciando Servidor SQUID.\033[m')
+                 print ('\033[32mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(1)
-                 print (f2+'Portas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
-                 print (f2+'Reiniciando Servidor SQUID3.\033[m')
+                 print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(1)
-                 print (f2+'Portas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(1)
               print (f6+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
               print (f6+'Crie um usuario e teste.\033[m')
