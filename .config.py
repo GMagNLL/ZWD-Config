@@ -254,9 +254,9 @@ def case():
                     system('touch /etc/squid/squid.conf')
                     
                     system('''echo '# ACL DE CONEXAO\n' >> /etc/squid/squid.conf''')
-                    system('''echo 'acl accept src %s' >> /etc/squid/squid.conf''' %(__ip___))
+                    system('''echo 'acl accept src %s' >> /etc/squid/squid.conf''' %(__ip__))
                     system('''echo 'acl ip url_regex -i %s' >> /etc/squid/squid.conf'''\
-                    %(__ip___))
+                    %(__ip__))
                     system('''echo 'acl payload dstdomain -i "/etc/squid/domains/domain"\n'\
                             >> /etc/squid/squid.conf''')
                     system('''echo '\n# PORTAS DE ACESSO\n' >> /etc/squid/squid.conf''')
@@ -277,7 +277,7 @@ def case():
               else:
                  system('rm -rf /etc/squid3/squid.conf')
                  system('touch /etc/squid3/squid.conf')
-                 print ('\033[32mConfigurando Portas SQUID3 IP:\033[36m %s\033[m' %(__ip__))
+                 print ('\033[36mConfigurando Portas SQUID3 IP:\033[36m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid3/domains')
                  if os.path.isfile('/etc/squid3/domains/domain') == False:
@@ -291,9 +291,9 @@ def case():
                     system('rm -rf /etc/squid3/squid.conf')
                     system('touch /etc/squid3/squid.conf')
                     system('''echo '# ACL DE CONEXAO\n' >> /etc/squid3/squid.conf''')
-                    system('''echo 'acl accept src %s' >> /etc/squid3/squid.conf''' %(__ip___))
+                    system('''echo 'acl accept src %s' >> /etc/squid3/squid.conf''' %(__ip__))
                     system('''echo 'acl ip url_regex -i %s' >> /etc/squid3/squid.conf'''\
-                    %(__ip___))
+                    %(__ip__))
                     system('''echo 'acl payload dstdomain -i "/etc/squid3/domains/domain"\n'\
                             >> /etc/squid3/squid.conf''')
                     system('''echo '\n# PORTAS DE ACESSO\n' >> /etc/squid3/squid.conf''')
@@ -308,14 +308,14 @@ def case():
                     system('''echo 'http_access allow ip' >> /etc/squid3/squid.conf''')
                     system('''echo 'http_access allow payload' >> /etc/squid3/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid3/squid.conf''')
-                               
+                    
                     print (f2+'Portas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
-              print ('\033[32mConfigurando Portas SSH.\033[m')
+              print ('\033[36mConfigurando Portas SSH.\033[m')
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
-              print ('\033[32mReiniciando Servidor SSH.\033[m')
+              print ('\033[36mReiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
  
               if os.path.isfile('/etc/squid/squid.conf') == True:
