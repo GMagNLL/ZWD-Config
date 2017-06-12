@@ -33,9 +33,19 @@ if sys.version_info.major < 3:
    print (f1+'Erro: Progama suportado somente em Python3\033[m')
    sleep(2)
    exit()
- 
+try:
+   import simplejson
+except ImportError:
+   print ('\033[31mDependencias nao instaladas.\033[m')
+   sleep(1)
+   print ('\033[92mInstalando Dependencias .. aguarde\033[30m')
+   if os.path.isfile('/usr/local/bin/pip') == False:
+      system('nohup wget -qc https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py')
+      system('python3 get-pip.py')
+      system('rm -rf get-pip.py')
+   system('pip install simplejson')
+   system('clear')
 import fileinput
-import simplejson
 from urllib.request import *
 
 f0 = '\033[90m'
@@ -81,7 +91,7 @@ __main__ = '\n\033[32mI) =\033[92m Informacoes do IP\n\033[m'\
 # 0 = True.
 __info__ = f2+'Author:\033[96m %s\n\033[m' %(__author__)\
           +'\033[32mVersion:\033[96m %s\033[m\n\n' %(__version__)
-__Banner__ = '\033[36m^-------------------------------------_\033[92m\n'\
+__Banner__ = '\033[32m^-------------------------------------_\033[92m\n'\
             +' {= ZwDConfig /SSH/SQUID3 =}\n\033[m'
 print (__Banner__)
 print (__info__)
