@@ -1,5 +1,4 @@
 #
-#
 <body>
 <h1>Configurar VPS SSH/SQUID3</h1>
 <table border="0" cellpadding="0" cellspacing="2" width="100%">
