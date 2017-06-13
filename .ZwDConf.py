@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 __author__ = 'Zwdeff'
-__version__ = '1.0'
+__version__ = '1.1'
 __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
 """
@@ -89,12 +89,12 @@ __main__ = '\n\033[32mI) =\033[92m Informacoes do IP\n\033[m'\
 # 8 = True.
 # 9 = True.
 # 0 = True.
-__info__ = '\033[92mAuthor:\033[36m %s\n\033[m' %(__author__)\
-          +'\033[92mVersion:\033[36m %s\033[m\n\n' %(__version__)
-__Banner__ = '\033[36m{= ZwDConfig /SSH/SQUID3 =}_\n\033[m'
+__info__ = '\033[32mAuthor:\033[92m %s\n\033[m' %(__author__)\
+          +'\033[32mVersion:\033[92m %s\033[m\n\n' %(__version__)
+__Banner__ = '\033[32m{= ZwDConfig /SSH/SQUID3 =}_\n\033[m'
 print (__Banner__)
 print (__info__)
-print ('\033[92mIP:\033[36m %s\033[m' %(__ip__))
+print ('\033[32mIP:\033[92m %s\033[m' %(__ip__))
 
 def case():
   try:
@@ -114,7 +114,7 @@ def case():
               if ':' not in json_data:
                   if json_data['zip'] == '':
                      json_data['zip'] = 'Null'
-              __ADD__ = '\033[92m\nIPAddress\033[32m: ' + str(json_data['query'])\
+              __ADD__ = '\033[92m\nIPAddress\033[92m: ' + str(json_data['query'])\
                        +'\033[32m\nPais\033[92m: ' + str(json_data['country'])\
                        +'\033[92m\nPais Code\033[32m: ' + str(json_data['countryCode'])\
                        +'\033[32m\nHospedado por\033[92m: ' + str(json_data['as'])\
