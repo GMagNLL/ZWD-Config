@@ -7,7 +7,7 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
 """
  Github https://github.com/Xdwnff-04x/ZwD-Config
- Copyright 2017 Config of copyright .Zwdeff
+ Copyright 2017 ZwDConfig of copyright .Zwdeff
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -129,8 +129,8 @@ def case():
                        +'\033[92m\nStatus\033[32m: ' + str(json_data['status'])\
                        +'\033[32m\nLat/Long\033[32m: ' + str(json_data['lat'])\
                        +', '+str(json_data['lon'])
+                       
               print (__ADD__)
-
               w = input(f6+'\n :: _\033[92m'+' ')
            if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
               print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
@@ -144,12 +144,24 @@ def case():
                      echo '\033[92mServidor DNS\033[32m:' $serv''')
               system('''host=$(hostname)\necho '\033[32mHostName\033[92m:' $host''')
               system('''internal=$(hostname -i)\necho '\033[92mIP Interno\033[32m:'\
-               $internal''')
+                $internal''')
               system('''free -h | grep -v + > /tmp/ramcache''')
-              system('''echo '\033[92mRam Usages\033[32m:' && cat /tmp/ramcache\
+              system('''echo '\033[92mRam Usages\033[32m:'  && cat /tmp/ramcache\
                | grep -v 'Swap' ''')
-              system('''echo '\033[92mSwap Usages\033[32m:'&& cat /tmp/ramcache\
+              system('''echo '\033[92mSwap Usages\033[32m:' && cat /tmp/ramcache\
                | grep -v 'Mem' ''')
+              print ('\033[92mUsuarios Conectados:\033[m')
+              system('''database='/root/usuarios.db'
+              while read us
+              do
+                usr="$(echo $us | cut -d' ' -f1)"
+                ss1="$(echo $us | cut -d' ' -f2)"
+                ps x | grep [[:space:]]$usr[[:space:]] | grep -v grep | \
+                grep -v pts > /tmp/tmp4
+                ss2="$(cat /tmp/tmp4 | wc -l)"
+                printf ' %-35s%s\n' $usr $ss2/$ss1; tput sgr0
+              done < $database
+              rm -rf /tmp/tmp4''')
               system('''load=$(top -n 1 -b | grep 'load average:'\
                | awk '{print $11 $12 $13 $14}')\n
                      echo '\033[92mCarga Media\033[92m:' $load''')
@@ -170,6 +182,8 @@ def case():
                        +'''criadas por este progama.' > /etc/setup/senhas/except''')
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('mkdir /etc/setup/limite')
+                 system('mkdir /etc/setup/limite/mite')
+                 system('touch /etc/setup/limite/mite/lm')
                  system('touch /etc/setup/limite/lm')
               if t == True:
                  system('apt-get autoremove ssh -y')
@@ -297,6 +311,8 @@ def case():
                     system('rm -rf /etc/squid/domains')
                  else:
                     system('rm -rf /etc/squid3/domains')
+                 if os.path.isfile('/root/usuarios.db') == False:
+                     system('rm -rf /root/usuarios.db')
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
                  if os.path.isfile('/etc/issue.net') == False:
@@ -451,8 +467,13 @@ def case():
            if w == '7':
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
+              if os.path.isfile('/etc/setup/limite/mite/lm') == False:
+                 system('mkdir /etc/setup/limite/mite')
+                 system('touch /etc/setup/limite/mite/lm')
               def user():
                   n = input(f6+'\nNome do usuario :: _\033[92m'+' ')
+                  if os.path.isfile('/root/usuarios.db') == False:
+                     system('touch /root/usuarios.db')
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Erro: o usuario %s ja existe.\033[m' %(n))
                      user()
@@ -470,6 +491,8 @@ def case():
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
+                  system('''echo '%s %s' >> /root/usuarios.db''' %(n,lm))
+                  system('''echo '%s %s' > /etc/setup/limite/mite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                    %(n,lm))
@@ -479,10 +502,11 @@ def case():
               
            if w == '9':
               def dex():
-                  df = input(f6+'\nQue usuario voce deseja deletar. :: _\033[92m'+' ')
+                  df = input(f6+'\nQue usuario voce deseja deletar :: _\033[92m'+' ')
                   if df == '0':
                      case()
-                  if os.path.isfile('/etc/setup/senhas/%s' %(df)) == False:
+                  if os.path.isfile('/etc/setup/senhas/'+df) == False\
+                   or os.path.isfile('/etc/setup/limite/mite/'+df) == False:
                      print (f1+'Erro: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
                      dex()
@@ -490,18 +514,29 @@ def case():
                   system('rm -rf /etc/setup/senhas/%s' %(df))
                   d = open('/etc/setup/limite/'+df).read()
                   d = d+'\n'
-                  def delete():
-                      sn = '/etc/security/limits.conf'
-                      f = open(sn)
-                      otput = []
-                      for line in f:
-                          if not d in line:
-                             otput.append(line)
-                      f.close()
-                      f = open(sn, 'w')
-                      f.writelines(otput)
-                      f.close()
-                  delete()
+                  sn = '/etc/security/limits.conf'
+                  f = open(sn)
+                  otput = []
+                  for line in f:
+                      if not d in line:
+                         otput.append(line)
+                  f.close()
+                  f = open(sn, 'w')
+                  f.writelines(otput)
+                  f.close()
+                  d = open('/etc/setup/limite/mite/'+df).read()
+                  d = d+'\n'
+                  sn = '/root/usuarios.db'
+                  f = open(sn)
+                  otput = []
+                  for line in f:
+                      if not d in line:
+                         otput.append(line)
+                  f.close()
+                  f = open(sn, 'w')
+                  f.writelines(otput)
+                  f.close()
+                  system('rm -rf /etc/setup/limite/mite/'+df)
                   system('rm -rf /etc/setup/limite/'+df)
                   print (f6+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
                   sleep(2)
@@ -545,20 +580,31 @@ def case():
                       mt = input(f6+'\nQual o novo limite para '+rd+' :: _\033[92m'+' ')
                       d = open('/etc/setup/limite/'+rd).read()
                       d = d+'\n'
-                      def delete():
-                          sn = '/etc/security/limits.conf'
-                          f = open(sn)
-                          otput = []
-                          for line in f:
-                              if not d in line:
-                                 otput.append(line)
-                          f.close()
-                          f = open(sn, 'w')
-                          f.writelines(otput)
-                          f.close()
-                      delete()
-                      system('rm -rf /etc/setup/limite/'+rd)
-                      system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(rd,mt,rd))
+                      sn = '/etc/security/limits.conf'
+                      f = open(sn)
+                      otput = []
+                      for line in f:
+                          if not d in line:
+                             otput.append(line)
+                      f.close()
+                      f = open(sn, 'w')
+                      f.writelines(otput)
+                      f.close()
+                      d = open('/etc/setup/limite/mite/'+rd).read()
+                      d = d+'\n'
+                      sn = '/root/usuarios.db'
+                      f = open(sn)
+                      otput = []
+                      for line in f:
+                          if not d in line:
+                             otput.append(line)
+                      f.close()
+                      f = open(sn, 'w')
+                      f.writelines(otput)
+                      f.close()
+                      system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
+                      system('''echo '%s %s' > /etc/setup/limite/mite/%s''' %(rd,mt,rd))
+                      system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                        %(rd,mt))
                       print (f6+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
