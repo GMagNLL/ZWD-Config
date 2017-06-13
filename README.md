@@ -1,4 +1,4 @@
-# ZwD Config_
+# ZwD-Config
 #
 <body>
 <h1>Configurar VPS SSH/SQUID3</h1>
