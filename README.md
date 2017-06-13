@@ -1,5 +1,5 @@
 <body>
-<h1 align="center">Configurar VPS SSH/SQUID3</h1>
+<h1>Configurar VPS SSH/SQUID3</h1>
 <table border="0" cellpadding="0" cellspacing="2" width="100%">
   <tr>
     <td width="100px" class="main2"><b>Ferramenta:</b></td>
@@ -8,7 +8,7 @@
     <td width="100px" class="main2"><b>Author:</b></td><td width="780px">Zwdeff</td>
   </tr>
   <tr>
-    <td width="100px" class="main2"><b>Termo:</b><\td><td width="780px">Eu fiz este script sem nenhuma intenção maliciosa ... usem sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro ou duvida contacte meu telegram.</td>
+    <td width="100px" class="main2"><b>Termo:</b></td><td width="780px">Eu fiz este script sem nenhuma intenção maliciosa ... usem sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro duvida, ou sujestão contacte meu telegram.</td>
   </tr>
   <tr>
     <td width="100px" class="main2"><b>Telegram:</b></td><td width="780px">@nZwdeff</td>
