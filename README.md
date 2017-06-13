@@ -3,7 +3,7 @@
 <table border="0" cellpadding="0" cellspacing="2" width="100%">
   <tr>
     <td width="100px" class="main2"><b>Ferramenta:</b></td>
-    <td width="780px" class="main2"><b>ZwDConfig V1.0</b></td>
+    <td width="780px" class="main2"><b>ZwDConfig V1.0 Beta</b></td>
   <tr>
     <td width="100px" class="main2"><b>Author:</b></td><td width="780px">Zwdeff</td>
   </tr>
