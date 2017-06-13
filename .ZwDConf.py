@@ -60,8 +60,7 @@ f7 = '\033[97m'
   
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
-print ('\033[92mConectando .. via python%s /%s\033[m' % (v,H))
-sleep(1)
+print ('\033[92m\033[92mConectando .. via python%s /%s\033[m' % (v,H))
 
 url = str(urlopen('http://check-host.net/ip').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
@@ -90,13 +89,12 @@ __main__ = '\n\033[32mI) =\033[92m Informacoes do IP\n\033[m'\
 # 8 = True.
 # 9 = True.
 # 0 = True.
-__info__ = f2+'Author:\033[96m %s\n\033[m' %(__author__)\
-          +'\033[32mVersion:\033[96m %s\033[m\n\n' %(__version__)
-__Banner__ = '\033[32m^-------------------------------------_\033[92m\n'\
-            +' {= ZwDConfig /SSH/SQUID3 =}\n\033[m'
+__info__ = '\033[92mAuthor:\033[36m %s\n\033[m' %(__author__)\
+          +'\033[92mVersion:\033[36m %s\033[m\n\n' %(__version__)
+__Banner__ = '\033[36m{= ZwDConfig /SSH/SQUID3 =}_\n\033[m'
 print (__Banner__)
 print (__info__)
-print ('\033[92mIP:\033[96m %s\033[m' %(__ip__))
+print ('\033[92mIP:\033[36m %s\033[m' %(__ip__))
 
 def case():
   try:
