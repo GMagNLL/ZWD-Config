@@ -42,6 +42,8 @@ except ImportError:
    if os.path.isfile('/usr/local/bin/pip') == False:
       system('nohup wget -qc https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py')
       system('python3 get-pip.py')
+      if os.path.isfile('/root/nohup.out') == True:
+         system('rm -rf /root/nohup.out')
       system('rm -rf get-pip.py')
       system('clear')
    system('pip3 install simplejson')
@@ -316,16 +318,16 @@ def case():
                     system('rm -rf /etc/squid/domains')
                  else:
                     system('rm -rf /etc/squid3/domains')
-                 if os.path.isfile('/root/usuarios.db') == False:
+                 if os.path.isfile('/root/usuarios.db') == True:
                      system('rm -rf /root/usuarios.db')
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
-                 if os.path.isfile('/etc/issue.net') == False:
-                    system('touch /etc/issue.net')
-                    for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
-                     inplace=1)):
-                        sys.stdout.write(line.replace('Banner /etc/Banner',\
-                         '#Banner /etc/issue.net'))
+                    if os.path.isfile('/etc/issue.net') == False:
+                       system('touch /etc/issue.net')
+                       for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
+                       inplace=1)):
+                           sys.stdout.write(line.replace('Banner /etc/Banner',\
+                           '#Banner /etc/issue.net'))
                  if os.path.isfile('/etc/setup/senhas/except') == True:
                     for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
                      inplace=1)):
@@ -333,13 +335,16 @@ def case():
                     system('rm -rf  /etc/security/limits.conf')
                     system('cp /etc/setup/limits/limits.conf /etc/security')
                     system('rm -rf /etc/setup')
-                 if t == True:
-                    system('apt-get autoremove ssh -y')
-                    system('apt-get update && apt-get install ssh -y')
                  if d == True:
                     system('apt-get autoremove squid -y')
                  if s == True:
                     system('apt-get autoremove squid3 -y')
+                 if os.path.isfile('/etc/squid/squid.conf') == True:
+                    system('rm -rf /etc/squid/squid.conf')
+                    system('touch /etc/squid/squid.conf')
+                 if os.path.isfile('/etc/squid3/squid.conf') == True:
+                    system('rm -rf /etc/squid3/squid.conf')
+                    system('touch /etc/squid3/squid.conf')
                  system('cd /etc && service ssh restart')
                  print (f2+'\nConcluido.. Pode reconfigurar sua vps com um script da\n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
