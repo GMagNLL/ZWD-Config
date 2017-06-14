@@ -45,6 +45,10 @@ except ImportError:
       system('rm -rf get-pip.py')
       system('clear')
    system('pip3 install simplejson')
+   sleep(1)
+   print ('\033[36mConcluido .. Dependencias instaladas.\033[m')
+   import simplejson
+   sleep(2)
    system('clear')
 import fileinput
 from urllib.request import *
@@ -61,7 +65,7 @@ f7 = '\033[97m'
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
 print ('\033[92m\033[92mConectando .. via python%s /%s\033[m' % (v,H))
-
+sleep(0.9)
 url = str(urlopen('http://check-host.net/ip').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
   
