@@ -301,10 +301,10 @@ def case():
                  print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(2)
-                 print ('\033[36mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
-              print (f3+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print (f3+'Crie um usuario e teste.\033[m')
+              print (f2+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
+              print (f2+'Crie um usuario e teste.\033[m')
               sleep(2)
               case()
               
@@ -346,7 +346,7 @@ def case():
                     system('rm -rf /etc/squid3/squid.conf')
                     system('touch /etc/squid3/squid.conf')
                  system('cd /etc && service ssh restart')
-                 print (f3+'\nConcluido.. Pode reconfigurar sua vps com um script da\n'\
+                 print ('\n\033[7mConcluido.. Pode reconfigurar sua vps com um script da\n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
@@ -381,7 +381,7 @@ def case():
                      system('''touch /etc/squid3/domains/%s''' % (do))
                      print ('\033[m')
                      system('cd /etc && service squid3 restart')
-                     print ('\033[93mDomain: %s Adicionado [0] Para Home.' % (do))
+                     print ('\033[92mDomain: %s Adicionado [0] Para Home.' % (do))
                      dom()
                   else:
                      if os.path.isfile('/etc/squid/domains/%s' %(do)) == True:
@@ -391,7 +391,7 @@ def case():
                      system('''touch /etc/squid/domains/%s''' % (do))
                      print ('\033[m')
                      system('cd /etc && service squid restart')
-                     print ('\033[93mDomain: %s Adicionado.. [0] Para Home.' % (do))
+                     print ('\033[92mDomain: %s Adicionado.. [0] Para Home.' % (do))
                      dom()
               dom()
               
@@ -422,7 +422,7 @@ def case():
                      sleep(2)
                      print ('\033[m')
                      system('cd /etc && service squid restart')
-                     print ('\033[93m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
+                     print ('\033[92m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
                      delet()
                   else:
                      if os.path.isfile('/etc/squid3/domains/%s' %(de)) == False:
@@ -435,7 +435,7 @@ def case():
                      sleep(2)
                      print ('\033[m')
                      system('cd /etc && service squid3 restart')
-                     print ('\033[93m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
+                     print ('\033[92m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
                      
@@ -450,7 +450,7 @@ def case():
               nb = input(f6+'\nAdicionar ao Banner :: _ \033[92m'+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
               system('cd /etc && service ssh restart')
-              print ('\033[32mBanner:\033[92m %s \033[93m\nAdicionado com Sucesso.\033[m'\
+              print ('\033[32mBanner:\033[92m %s \033[32m\nAdicionado com Sucesso.\033[m'\
                % (nb))
               sleep(2)
               case()
@@ -468,7 +468,7 @@ def case():
                         sys.stdout.write(line.replace('Banner /etc/Banner',\
                          '#Banner /etc/issue.net'))
                     system('cd /etc && service ssh restart')
-                    print (f3+'Concluido .. Banner Retirado.\033[m')
+                    print (f2+'Concluido .. Banner Retirado.\033[m')
                     sleep(2)
                     case()
               if rb == 'n' or rb == 'N':
@@ -520,9 +520,9 @@ def case():
                   system('grep -v ^'+df+'[[:space:]] /etc/security/limits.conf\
                    > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf')
                   system('grep -v ^'+df+'[[:space:]] /root/usuarios.db\
-                   > /tmp/usdb; cat /tmp/usdb > root/usuarios.db')
+                   > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db')
                   system('rm -rf /etc/setup/limite/'+df)
-                  print (f3+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
+                  print (f2+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
                   sleep(2)
                   dex()
               dex()
@@ -552,25 +552,25 @@ def case():
                             +'" ) |passwd '+rd+' > /dev/null 2>/dev/null')
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
-                      print (f3+'Concluido. nova senha aplicada para %s' %(rd))
+                      print (f2+'Concluido. nova senha aplicada para %s' %(rd))
                       case()
                    if md == '2':
                       print (f1+'\nUtileze-a no formato dia/mes/ano\033[m\n')
                       dt = input(f6+'\nQual a nova data para '+rd+' :: _\033[92m'+' ')
                       system('chage -E '+dt+' '+rd+' 2> /dev/null')
-                      print (f3+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
+                      print (f2+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
                       case()
                    if md == '3':
                       mt = input(f6+'\nQual o novo limite para '+rd+' :: _\033[92m'+' ')
                       system('grep -v ^'+rd+'[[:space:]] /etc/security/limits.conf\
                        > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf')
                       system('grep -v ^'+rd+'[[:space:]] /root/usuarios.db\
-                       > /tmp/usdb; cat /tmp/usdb > root/usuarios.db')
+                       > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db')
                       system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
                       system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                        %(rd,mt))
-                      print (f3+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
+                      print (f2+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
                       %(mt,rd))
                       case()
                       
