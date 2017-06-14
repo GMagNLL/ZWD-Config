@@ -153,6 +153,8 @@ def case():
               system('''echo '\033[92mSwap Usages\033[32m:' && cat /tmp/ramcache\
                | grep -v 'Mem' ''')
               print ('\033[92mUsuarios Conectados:\033[m')
+              if os.path.isfile('/root/usuarios.db') == False:
+                 system('touch /root/usuarios.db')
               system('''database='/root/usuarios.db'
               while read us
               do
@@ -174,6 +176,8 @@ def case():
               t = os.path.isfile('/usr/bin/ssh')
               s = os.path.isfile('/usr/sbin/squid3')
               d = os.path.isfile('/usr/sbin/squid')
+              if os.path.isfile('/root/usuarios.db') == False:
+                 system('touch /root/usuarios.db')
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('mkdir /etc/setup')
                  system('mkdir /etc/setup/limits')
