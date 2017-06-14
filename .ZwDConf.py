@@ -45,10 +45,10 @@ except ImportError:
       system('rm -rf get-pip.py')
       system('clear')
    system('pip3 install simplejson')
-   sleep(1)
+   sleep(2)
    print ('\033[36mConcluido .. Dependencias instaladas.\033[m')
    import simplejson
-   sleep(2)
+   sleep(3)
    system('clear')
 import fileinput
 from urllib.request import *
