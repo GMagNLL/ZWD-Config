@@ -2,25 +2,23 @@
 # encoding: utf-8
 
 __author__ = 'Zwdeff'
-__version__ = '1.1'
+__version__ = '1.2'
 __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
-"""
- Github https://github.com/Xdwnff-04x/ZwD-Config
- Copyright 2017 ZwDConfig of copyright .Zwdeff
+# Github https://github.com/Xdwnff-04x/ZwD-Config
+# Copyright 2017 ZwDConfig of copyright @nZwdeff
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-"""
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
 
 import sys
 import time
@@ -72,36 +70,26 @@ sleep(0.9)
 url = str(urlopen('http://check-host.net/ip').read())
 __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
   
-__main__ = '\n\033[32mI) =\033[92m Informacoes do IP\n\033[m'\
-          +'\033[92mM) =\033[32m Monitor do Sistema\n\033[m'\
-          +'\033[32m1) =\033[92m Configurar VPS\n\033[m'\
-          +'\033[92m2) =\033[32m Desconfigurar\033[92m /SSH/SQUID3\n\033[m'\
-          +'\033[32m3) =\033[92m Adicionar Domain\n\033[m'\
-          +'\033[92m4) =\033[32m Remover Domain\n\033[m'\
-          +'\033[32m5) =\033[32m Adicionar Banner\n\033[m'\
-          +'\033[92m6) =\033[92m Remover Banner\n\033[m'\
-          +'\033[32m7) =\033[32m Adicionar usuario\n\033[m'\
-          +'\033[92m8) =\033[92m Redefinir usuario\n\033[m'\
-          +'\033[32m9) =\033[32m Remover usuario\n\033[m'\
-          +'\033[92m0) =\033[92m Sair\n\n\n\033[m'
-# I = True.
-# M = True.
-# 1 = True.
-# 2 = True.
-# 3 = True.
-# 4 = True.
-# 5 = True.
-# 6 = True.
-# 7 = True.
-# 8 = True.
-# 9 = True.
-# 0 = True.
+__main__ = '\n\033[96mI\033[32m) =\033[92m Informacoes do IP\n\033[m'\
+          +'\033[36mM\033[92m) =\033[32m Monitor do Sistema\n\033[m'\
+          +'\033[96m1\033[32m) =\033[92m Configurar VPS\n\033[m'\
+          +'\033[36m2\033[92m) =\033[32m Desconfigurar\033[92m /SSH/SQUID3\n\033[m'\
+          +'\033[96m3\033[32m) =\033[92m Adicionar Domain\n\033[m'\
+          +'\033[36m4\033[92m) =\033[32m Remover Domain\n\033[m'\
+          +'\033[96m5\033[32m) =\033[32m Adicionar Banner\n\033[m'\
+          +'\033[36m6\033[92m) =\033[92m Remover Banner\n\033[m'\
+          +'\033[96m7\033[32m) =\033[32m Adicionar usuario\n\033[m'\
+          +'\033[36m8\033[92m) =\033[92m Redefinir usuario\n\033[m'\
+          +'\033[96m9\033[32m) =\033[32m Remover usuario\n\033[m'\
+          +'\033[36m0\033[92m) =\033[92m Sair\n\n\n\033[m'
+
+
 __info__ = '\033[32mAuthor:\033[92m %s\n\033[m' %(__author__)\
           +'\033[32mVersion:\033[92m %s\033[m\n\n' %(__version__)
 __Banner__ = '\033[32m{= ZwDConfig /SSH/SQUID3 =}_\n\033[m'
 print (__Banner__)
 print (__info__)
-print ('\033[32mIP:\033[92m %s\033[m' %(__ip__))
+print ('\033[32mIP:\033[96m %s\033[m' %(__ip__))
 
 def case():
   try:
@@ -139,6 +127,7 @@ def case():
               w = input(f6+' :: _\033[92m'+' ')
            if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
               print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
+              
               system('''v=$(uname -o)\necho '\033[92mSistema Operacional\033[32m:' $v''')
               if os.path.isfile('/etc/debian_version') == True:
                  system('''deb=$(cat /etc/debian_version)\necho\
@@ -250,7 +239,7 @@ def case():
               else:
                  system('rm -rf /etc/squid3/squid.conf')
                  system('touch /etc/squid3/squid.conf')
-                 print ('\033[32mConfigurando Portas SQUID3 IP:\033[36m %s\033[m' %(__ip__))
+                 print ('\033[32mConfigurando Portas SQUID3 IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid3/domains')
                  if os.path.isfile('/etc/squid3/domains/domain') == False:
@@ -304,12 +293,13 @@ def case():
                  print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
               print (f2+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print (f2+'Crie um usuario e teste.\033[m')
+              print ('\033[32mCrie um usuario e teste.\033[m')
               sleep(2)
               case()
               
            if w == '2':
-              rc = input(f6+'\nDeseja Remover todas as Alteracoes. [y/n] :: _\033[92m'+' ')
+              rc = input(f6+'\nDeseja Remover todas as Alteracoes. feitas por ZwDConfig'\
+                        +'\n[y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
@@ -346,7 +336,7 @@ def case():
                     system('rm -rf /etc/squid3/squid.conf')
                     system('touch /etc/squid3/squid.conf')
                  system('cd /etc && service ssh restart')
-                 print ('\n\033[7mConcluido.. Pode reconfigurar sua vps com um script da\n'\
+                 print ('\n\033[37mConcluido.. Pode reconfigurar sua vps com um script da\n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
@@ -369,9 +359,14 @@ def case():
                  system('cat /etc/squid/domains/domain')
               else:
                  system('cat /etc/squid3/domains/domain')
+              print ('\n')
               def dom():
-                  do = input(f6+'\nAdicionar Domain :: _\033[92m'+' ')
+                  do = input(f6+'Adicionar Domain :: _\033[92m'+' ')
                   if do == '0':
+                     if os.path.isfile('/etc/squid/squid.conf') == True:
+                        system('cd /etc && service squid restart')
+                     else:
+                        system('cd /etc && service squid3 restart')
                      case()
                   if os.path.isfile('/etc/squid3/domains/domain') == True:
                      if os.path.isfile('/etc/squid3/domains/%s' %(do)) == True:
@@ -379,8 +374,6 @@ def case():
                         dom()
                      system('''echo '%s' >> /etc/squid3/domains/domain''' % (do))
                      system('''touch /etc/squid3/domains/%s''' % (do))
-                     print ('\033[m')
-                     system('cd /etc && service squid3 restart')
                      print ('\033[92mDomain: %s Adicionado [0] Para Home.' % (do))
                      dom()
                   else:
@@ -389,8 +382,6 @@ def case():
                         dom()
                      system('''echo '%s' >> /etc/squid/domains/domain''' % (do))
                      system('''touch /etc/squid/domains/%s''' % (do))
-                     print ('\033[m')
-                     system('cd /etc && service squid restart')
                      print ('\033[92mDomain: %s Adicionado.. [0] Para Home.' % (do))
                      dom()
               dom()
@@ -407,9 +398,14 @@ def case():
                  system('cat /etc/squid/domains/domain')
               else:
                  system('cat /etc/squid3/domains/domain')
+              print ('\n')
               def delet():
-                  de = input(f6+'\nDeletar Domain :: _\033[92m'+' ')
+                  de = input(f6+'Deletar Domain :: _\033[92m'+' ')
                   if de == '0':
+                     if os.path.isfile('/etc/squid/squid.conf') == True:
+                        system('cd /etc && service squid restart')
+                     else:
+                        system('cd /etc && service squid3 restart')
                      case()
                   if os.path.isfile('/etc/squid/domains/domain') == True:
                      if os.path.isfile('/etc/squid/domains/%s' %(de)) == False:
@@ -420,8 +416,6 @@ def case():
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[m')
-                     system('cd /etc && service squid restart')
                      print ('\033[92m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
                      delet()
                   else:
@@ -433,8 +427,6 @@ def case():
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[m')
-                     system('cd /etc && service squid3 restart')
                      print ('\033[92m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
@@ -533,9 +525,7 @@ def case():
                          +'\n\033[36m2\033[92m) = Mudar data de expiracao\033[m'\
                          +'\n\033[36m3\033[92m) = Mudar limite de logins\033[m'\
                          +'\n\033[36m0\033[92m) = Home\n\n\033[m'
-                   # 1 = True.
-                   # 2 = True.
-                   # 3 = True.
+
                    rd = input(f6+'\nQue usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
                       case()
