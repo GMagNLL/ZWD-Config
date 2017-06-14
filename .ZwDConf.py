@@ -301,10 +301,10 @@ def case():
                  print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(2)
-                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[36mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
-              print (f2+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print (f2+'Crie um usuario e teste.\033[m')
+              print (f3+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
+              print (f3+'Crie um usuario e teste.\033[m')
               sleep(2)
               case()
               
@@ -477,9 +477,6 @@ def case():
            if w == '7':
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
-              if os.path.isfile('/etc/setup/limite/mite/lm') == False:
-                 system('mkdir /etc/setup/limite/mite')
-                 system('touch /etc/setup/limite/mite/lm')
               def user():
                   n = input(f6+'\nNome do usuario :: _\033[92m'+' ')
                   if os.path.isfile('/root/usuarios.db') == False:
@@ -514,8 +511,7 @@ def case():
                   df = input(f6+'\nQue usuario voce deseja deletar :: _\033[92m'+' ')
                   if df == '0':
                      case()
-                  if os.path.isfile('/etc/setup/senhas/'+df) == False\
-                   or os.path.isfile('/etc/setup/limite/mite/'+df) == False:
+                  if os.path.isfile('/etc/setup/senhas/'+df) == False:
                      print (f1+'Erro: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
                      dex()
