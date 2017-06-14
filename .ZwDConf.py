@@ -201,7 +201,7 @@ def case():
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  system('rm -rf /etc/squid/squid.conf')
                  system('touch /etc/squid/squid.conf')
-                 print (f2+'Configurando Portas SQUID IP:\033[36m %s\033[m' %(__ip__))
+                 print (f2+'Configurando Portas SQUID IP:\033[96m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid/domains')
                  if os.path.isfile('/etc/squid/domains/domain') == False:
