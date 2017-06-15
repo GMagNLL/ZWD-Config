@@ -40,15 +40,15 @@ except ImportError:
    print ('\033[92mInstalando Dependencias .. aguarde\033[30m')
    if os.path.isfile('/usr/local/bin/pip') == False:
       system('nohup wget -qc https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py')
-      print ('\033[m')
       system('python3 get-pip.py')
       if os.path.isfile('/root/nohup.out') == True:
          system('rm -rf /root/nohup.out')
       system('rm -rf get-pip.py')
       system('clear')
+   print ('\033[m')
    system('pip3 install simplejson')
    sleep(2)
-   print ('\033[36mConcluido .. Dependencias instaladas.\033[m')
+   print ('\n\033[36mConcluido .. Dependencias instaladas.\033[m')
    import simplejson
    sleep(4)
    system('clear')
@@ -352,7 +352,7 @@ def case():
                     system('''echo 'http_access allow payload' >> /etc/squid/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid/squid.conf''')
                                
-                    print ('\033[33mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[32mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
               else:
                  system('rm -rf /etc/squid3/squid.conf')
@@ -403,7 +403,7 @@ def case():
                  print ('\033[32mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(2)
-                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%\n\033[m')
               else:
                  print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
@@ -411,13 +411,13 @@ def case():
                  print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
               print ('\033[32mConcluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print ('\033[92mCrie um usuario e teste.\033[m')
+              print ('\033[32mCrie um usuario e teste.\033[m')
               sleep(2)
               case()
               
            if w == '2':
               rc = input(f6+'\nDeseja Remover todas as Alteracoes. feitas por ZwDConfig'\
-                        +'\n[y/n] :: _\033[92m'+' ')
+                        +' [y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
