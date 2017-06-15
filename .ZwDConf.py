@@ -45,6 +45,7 @@ except ImportError:
          system('rm -rf /root/nohup.out')
       system('rm -rf get-pip.py')
       system('clear')
+   print ('\033[m')
    system('pip3 install simplejson')
    sleep(2)
    print ('\033[36mConcluido .. Dependencias instaladas.\033[m')
