@@ -6,7 +6,7 @@ __version__ = '1.2'
 __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
 # Github https://github.com/Xdwnff-04x/ZwD-Config
-# Copyright 2017 ZwDConfig of copyright @nZwdeff
+# Copyright (c) 2017 ZwDConfig of copyright Zwdeff
 
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -23,12 +23,13 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 import sys
 import time
 import os, re
+import fileinput
 from os import system
 from sys import *
 from time import *
 
 if sys.version_info.major < 3:
-   print (f1+'Erro: Progama suportado somente em Python3\033[m')
+   print (f1+'Error: Progama suportado somente em Python3\033[m')
    sleep(2)
    exit()
 try:
@@ -50,7 +51,7 @@ except ImportError:
    import simplejson
    sleep(3)
    system('clear')
-import fileinput
+   
 from urllib.request import *
 
 f0 = '\033[90m'
@@ -65,46 +66,152 @@ f8 = '\033[96m'
   
 v = sys.version_info.major
 H = strftime('%d/%m/%Y %H:%M:%S')
-print ('\033[92m\033[92mConectando .. via python%s /%s\033[m' % (v,H))
+print ('\033[92m\033[92mConnecting .. from python%s /%s\033[m' % (v,H))
 sleep(0.9)
-url = str(urlopen('http://check-host.net/ip').read())
-__ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
+try:
+   url = str(urlopen('http://check-host.net/ip').read())
+   __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
   
-__main__ = '\n\033[96mI\033[32m) =\033[92m Informacoes do IP\n\033[m'\
-          +'\033[36mM\033[92m) =\033[32m Monitor do Sistema\n\033[m'\
-          +'\033[96m1\033[32m) =\033[92m Configurar VPS\n\033[m'\
-          +'\033[36m2\033[92m) =\033[32m Desconfigurar\033[92m /SSH/SQUID3\n\033[m'\
-          +'\033[96m3\033[32m) =\033[92m Adicionar Domain\n\033[m'\
-          +'\033[36m4\033[92m) =\033[32m Remover Domain\n\033[m'\
-          +'\033[96m5\033[32m) =\033[32m Adicionar Banner\n\033[m'\
-          +'\033[36m6\033[92m) =\033[92m Remover Banner\n\033[m'\
-          +'\033[96m7\033[32m) =\033[32m Adicionar usuario\n\033[m'\
-          +'\033[36m8\033[92m) =\033[92m Redefinir usuario\n\033[m'\
-          +'\033[96m9\033[32m) =\033[32m Remover usuario\n\033[m'\
-          +'\033[36m0\033[92m) =\033[92m Sair\n\n\n\033[m'
+   __main__ = '\n\033[36m1) = Configurar VPS\n'\
+             +'2) = Desconfigurar /SSH/SQUID3\n'\
+             +'3) = Adicionar Domain\n'\
+             +'4) = Remover Domain\n'\
+             +'5) = Adicionar Banner\n'\
+             +'6) = Remover Banner\n'\
+             +'7) = Adicionar usuario\n'\
+             +'8) = Redefinir usuario\n'\
+             +'9) = Remover usuario\n'\
+             +'10 = Monitor do Sistema\n'\
+             +'11 = Informacoes do IP\n'\
+             +'12 = Server Speed Test\n'\
+             +'13 = Mais Opcoes\n'\
+             +'0) = Sair\n\n\n\033[m'
 
-
-__info__ = '\033[32mAuthor:\033[92m %s\n\033[m' %(__author__)\
-          +'\033[32mVersion:\033[92m %s\033[m\n\n' %(__version__)
-__Banner__ = '\033[32m{= ZwDConfig /SSH/SQUID3 =}_\n\033[m'
-print (__Banner__)
-print (__info__)
-print ('\033[32mIP:\033[96m %s\033[m' %(__ip__))
+   __info__ = '\033[32mAuthor:\033[36m %s\n\033[m' %(__author__)\
+             +'\033[32mVersion:\033[36m %s\033[m\n' %(__version__)
+   __Banner__ = '\033[32m{= \033[92mZwDConfig /SSH/SQUID3\033[32m =}_\n\033[m'
+   print (__Banner__)
+   print (__info__)
+   print ('\033[32mIP:\033[36m %s\033[m' %(__ip__))
+except IOError:
+   print (f1+'Erro: Por favor connecte-se a uma Rede de Dados ..\033[m')
+   exit()
 
 def case():
   try:
      print (__main__)
      w = input(f6+' :: _\033[92m'+' ')
      
-     while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6'\
-      or w != '7' or w != '8' or w != '9' or w != '0' or w != 'm' or w != 'M'\
-       or w != 'monitor' or w != 'Monitor' or w != 'MONITOR' or w != 'i' or w != 'I':
+     while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6' or w != '13'\
+      or w != '7' or w != '8' or w != '9' or w != '0' or w != '10' or w != '11' or w != '12':
         if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6' or w == '7'\
-         or w == '8' or w == '9' or w == '0' or w == 'm' or w == 'M' or w == 'monitor'\
-          or w == 'Monitor' or w == 'MONITOR' or w == 'i' or w == 'I':
-           if w == 'i' or w == 'I':
+         or w == '8' or w == '9' or w == '0' or w == '10' or w == '11' or w == '00'\
+          or w == '12' or w == '13':
+           if w == '12':
+              if os.path.isfile('/etc/setup/speedtest.py') == False:
+                 print ('\033[36m ..\033[30m')
+                 system('nohup wget -qc \
+                 https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py')
+                 print ('\033[m')
+                 system('cp speedtest.py /etc/setup')
+                 if os.path.isfile('/root/index.html') == True:
+                    system('rm -rf /root/index.htm')
+                 system('rm -rf speedtest.py')
+                 if os.path.isfile('/root/nohup.out') == True:
+                    system('rm -rf /root/nohup.out')
+              system('python3 /etc/setup/speedtest.py')
+              
+              w = input(f6+'\n :: _\033[92m'+' ')
+           if w == '13':
+              __sbm__ = f6+'\n1) = fazer Backup dos usuarios\n'\
+                          +'2) = fazer Backup de um usuario\n'\
+                          +'3) = Restaurar usuarios\n'\
+                          +'4) = Restaurar um usuario\n'\
+                          +'5) = Deletar um usuario do Backup\n'\
+                          +'6) = Deletar Todos os usuarios\n'\
+                          +'7) = Deletar Backup\n'\
+                          +'0) = Home\033[m\n'
+              print (__sbm__)
+              
+              def mopt():
+                  sbm = input(f6+' :: _\033[92m'+' \033[m')
+                  if sbm != '1' or sbm != '0' or sbm != '4':
+                     mopt()
+                  if sbm == '3':
+                     rst = input(f6+'Voce quer restaura todos os usuarios do\n'\
+                                +' Backup [y/n] :: _\033[92m'+' ')
+                     if rst == 'y' or rst == 'Y':
+                        system('''backup='/etc/setup/backup/users'
+                               while read us
+                               do
+                                 usr="$(echo $us | cut -d' ' -f1)"
+                                 lm="$(echo $us | cut -d' ' -f2)"
+                                 pas="$(echo $us | cut -d' ' -f3)"
+                                 dx="$(echo $us | cut -d' ' -f4)"
+                                 d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
+                                 da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                                 useradd -M -s /bin/false $usr -e $d
+                                 (echo "$pas" ; echo "$pas" ) |passwd $usr\
+                                  > /dev/null 2>/dev/null
+                                 echo -e '\033[33mUsuario: '$usr' senha: '$pas\
+                                 'maxlogin '$lm' Restaurado.\nExpira: $da\033[m'
+                                 echo -e $usr $lm >> /root/usuarios.db
+                                 echo -e $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                                 echo -e $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                                 grep -v ^$usr[[:space:]] /etc/setup/users\
+                                  > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
+                                 grep -v ^$usr[[:space:]] /etc/setup/backup/users\
+                                  > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
+                                 rm -rf /etc/setup/bkp/$usr
+                                 echo -e $usr $lm $pas $dx >> /etc/setup/users
+                                 echo -e $usr $lm $pas $dx >> /etc/setup/bkp/$usr
+                               done < $backup''')
+                        system('rm -rf /etc/setup/backup/%s' %(us))
+                     if rst == 'n' or rst == 'N':
+                        mopt()
+                  if sbm == '4':
+                     def userrs():
+                         us = input(f6+'Qual usuario voce quer Restaurar :: _'+' ')
+                         print ('\033[33mUsuarios no Backup:')
+                         system('cat /etc/setup/backup/users')
+                         print ('\n\033[m')
+                         if os.path.isfile('/etc/setup/backup/%s' %(us)) == False:
+                            print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
+                            %(us))
+                            userrs()
+                         system('''backup='/etc/setup/backup/'''+us+''''
+                                while read us
+                                do
+                                  usr="$(echo $us | cut -d' ' -f1)"
+                                  lm="$(echo $us | cut -d' ' -f2)"
+                                  pas="$(echo $us | cut -d' ' -f3)"
+                                  dx="$(echo $us | cut -d' ' -f4)"
+                                  d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
+                                  da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                                  useradd -M -s /bin/false $usr -e $d
+                                  (echo "$pas" ; echo "$pas" ) |passwd $usr\
+                                   > /dev/null 2>/dev/null
+                                  echo -e '\033[33mConcluido. usuario: '$usr' senha: '$pas\
+                                  'maxlogin '$lm' Restaurado.\nExpira: $da\033[m'
+                                  echo -e $usr $lm >> /root/usuarios.db
+                                  echo -e $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                                  echo -e $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                                  grep -v ^$usr[[:space:]] /etc/setup/users\
+                                   > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
+                                  grep -v ^$usr[[:space:]] /etc/setup/backup/users\
+                                   > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
+                                  rm -rf /etc/setup/bkp/$usr
+                                  echo -e $usr $lm $pas $dx >> /etc/setup/users
+                                  echo -e $usr $lm $pas $dx >> /etc/setup/bkp/$usr
+                                done < $backup''')
+                         system('rm -rf /etc/setup/backup/%s' %(us))
+                     userrs()
+                  if sbm == '0':
+                     case()
+              mopt()
+           if w == '11':
               url = 'http://ip-api.com/json/%s' % (__ip__)
-              req = urlopen(url).read()
+              req = urlopen(url).read()                  
               json_data = simplejson.loads(req)
               if ':' not in json_data:
                   if json_data['zip'] == '':
@@ -125,8 +232,8 @@ def case():
                        
               print (__ADD__+'\n')
               w = input(f6+' :: _\033[92m'+' ')
-           if w == 'm' or w == 'M' or w == 'monitor' or w == 'Monitor' or w == 'MONITOR':
-              print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
+           if w == '10':
+              print ('\n\033[92mMonitor do Sistema\033[32m ..\033[m')
               
               system('''v=$(uname -o)\necho '\033[92mSistema Operacional\033[32m:' $v''')
               if os.path.isfile('/etc/debian_version') == True:
@@ -163,7 +270,7 @@ def case():
                      echo '\033[92mCarga Media\033[92m:' $load''')
               system('''time=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)\n
                      echo '\033[32mTempo de Atividade\033[92m:' $time''')
-              w = input(f6+' :: _\033[92m'+' ')
+              w = input(f6+'\n :: _\033[92m'+' ')
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
               s = os.path.isfile('/usr/sbin/squid3')
@@ -175,9 +282,15 @@ def case():
                  system('mkdir /etc/setup/limits')
                  system('cp /etc/security/limits.conf /etc/setup/limits')
                  system('mkdir /etc/setup/senhas')
+                 system('mkdir /etc/setup/backup')
                  system('touch /etc/setup/senhas/except')
                  system('''echo 'Ola anqui fica armazenado todas as senhas'''\
                        +'''criadas por este progama.' > /etc/setup/senhas/except''')
+              if os.path.isfile('/etc/setup/users') == False:
+                 system('touch /etc/setup/users')
+                 system('mkdir /etc/setup/bkp')
+              if os.path.isfile('/etc/setup/backup/users') == False:
+                 system('touch /etc/setup/backup/users')
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('mkdir /etc/setup/limite')
                  system('touch /etc/setup/limite/lm')
@@ -201,7 +314,7 @@ def case():
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  system('rm -rf /etc/squid/squid.conf')
                  system('touch /etc/squid/squid.conf')
-                 print (f2+'Configurando Portas SQUID IP:\033[96m %s\033[m' %(__ip__))
+                 print ('\033[33mConfigurando Portas SQUID IP:\033[92m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid/domains')
                  if os.path.isfile('/etc/squid/domains/domain') == False:
@@ -234,12 +347,12 @@ def case():
                     system('''echo 'http_access allow payload' >> /etc/squid/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid/squid.conf''')
                                
-                    print ('\033[32mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[33mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
               else:
                  system('rm -rf /etc/squid3/squid.conf')
                  system('touch /etc/squid3/squid.conf')
-                 print ('\033[32mConfigurando Portas SQUID3 IP:\033[96m %s\033[m' %(__ip__))
+                 print ('\033[33mConfigurando Portas SQUID3 IP:\033[92m %s\033[m' %(__ip__))
                  sleep(2)
                  system('mkdir /etc/squid3/domains')
                  if os.path.isfile('/etc/squid3/domains/domain') == False:
@@ -271,29 +384,29 @@ def case():
                     system('''echo 'http_access allow payload' >> /etc/squid3/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid3/squid.conf''')
                     
-                    print ('\033[32mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[37mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
-              print ('\033[32mConfigurando Portas SSH.\033[m')
+              print ('\033[33mConfigurando Portas SSH.\033[m')
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
-              print ('\033[32mReiniciando Servidor SSH.\033[m')
+              print ('\033[33mReiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
               sleep(2)
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  sleep(2)
-                 print ('\033[32mReiniciando Servidor SQUID.\033[m')
+                 print ('\033[33mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(2)
-                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[37mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
-                 print ('\033[32mReiniciando Servidor SQUID3.\033[m')
+                 print ('\033[33mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(2)
-                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[37mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
-              print (f2+'Concluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print ('\033[32mCrie um usuario e teste.\033[m')
+              print ('\033[33mConcluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
+              print ('\033[93mCrie um usuario e teste.\033[m')
               sleep(2)
               case()
               
@@ -336,7 +449,7 @@ def case():
                     system('rm -rf /etc/squid3/squid.conf')
                     system('touch /etc/squid3/squid.conf')
                  system('cd /etc && service ssh restart')
-                 print ('\n\033[37mConcluido.. Pode reconfigurar sua vps com um script da\n'\
+                 print ('\n\033[33mConcluido.. Pode reconfigurar sua vps com um script da\n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
@@ -354,7 +467,7 @@ def case():
                     system('touch /etc/squid/domains/domain')
                  else:
                     system('touch /etc/squid3/domains/domain')
-              print (f2+'Domains do arquivo:\033[36m')
+              print ('\033[33mDomains do arquivo:\033[36m')
               if os.path.isfile('/etc/squid/domains/domain') == True:
                  system('cat /etc/squid/domains/domain')
               else:
@@ -370,19 +483,19 @@ def case():
                      case()
                   if os.path.isfile('/etc/squid3/domains/domain') == True:
                      if os.path.isfile('/etc/squid3/domains/%s' %(do)) == True:
-                        print (f1+'Erro: o domain %s ja existe.\033[m' %(do))
+                        print (f1+'Error: o domain %s ja existe.\033[m' %(do))
                         dom()
                      system('''echo '%s' >> /etc/squid3/domains/domain''' % (do))
                      system('''touch /etc/squid3/domains/%s''' % (do))
-                     print ('\033[92mDomain: %s Adicionado [0] Para Home.' % (do))
+                     print ('\033[33mDomain: %s Adicionado. [0] Para Home.' % (do))
                      dom()
                   else:
                      if os.path.isfile('/etc/squid/domains/%s' %(do)) == True:
-                        print (f1+'Erro: o domain %s ja existe.\033[m' %(do))
+                        print (f1+'Error: o domain %s ja existe.\033[m' %(do))
                         dom()
                      system('''echo '%s' >> /etc/squid/domains/domain''' % (do))
                      system('''touch /etc/squid/domains/%s''' % (do))
-                     print ('\033[92mDomain: %s Adicionado.. [0] Para Home.' % (do))
+                     print ('\033[33mDomain: %s Adicionado. [0] Para Home.' % (do))
                      dom()
               dom()
               
@@ -393,7 +506,7 @@ def case():
                     system('touch /etc/squid3/domains/domain')
                  else:
                     system('touch /etc/squid/domains/domain')
-              print (f2+'Domains do arquivo:\033[36m')
+              print ('\033[33mDomains do arquivo:\033[36m')
               if os.path.isfile('/etc/squid/domains/domain') == True:
                  system('cat /etc/squid/domains/domain')
               else:
@@ -416,18 +529,18 @@ def case():
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[92m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
+                     print ('\033[33m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
                      delet()
                   else:
                      if os.path.isfile('/etc/squid3/domains/%s' %(de)) == False:
-                        print (f1+'Erro: o domain %s nao existe.\033[m' %(de))
+                        print (f1+'Error: o domain %s nao existe.\033[m' %(de))
                         delet()
                      system('rm -rf /etc/squid3/domains/%s' %(de))
                      for i, line in enumerate(fileinput.input('/etc/squid3/domains/domain',\
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[92m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
+                     print ('\033[33m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
                      
@@ -460,7 +573,7 @@ def case():
                         sys.stdout.write(line.replace('Banner /etc/Banner',\
                          '#Banner /etc/issue.net'))
                     system('cd /etc && service ssh restart')
-                    print (f2+'Concluido .. Banner Retirado.\033[m')
+                    print ('\033[33mConcluido .. Banner Retirado.\033[m')
                     sleep(2)
                     case()
               if rb == 'n' or rb == 'N':
@@ -474,7 +587,7 @@ def case():
                   if os.path.isfile('/root/usuarios.db') == False:
                      system('touch /root/usuarios.db')
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
-                     print (f1+'Erro: o usuario %s ja existe.\033[m' %(n))
+                     print (f1+'Error: o usuario %s ja existe.\033[m' %(n))
                      user()
                   sn = input(f6+'Senha Para '+n+' :: _\033[92m'+' ')
                   dx = input(f6+'Quantos dias '+n\
@@ -491,6 +604,8 @@ def case():
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
                   system('''echo '%s %s' >> /root/usuarios.db''' %(n,lm))
+                  system('''echo '%s %s %s %s' >> /etc/setup/users''' %(n,lm,sn,dx))
+                  system('''echo '%s %s %s %s' >> /etc/setup/bkp/%s''' %(n,lm,sn,dx,n))
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                    %(n,lm))
@@ -504,7 +619,7 @@ def case():
                   if df == '0':
                      case()
                   if os.path.isfile('/etc/setup/senhas/'+df) == False:
-                     print (f1+'Erro: o usuario %s nao existe.. ou nao '%(df)\
+                     print (f1+'Error: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
                      dex()
                   system('userdel --force %s > /dev/null 2>/dev/null' %(df))
@@ -514,25 +629,24 @@ def case():
                   system('grep -v ^'+df+'[[:space:]] /root/usuarios.db\
                    > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db')
                   system('rm -rf /etc/setup/limite/'+df)
-                  print (f2+'Usuario %s excluido com exito.. [0] Para Home.\033[m' %(df))
+                  print ('\033[33mUsuario %s excluido com exito. [0] Para Home.\033[m' %(df))
                   sleep(2)
                   dex()
               dex()
               
            if w == '8':
               def rdf():
-                   main = '\n\033[36m1\033[92m) = Alterar senha\033[m'\
-                         +'\n\033[36m2\033[92m) = Mudar data de expiracao\033[m'\
-                         +'\n\033[36m3\033[92m) = Mudar limite de logins\033[m'\
-                         +'\n\033[36m0\033[92m) = Home\n\n\033[m'
-
-                   rd = input(f6+'\nQue usuario voce deseja redefinir :: _\033[92m'+' ')
+                   main = '\n\033[36m1) = Alterar senha\n'\
+                         +'2) = Mudar data de expiracao\n'\
+                         +'3) = Mudar limite de logins\n'\
+                         +'0) = Home\n\n\033[m'
+                   print (main)
+                   rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
                       case()
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
                       print (f1+'\nErro: o usuario %s nao existe ..\033[m' %(rd))
                       rdf()
-                   print (main)
                    md = input(f6+' :: _\033[92m'+' ')
                    if md == '0':
                       case()
@@ -560,8 +674,8 @@ def case():
                       system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                        %(rd,mt))
-                      print (f2+'Concluido. novo limete de %s conexoes aplicado para %s.\033[m'\
-                      %(mt,rd))
+                      print ('\033[90mConcluido. novo limete de '+mt+' conexoes aplicado'\
+                            +' para '+rd+'.\033[m')
                       case()
                       
               rdf()
