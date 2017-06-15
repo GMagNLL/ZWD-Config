@@ -40,17 +40,17 @@ except ImportError:
    print ('\033[92mInstalando Dependencias .. aguarde\033[30m')
    if os.path.isfile('/usr/local/bin/pip') == False:
       system('nohup wget -qc https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py')
+      print ('\033[m')
       system('python3 get-pip.py')
       if os.path.isfile('/root/nohup.out') == True:
          system('rm -rf /root/nohup.out')
       system('rm -rf get-pip.py')
       system('clear')
-   print ('\033[m')
    system('pip3 install simplejson')
    sleep(2)
    print ('\033[36mConcluido .. Dependencias instaladas.\033[m')
    import simplejson
-   sleep(3)
+   sleep(4)
    system('clear')
    
 from urllib.request import *
@@ -109,6 +109,10 @@ def case():
          or w == '8' or w == '9' or w == '0' or w == '10' or w == '11' or w == '00'\
           or w == '12' or w == '13':
            if w == '12':
+              if os.path.isfile('/etc/setup/senhas/except') == False:
+                 print ('\033[31mError: Para utilizar esta opcao.. antes e\n'\
+                       +'preciso configurar sua VPS com este script.')
+                 case()
               if os.path.isfile('/etc/setup/speedtest.py') == False:
                  print ('\033[36m ..\033[30m')
                  system('nohup wget -qc \
@@ -385,29 +389,29 @@ def case():
                     system('''echo 'http_access allow payload' >> /etc/squid3/squid.conf''')
                     system('''echo 'http_access deny all' >> /etc/squid3/squid.conf''')
                     
-                    print ('\033[37mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
+                    print ('\033[32mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\033[m')
                     sleep(2)
               print ('\033[33mConfigurando Portas SSH.\033[m')
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
-              print ('\033[33mReiniciando Servidor SSH.\033[m')
+              print ('\033[32mReiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
               sleep(2)
               if os.path.isfile('/etc/squid/squid.conf') == True:
                  sleep(2)
-                 print ('\033[33mReiniciando Servidor SQUID.\033[m')
+                 print ('\033[32mReiniciando Servidor SQUID.\033[m')
                  system('cd /etc && service squid restart')
                  sleep(2)
-                 print ('\033[37mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID Rodando 100%n\n\033[m')
               else:
-                 print ('\033[33mReiniciando Servidor SQUID3.\033[m')
+                 print ('\033[32mReiniciando Servidor SQUID3.\033[m')
                  system('cd /etc && service squid3 restart')
                  sleep(2)
-                 print ('\033[37mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
+                 print ('\033[32mPortas SSH[22/443]SQUID3 Rodando 100%\n\033[m')
               sleep(3)
-              print ('\033[33mConcluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
-              print ('\033[93mCrie um usuario e teste.\033[m')
+              print ('\033[32mConcluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
+              print ('\033[92mCrie um usuario e teste.\033[m')
               sleep(2)
               case()
               
