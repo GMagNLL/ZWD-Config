@@ -114,7 +114,7 @@ def case():
                        +'preciso configurar sua VPS com este script.')
                  case()
               if os.path.isfile('/etc/setup/speedtest.py') == False:
-                 print ('\033[36m ..\033[30m')
+                 print ('\033[30m')
                  system('nohup wget -qc \
                  https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py')
                  print ('\033[m')
