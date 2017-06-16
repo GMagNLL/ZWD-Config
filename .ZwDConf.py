@@ -73,7 +73,7 @@ try:
    url = str(urlopen('http://check-host.net/ip').read())
    __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
   
-   __main__ = '\n\033[36m1) = Configurar VPS\n'\
+   __main__ = f6+'\n1) = Configurar VPS\n'\
              +'2) = Desconfigurar /SSH/SQUID3\n'\
              +'3) = Adicionar Domain\n'\
              +'4) = Remover Domain\n'\
@@ -85,7 +85,8 @@ try:
              +'10 = Monitor do Sistema\n'\
              +'11 = Informacoes do IP\n'\
              +'12 = Server Speed Test\n'\
-             +'13 = Mais Opcoes\n'\
+             +'13 = Back Up users\n'\
+             +'14 = Mais Opcoes\n'\
              +'0) = Sair\n\n\n\033[m'
 
    __info__ = '\033[32mAuthor:\033[36m %s\n\033[m' %(__author__)\
@@ -104,10 +105,11 @@ def case():
      w = input(f6+' :: _\033[92m'+' ')
      
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6' or w != '13'\
-      or w != '7' or w != '8' or w != '9' or w != '0' or w != '10' or w != '11' or w != '12':
+      or w != '7' or w != '8' or w != '9' or w != '0' or w != '10' or w != '11' or w != '12'\
+       or w == '14':
         if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6' or w == '7'\
          or w == '8' or w == '9' or w == '0' or w == '10' or w == '11' or w == '00'\
-          or w == '12' or w == '13':
+          or w == '12' or w == '13' or w == '14':
            if w == '12':
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  print ('\033[31mError: Para utilizar esta opcao.. antes e\n'\
@@ -128,24 +130,83 @@ def case():
               
               w = input(f6+'\n :: _\033[92m'+' ')
            if w == '13':
-              __sbm__ = f6+'\n1) = fazer Backup dos usuarios\n'\
-                          +'2) = fazer Backup de um usuario\n'\
-                          +'3) = Restaurar usuarios\n'\
-                          +'4) = Restaurar um usuario\n'\
-                          +'5) = Deletar um usuario do Backup\n'\
-                          +'6) = Deletar Todos os usuarios\n'\
-                          +'7) = Deletar Backup\n'\
+              if os.path.isfile('/etc/setup/backup/0dir') == True:
+                 print (f1+'Isto excluirar todo o Backup antigo ..\033[m')
+              bk = input(f6+'Deseja fazer o Backup de todos os usuarios'\
+                        +' [y/n] :: _\033[32m'+' ')
+              if bk == 'y' or bk == 'Y':
+                 print ('\033[32mfazendo o Backup dos usuarios .. aguarde.\033[m')
+                 if os.path.isfile('/etc/setup/backup/users') == True:
+                    system('rm -rf /etc/setup/backup')
+                 system('mkdir /etc/setup/backup')
+                 system('touch /etc/setup/backup/0dir')
+                 sleep(3)
+                 system('cp /etc/setup/users /etc/setup/backup')
+                 system('cp /etc/setup/bkp /etc/setup/backup')
+                 system('touch /etc/setup/backup/bkp/0dir')
+                 system('cp /etc/setup/ario /etc/setup/backup')
+                 print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
+                 mopt()
+              if bk == 'n' or bk == 'N':
+                 w = input(f6+'\n :: _\033[92m'+' ')
+           if w == '14':
+              __sbm__ = f6+'\n1) = fazer Backup de um usuario\n'\
+                          +'2) = Restaurar usuarios\n'\
+                          +'3) = Restaurar um usuario\n'\
+                          +'4) = Deletar um usuario do Backup\n'\
+                          +'5) = Deletar Todos os usuarios\n'\
+                          +'6) = Deletar Backup\n'\
                           +'0) = Home\033[m\n'
               print (__sbm__)
               
               def mopt():
-                  sbm = input(f6+' :: _\033[92m'+' \033[m')
-                  if sbm != '1' or sbm != '0' or sbm != '4':
-                     mopt()
-                  if sbm == '3':
-                     rst = input(f6+'Voce quer restaura todos os usuarios do\n'\
+                  sbm = input(f6+' :: _\033[92m'+' ')
+                  if sbm == '0':
+                     case()
+                  if sbm == '1':
+                     def bsck():
+                         bus = input(f6+'De qual usuario voce quer fazer Backup :: _\033[92m'\
+                                    +' ')
+                         if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
+                            print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
+                            bsck()
+                         if os.path.isfile('/etc/setup/backup/users') == False:
+                            system('touch /etc/setup/backup/users')
+                         if os.path.isfile('/etc/setup/backup/ario') == False:
+                            system('touch /etc/setup/backup/ario')
+                         if os.path.isfile('/etc/setup/backup/0dir') == False:
+                            system('mkdir /etc/setup/backup')
+                            system('touch /etc/setup/backup/0dir')
+                         if os.path.isfile('/etc/setup/backup/bkp/0dir') == False:
+                            system('mkdir /etc/setup/backup/bkp')
+                            system('touch /etc/setup/backup/bkp/0dir')
+                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
+                            print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
+                            %(us))
+                         system('''xdif='/etc/setup/bkp/'''+bus+''''
+                                while read n
+                                do
+                                  usr="$(echo $n | cut -d' ' -f1)"
+                                  lm="$(echo $n | cut -d' ' -f2)"
+                                  pas="$(echo $n | cut -d' ' -f3)"
+                                  dx="$(echo $n | cut -d' ' -f4)"
+                                  echo $usr $lm $pas $dx > /etc/setup/backup/bkp/$usr
+                                  echo $usr $lm $pas $dx >> /etc/setup/backup/users
+                                  echo $usr >> /etc/setup/backup/ario
+                                  
+                                done < $xdif''')
+                                
+                         print ('\033[33mConcluido. usuario %s adicionado ao Backup\033[m'\
+                         %(bus))
+                         case()
+                     bsck()
+                  if sbm == '2':
+                     rst = input(f6+'Voce quer restaura todos os usuarios do'\
                                 +' Backup [y/n] :: _\033[92m'+' ')
                      if rst == 'y' or rst == 'Y':
+                        if os.path.isfile('/etc/setup/backup/users') == False:
+                           print (f1+'Error: voce ainda nao tem Backup.\033[m')
+                           case()
                         system('''backup='/etc/setup/backup/users'
                                while read us
                                do
@@ -168,23 +229,30 @@ def case():
                                  grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                   > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
                                  rm -rf /etc/setup/bkp/$usr
-                                 echo -e $usr $lm $pas $dx >> /etc/setup/users
-                                 echo -e $usr $lm $pas $dx >> /etc/setup/bkp/$usr
+                                 echo  $usr $lm $pas $dx >> /etc/setup/users
+                                 echo  $usr $lm $pas $dx >> /etc/setup/bkp/$usr
                                done < $backup''')
-                        system('rm -rf /etc/setup/backup/%s' %(us))
+                        system('rm -rf /etc/setup/backup/users')
+                        system('rm -rf /etc/setup/backup/bkp' %(us))
+                        system('rm -rf /etc/setup/backup')
+                        print ('\033[33mConcluido. Backup completo.\033[m')
+                        case()
                      if rst == 'n' or rst == 'N':
                         mopt()
-                  if sbm == '4':
+                  if sbm == '3':
                      def userrs():
-                         us = input(f6+'Qual usuario voce quer Restaurar :: _'+' ')
+                         if os.path.isfile('/etc/setup/backup/users') == False:
+                           print (f1+'Error: Voce ainda nao tem Backup.\033[m')
+                           case()
+                         us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
                          print ('\033[33mUsuarios no Backup:')
-                         system('cat /etc/setup/backup/users')
+                         system('cat /etc/setup/backup/ario')
                          print ('\n\033[m')
-                         if os.path.isfile('/etc/setup/backup/%s' %(us)) == False:
+                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
                             userrs()
-                         system('''backup='/etc/setup/backup/'''+us+''''
+                         system('''backup='/etc/setup/backup/bkp/'''+us+''''
                                 while read us
                                 do
                                   usr="$(echo $us | cut -d' ' -f1)"
@@ -209,10 +277,82 @@ def case():
                                   echo -e $usr $lm $pas $dx >> /etc/setup/users
                                   echo -e $usr $lm $pas $dx >> /etc/setup/bkp/$usr
                                 done < $backup''')
-                         system('rm -rf /etc/setup/backup/%s' %(us))
+                         system('rm -rf /etc/setup/backup/bkp/%s' %(us))
+                         case()
                      userrs()
-                  if sbm == '0':
-                     case()
+                  if sbm == '4':
+                     def bacf():
+                         if os.path.isfile('/etc/setup/backup/users') == False:
+                           print (f1+'Error: Voce ainda nao tem Backup.\033[m')
+                           case()
+                         rtb = input(f6+'Qual usuario voce quer tirar do Backup :: _\033[92m'\
+                                    +' ')
+                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
+                            print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
+                            %(us))
+                            bacf()
+                         system('rm -rf /etc/setup/backup/bkp/'+rtb)
+                         system('grep -v ^'+rtb+'[[:space:]] /etc/setup/backup/users\
+                          > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users')
+                          
+                         print ('\033[33mConcluido. o usuario %s foi deletado do Backup.\033[m'\
+                         %(rtb))
+                         case()
+                     bacf()
+                  if sbm == '5':
+                     print (f1+'\nEsta funcao Deletarar todos os usuarios ..\n'\
+                           +'ativos e criados por este progama.\033[m')
+                     dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
+                     if dlt == 'y' or dlt == 'Y':
+                        if os.path.isfile('/etc/setup/backup/users') == False:
+                           print (f1+'Error: Voce ainda nao tem Backup.\033[m')
+                           case()
+                        up = input('\033[33mVoce fez ou Deseja fazer o Backup de algum\n'\
+                                  +'desses usuarios futuramente. [y/n]\033[36m :: _\033[92m'\
+                                  +' ')
+         
+                        system('rm -rf /etc/setup/limite && mkdir /etc/setup/limite')
+                        if up == 'y' or up == 'Y':
+                           print ('Certo.. as informacoes ficaram preservadas.')
+                        system('''exc='/etc/setup/ario'
+                               while read ex
+                               do
+                                 userdel --force $ex > /dev/null 2>/dev/null
+                                 grep -v ^$ex[[:space:]] /etc/security/limits.conf\
+                                  > /tmp/dx; cat /tmp/dx > /etc/security/limits.conf
+                                 rm -rf /tmp/dx
+                                 
+                                 echo 'Usuario' $ex '.. Deletado.'
+                               done < exc''')
+                               
+                        if up == 'n' or up == 'N':
+                           system('rm -rf /etc/setup/bkp && mkdir /etc/setup/bkp')
+                           system('rm -rf /etc/setup/users && touch /etc/setup/users')
+                           system('rm -rf /etc/setup/ario && touch /etc/setup/ario')
+                        system('rm -rf /root/usuarios.db && touch /root/usuarios.db')
+                        print ('\033[33mConcluido.. Todos os usuarios foram excluidos.\033[m')
+                        sleep(2)
+                        case()
+                     if dlt == 'n' or dlt == 'N':
+                        case()
+                  if sbm == '6':
+                     print (f1+'Esta funcao excluirar todos os usuarios\n'\
+                           +'que estao no Backup.')
+                     def rtu():
+                         bex = input(f6+'... [y/n] :: _\033[92m'+' ')
+                         if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
+                            rtu()
+                         if bex == 'y' or bex == 'Y':
+                            system('rm -rf /etc/setup/backup')
+                         if bex == 'n' or bex == 'N':
+                            case()
+                         print ('\033[33mConcluido. todo o Backup foi Deletado.\033[m')
+                         sleep(2)
+                         case()
+                     rtu()
+                  if sbm != '1' or sbm != '2' or sbm != '0' or sbm != '4' or sbm != '3'\
+                   or sbm != '5' or sbm != '6':
+                     mopt()
               mopt()
            if w == '11':
               url = 'http://ip-api.com/json/%s' % (__ip__)
@@ -238,7 +378,7 @@ def case():
               print (__ADD__+'\n')
               w = input(f6+' :: _\033[92m'+' ')
            if w == '10':
-              print ('\n\033[92mMonitor do Sistema\033[32m ..\033[m')
+              print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
               
               system('''v=$(uname -o)\necho '\033[92mSistema Operacional\033[32m:' $v''')
               if os.path.isfile('/etc/debian_version') == True:
@@ -287,15 +427,13 @@ def case():
                  system('mkdir /etc/setup/limits')
                  system('cp /etc/security/limits.conf /etc/setup/limits')
                  system('mkdir /etc/setup/senhas')
-                 system('mkdir /etc/setup/backup')
                  system('touch /etc/setup/senhas/except')
-                 system('''echo 'Ola anqui fica armazenado todas as senhas'''\
+                 system('''echo 'Ola anqui fica armazenado todas as senhas '''\
                        +'''criadas por este progama.' > /etc/setup/senhas/except''')
               if os.path.isfile('/etc/setup/users') == False:
                  system('touch /etc/setup/users')
+                 system('touch /etc/setup/ario')
                  system('mkdir /etc/setup/bkp')
-              if os.path.isfile('/etc/setup/backup/users') == False:
-                 system('touch /etc/setup/backup/users')
               if os.path.isfile('/etc/setup/limite/lm') == False:
                  system('mkdir /etc/setup/limite')
                  system('touch /etc/setup/limite/lm')
@@ -416,8 +554,7 @@ def case():
               case()
               
            if w == '2':
-              rc = input(f6+'\nDeseja Remover todas as Alteracoes. feitas por ZwDConfig'\
-                        +' [y/n] :: _\033[92m'+' ')
+              rc = input(f6+'Deseja Remover todas as Modificacoes. [y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
@@ -534,7 +671,7 @@ def case():
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[33m\nDomain: %s Excluido. [0] Para Home.\033[m' % (de))
+                     print ('\033[33mDomain: %s Excluido. [0] Para Home.\033[m' % (de))
                      delet()
                   else:
                      if os.path.isfile('/etc/squid3/domains/%s' %(de)) == False:
@@ -545,7 +682,7 @@ def case():
                       inplace=1)):
                          sys.stdout.write(line.replace(de+'\n', ''))
                      sleep(2)
-                     print ('\033[33m\nDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
+                     print ('\033[33mDomain: %s Excluido.. [0] Para Home.\033[m' % (de))
                      delet()
               delet()
                      
@@ -557,7 +694,7 @@ def case():
                  for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                      sys.stdout.write(line.replace('#Banner /etc/issue.net',\
                       'Banner /etc/Banner'))
-              nb = input(f6+'\nAdicionar ao Banner :: _ \033[92m'+' ')
+              nb = input(f6+'Adicionar ao Banner :: _ \033[92m'+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
               system('cd /etc && service ssh restart')
               print ('\033[32mBanner:\033[92m %s \033[32m\nAdicionado com Sucesso.\033[m'\
@@ -566,7 +703,7 @@ def case():
               case()
               
            if w == '6':
-              rb = input(f6+'\nDeseja deletar o Banner por completo ficarar\ncomo de'\
+              rb = input(f6+'Deseja deletar o Banner por completo ficarar\ncomo de'\
                         +' fabrica. [y/n] :: _\033[92m'+' ')
               if rb == 'Y' or rb == 'y':
                  if os.path.isfile('/etc/Banner') == True:
@@ -588,15 +725,14 @@ def case():
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  system('touch /etc/setup/senhas/except')
               def user():
-                  n = input(f6+'\nNome do usuario :: _\033[92m'+' ')
+                  n = input(f6+'Nome do usuario :: _\033[92m'+' ')
                   if os.path.isfile('/root/usuarios.db') == False:
                      system('touch /root/usuarios.db')
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Error: o usuario %s ja existe.\033[m' %(n))
                      user()
                   sn = input(f6+'Senha Para '+n+' :: _\033[92m'+' ')
-                  dx = input(f6+'Quantos dias '+n\
-                             +' deve durar :: _\033[92m'+' ')
+                  dx = input(f6+'Quantos dias '+n+' deve durar :: _\033[92m'+' ')
                   lm = input(f6+'Maximo de conexoes simultaneas :: _\033[92m'+' ')
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
@@ -608,25 +744,36 @@ def case():
                          \necho '"+sn+"' > /etc/setup/senhas/"+n)
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
+                  system('''echo '%s' >> /etc/setup/ario''' %(n))
                   system('''echo '%s %s' >> /root/usuarios.db''' %(n,lm))
                   system('''echo '%s %s %s %s' >> /etc/setup/users''' %(n,lm,sn,dx))
                   system('''echo '%s %s %s %s' >> /etc/setup/bkp/%s''' %(n,lm,sn,dx,n))
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
-                   %(n,lm))
+                  %(n,lm))
                    
                   case()
               user()
               
            if w == '9':
               def dex():
-                  df = input(f6+'\nQue usuario voce deseja deletar :: _\033[92m'+' ')
+                  df = input(f6+'Que usuario voce deseja deletar :: _\033[92m'+' ')
                   if df == '0':
                      case()
                   if os.path.isfile('/etc/setup/senhas/'+df) == False:
                      print (f1+'Error: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
                      dex()
+                  cup = input('\033[33mDeseja fazer o Backup de '+df\
+                             +' futuramente. [y/n]\033[36m :: _\033[92m'+' ')
+                  if cup == 'N' or cup == 'n':
+                     system('rm -rf /etc/setup/bkp/%s' %(df))
+                     system('grep -v ^'+df+'[[:space:]] /etc/setup/users\
+                      > /tmp/bkp; cat /tmp/bkp > /etc/setup/users')
+                  if cup == 'Y' or cup == 'y':
+                     print ('\033[32mCerto? informacoes do usuario guardadas.\033[m')
+                  for i, line in enumerate(fileinput.input('/etc/setup/ario', inplace=1)):
+                        sys.stdout.write(line.replace(df, ''))
                   system('userdel --force %s > /dev/null 2>/dev/null' %(df))
                   system('rm -rf /etc/setup/senhas/%s' %(df))
                   system('grep -v ^'+df+'[[:space:]] /etc/security/limits.conf\
@@ -641,9 +788,10 @@ def case():
               
            if w == '8':
               def rdf():
-                   main = '\n\033[36m1) = Alterar senha\n'\
-                         +'2) = Mudar data de expiracao\n'\
+                   main = '\n\033[36m1) = Mudar senha\n'\
+                         +'2) = Mudar Data de expiracao\n'\
                          +'3) = Mudar limite de logins\n'\
+                         +'4) = Mudar Nome de usuario\n'\
                          +'0) = Home\n\n\033[m'
                    print (main)
                    rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
@@ -657,32 +805,106 @@ def case():
                       case()
                    if md == '1':
                       sna = input(f6+'\nNova senha para '+rd+' :: _\033[92m'+' ')
-                      system('(echo "'+sna+'" ; echo "'+sna\
-                            +'" ) |passwd '+rd+' > /dev/null 2>/dev/null')
+                      system('grep -v ^'+rd+'[[:space:]] /etc/setup/users\
+                       > /tmp/bkp; cat /tmp/bkp > /etc/setup/users')
+                      system('''backe='/etc/setup/bkp/'''+rd+''''
+                             while read us
+                             do
+                               usr="$(echo $us | cut -d' ' -f1)"
+                               lm="$(echo $us | cut -d' ' -f2)"
+                               dx="$(echo $us | cut -d' ' -f4)"
+                               (echo "'''+sna+'''" ; echo "'''+sna\
+                               +'''" ) |passwd '+rd+' > /dev/null 2>/dev/null
+                               echo $usr $lm '''+sna+''' $dx >> /etc/setup/users
+                               echo $usr $lm '''+sna+''' $dx > /etc/setup/bkp/$usr
+                             done < $backe''')
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
-                      print (f2+'Concluido. nova senha aplicada para %s' %(rd))
+                      print ('\033[33mConcluido. nova senha aplicada para %s' %(rd))
                       case()
                    if md == '2':
-                      print (f1+'\nUtileze-a no formato dia/mes/ano\033[m\n')
-                      dt = input(f6+'\nQual a nova data para '+rd+' :: _\033[92m'+' ')
-                      system('chage -E '+dt+' '+rd+' 2> /dev/null')
-                      print (f2+'Concluido. nova data %s aplicada para %s.\033[m' %(dt,rd))
+                      dt = input(f6+'Quantos dias '+rd+' deve durar :: _\033[92m'+' ')
+                      system('''backe='/etc/setup/bkp/'''+rd+''''
+                             while read us
+                             do
+                               d=$(date '+%C%y-%m-%d' -d '+'''+dt+''' days')
+                               da=$(date '+%d/%m/%Y' -d '+'''+dt+''' days')
+                               usr="$(echo $us | cut -d' ' -f1)"
+                               lm="$(echo $us | cut -d' ' -f2)"
+                               pas="$(echo $us | cut -d' ' -f3)"
+                               chage -E $d '''+rd+''' 2> /dev/null
+                               echo -e '\033[33mConcluido. nova data aplicada para '''+rd\
+                               +'''\033[m'
+                               echo -e '\033[32mExpira:\033[m' $da
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
+                                > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
+                               echo $usr  $lm $pas '''+dt+''' >> /etc/setup/users
+                               echo $usr  $lm $pas '''+dt+''' > /etc/setup/bkp/$usr
+                             done < $backe''')
                       case()
                    if md == '3':
-                      mt = input(f6+'\nQual o novo limite para '+rd+' :: _\033[92m'+' ')
-                      system('grep -v ^'+rd+'[[:space:]] /etc/security/limits.conf\
-                       > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf')
-                      system('grep -v ^'+rd+'[[:space:]] /root/usuarios.db\
-                       > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db')
+                      mt = input(f6+'Qual o novo limite para '+rd+' :: _\033[92m'+' ')
+                      system('''backe='/etc/setup/bkp/'''+rd+''''
+                             while read us
+                               usr="$(echo $us | cut -d' ' -f1)"
+                               pas="$(echo $us | cut -d' ' -f3)"
+                               dx="$(echo $us | cut -d' ' -f4)"
+                               grep -v ^'+rd+'[[:space:]] /etc/security/limits.conf\
+                                > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf
+                               grep -v ^'+rd+'[[:space:]] /root/usuarios.db\
+                                > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
+                                > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
+                               echo $usr '''+mt+''' $pas $dx >> /etc/setup/users
+                               echo $usr '''+mt+''' $pas $dx > /etc/setup/bkp/$usr
+                             done < $backe''')
+                             
                       system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
                       system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                        %(rd,mt))
-                      print ('\033[90mConcluido. novo limete de '+mt+' conexoes aplicado'\
+                      print ('\033[33mConcluido. novo limete de '+mt+' conexoes aplicado'\
                             +' para '+rd+'.\033[m')
                       case()
-                      
+                   if md == '4':
+                      no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
+                      system('''backup='/etc/setup/bkp/'''+us+''''
+                             while read us
+                             do
+                               lm="$(echo $us | cut -d' ' -f2)"
+                               pas="$(echo $us | cut -d' ' -f3)"
+                               dx="$(echo $us | cut -d' ' -f4)"
+                               d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
+                               da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                               userdel --force '''+rd+''' > /dev/null 2>/dev/null
+                               useradd -M -s /bin/false '''+no+''' -e $d
+                               (echo "$pas" ; echo "$pas" ) |passwd $usr\
+                                > /dev/null 2>/dev/null
+                               
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/ario
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/users
+                               grep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf
+                               grep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db
+ 
+                               echo -e '''+no+''' >> /etc/setup/ario
+                               echo -e $pas >> /etc/setup/senhas/'''+no+'''
+                               echo -e '''+no+''' $lm $pas $dx > /etc/setup/bkp/'''+no+'''
+                               echo -e '''+no+''' $lm >> /root/usuarios.db
+                               echo -e '''+no+'''' - maxlogins '$lm >> /etc/setup/limite/'''\
+                               +no+'''
+                               echo -e '''+no+'''' - maxlogins '$lm >> /etc/security/limits.conf
+                               echo -e '''+no+''' $lm $pas $dx >> /etc/setup/users
+                               echo -e '''+no+''' $lm $pas $dx >> /etc/setup/bkp/$usr
+                               rm -rf /etc/setup/senhas/'''+rd+'''
+                               rm -rf /etc/setup/bkp/'''+rd+'''
+                               
+                             done < $backup''')
+                      print ('\033[33mConcluido. '+rd+' agora se chama '+no+'.\033[m')
+                      case()
               rdf()
            if w == '0':
               print (f1+' Going out ..\033[m')
