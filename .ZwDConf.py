@@ -874,11 +874,11 @@ def case():
                                lm="$(echo $us | cut -d' ' -f2)"
                                pas="$(echo $us | cut -d' ' -f3)"
                                dx="$(echo $us | cut -d' ' -f4)"
-                               d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
-                               da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                               d=$(date '+%C%y-%m-%d' -d '+$dx days')
+                               da=$(date '+%d/%m/%Y' -d '+$dx days')
                                userdel --force '''+rd+''' > /dev/null 2>/dev/null
                                useradd -M -s /bin/false '''+no+''' -e $d
-                               (echo "$pas" ; echo "$pas" ) |passwd $usr\
+                               (echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
                                 > /dev/null 2>/dev/null
                                
                                grep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
@@ -898,7 +898,7 @@ def case():
                                +no+'''
                                echo -e '''+no+'''' - maxlogins '$lm >> /etc/security/limits.conf
                                echo -e '''+no+''' $lm $pas $dx >> /etc/setup/users
-                               echo -e '''+no+''' $lm $pas $dx >> /etc/setup/bkp/$usr
+                               echo -e '''+no+''' $lm $pas $dx >> /etc/setup/bkp/'''+no+'''
                                rm -rf /etc/setup/senhas/'''+rd+'''
                                rm -rf /etc/setup/bkp/'''+rd+'''
                                
