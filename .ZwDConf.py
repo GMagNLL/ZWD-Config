@@ -868,7 +868,7 @@ def case():
                       case()
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
-                      system('''backup='/etc/setup/bkp/'''+us+''''
+                      system('''backup='/etc/setup/bkp/'''+rd+''''
                              while read us
                              do
                                lm="$(echo $us | cut -d' ' -f2)"
