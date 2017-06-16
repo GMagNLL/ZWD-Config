@@ -142,7 +142,7 @@ def case():
                  system('touch /etc/setup/backup/0dir')
                  sleep(3)
                  system('cp /etc/setup/users /etc/setup/backup')
-                 system('cp /etc/setup/bkp /etc/setup/backup')
+                 system('cp -r /etc/setup/bkp /etc/setup/backup')
                  system('touch /etc/setup/backup/bkp/0dir')
                  system('cp /etc/setup/ario /etc/setup/backup')
                  print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
