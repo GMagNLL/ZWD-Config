@@ -749,8 +749,6 @@ def case():
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
                   system('''echo '%s' >> /etc/setup/ario''' %(n))
                   system('''echo '%s %s' >> /root/usuarios.db''' %(n,lm))
-                  system('''''' %(n,lm,sn))
-                  system('''''' %(n,lm,sn,n))
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                   %(n,lm))
