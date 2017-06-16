@@ -875,40 +875,33 @@ def case():
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
 
-                      system('''backup="/etc/setup/bkp/'''+rd+'''"
-                             while read we
-                             do
-                               lm="$(cat $we | cut -d' ' -f2)"
-                               pas="$(cat $we | cut -d' ' -f3)"
-                               d="$(cat $we | cut -d' ' -f4)"
-                               da="$(cat $we | cut -d' ' -f5)"
-                               userdel --force '''+rd+''' > /dev/null 2>/dev/null
-                               useradd -M -s /bin/false '''+no+''' -e $d
-                               (echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
-                                > /dev/null 2>/dev/null
-                                                          
-                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
-                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/ario
-                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
-                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/users
-                               grep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
-                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf
-                               grep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
-                                > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db
-                              
-                               echo '''+no+''' >> /etc/setup/ario
-                               echo $pas >> /etc/setup/senhas/'''+no+'''
-                               echo  '''+no+''' $lm $pas $d $da > /etc/setup/bkp/'''+no+'''
-                               echo '''+no+''' $lm >> /root/usuarios.db
-                               echo '''+no+''' '- maxlogins '$lm >> /etc/setup/limite/'''\
-                               +no+'''
-                               echo '''+no+''' '- maxlogins '$lm >> /etc/security/limits.conf
-                               echo '''+no+''' $lm $pas $d $da >> /etc/setup/users
-                               echo '''+no+''' $lm $pas $d $da >> /etc/setup/bkp/'''+no+'''
-                               rm -rf /etc/setup/senhas/'''+rd+'''
-                               rm -rf /etc/setup/bkp/'''+rd+'''
-                               
-                             done < $backup''')
+                      system('''lm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
+                             \npas="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f3)"\
+                             \nd="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
+                             \nda="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
+                             \nuserdel --force '''+rd+''' > /dev/null 2>/dev/null\
+                             \nuseradd -M -s /bin/false '''+no+''' -e $d\
+                             \n(echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
+                              > /dev/null 2>/dev/null\
+                             \ngrep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
+                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/ario\
+                             \ngrep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
+                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/users\
+                             \ngrep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
+                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf\
+                             \ngrep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
+                              > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db\ 
+                             \necho '''+no+''' >> /etc/setup/ario\
+                             \necho $pas >> /etc/setup/senhas/'''+no+'''\
+                             \necho  '''+no+''' $lm $pas $d $da > /etc/setup/bkp/'''+no+'''\
+                             \necho '''+no+''' $lm >> /root/usuarios.db\
+                             \necho '''+no+''' '- maxlogins '$lm >> /etc/setup/limite/'''\
+                             +no+'''\
+                             \necho '''+no+''' '- maxlogins '$lm >> /etc/security/limits.conf\
+                             \necho '''+no+''' $lm $pas $d $da >> /etc/setup/users\
+                             \necho '''+no+''' $lm $pas $d $da >> /etc/setup/bkp/'''+no+'''\
+                             \nrm -rf /etc/setup/senhas/'''+rd+'''\
+                             \nrm -rf /etc/setup/bkp/'''+rd)
                              
                       print ('\033[33mConcluido. '+rd+' agora se chama '+no+'.\033[m')
                       case()
