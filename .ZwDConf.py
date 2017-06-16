@@ -888,7 +888,7 @@ def case():
                                grep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
                                 > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf
                                grep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
-                                > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db 
+                                > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db
                                echo -e '''+no+''' >> /etc/setup/ario
                                echo -e $pas >> /etc/setup/senhas/'''+no+'''
                                echo -e '''+no+''' $lm $pas $dx > /etc/setup/bkp/'''+no+'''
