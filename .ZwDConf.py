@@ -146,7 +146,7 @@ def case():
                  system('touch /etc/setup/backup/bkp/0dir')
                  system('cp /etc/setup/ario /etc/setup/backup')
                  print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
-                 mopt()
+                 case()
               if bk == 'n' or bk == 'N':
                  w = input(f6+'\n :: _\033[92m'+' ')
            if w == '14':
