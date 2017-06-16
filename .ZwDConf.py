@@ -189,9 +189,10 @@ def case():
                                   usr="$(echo $n | cut -d' ' -f1)"
                                   lm="$(echo $n | cut -d' ' -f2)"
                                   pas="$(echo $n | cut -d' ' -f3)"
-                                  dx="$(echo $n | cut -d' ' -f4)"
-                                  echo $usr $lm $pas $dx > /etc/setup/backup/bkp/$usr
-                                  echo $usr $lm $pas $dx >> /etc/setup/backup/users
+                                  d="$(echo $n | cut -d' ' -f4)"
+                                  da="$(echo $n | cut -d' ' -f5)"
+                                  echo $usr $lm $pas $d $da > /etc/setup/backup/bkp/$usr
+                                  echo $usr $lm $pas $d $da >> /etc/setup/backup/users
                                   echo $usr >> /etc/setup/backup/ario
                                   
                                 done < $xdif''')
@@ -213,29 +214,29 @@ def case():
                                  usr="$(echo $us | cut -d' ' -f1)"
                                  lm="$(echo $us | cut -d' ' -f2)"
                                  pas="$(echo $us | cut -d' ' -f3)"
-                                 dx="$(echo $us | cut -d' ' -f4)"
-                                 d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
-                                 da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                                 d="$(echo $us | cut -d' ' -f4)"
+                                 da="$(echo $us | cut -d' ' -f5)"
+                                 
                                  useradd -M -s /bin/false $usr -e $d
                                  (echo "$pas" ; echo "$pas" ) |passwd $usr\
                                   > /dev/null 2>/dev/null
-                                 echo -e '\033[33mUsuario: '$usr' senha: '$pas\
-                                 'maxlogin '$lm' Restaurado.\nExpira: $da\033[m'
-                                 echo -e $usr $lm >> /root/usuarios.db
-                                 echo -e $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
-                                 echo -e $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                                 echo '\033[33mUsuario: '$usr' senha: '$pas\
+                                 'maxlogin '$lm' Restaurado.\nExpira:' $da'\033[m'
+                                 echo $usr $lm >> /root/usuarios.db
+                                 echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                                 echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
                                  grep -v ^$usr[[:space:]] /etc/setup/users\
                                   > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
                                  grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                   > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
-                                 rm -rf /etc/setup/bkp/$usr
-                                 echo  $usr $lm $pas $dx >> /etc/setup/users
-                                 echo  $usr $lm $pas $dx >> /etc/setup/bkp/$usr
+                                 echo $usr $lm $pas $d $da >> /etc/setup/users
+                                 echo $usr $lm $pas $d $da >> /etc/setup/bkp/$usr
+                                 rm -rf /etc/setup/backup/bkp/$usr
                                done < $backup''')
+                               
                         system('rm -rf /etc/setup/backup/users')
-                        system('rm -rf /etc/setup/backup/bkp' %(us))
                         system('rm -rf /etc/setup/backup')
-                        print ('\033[33mConcluido. Backup completo.\033[m')
+                        print ('\033[33mConcluido. Restauracao do Backup completa.\033[m')
                         case()
                      if rst == 'n' or rst == 'N':
                         mopt()
@@ -258,24 +259,23 @@ def case():
                                   usr="$(echo $us | cut -d' ' -f1)"
                                   lm="$(echo $us | cut -d' ' -f2)"
                                   pas="$(echo $us | cut -d' ' -f3)"
-                                  dx="$(echo $us | cut -d' ' -f4)"
-                                  d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')
-                                  da=$(date '+%d/%m/%Y' -d '+"+dx+" days')
+                                  d="$(echo $us | cut -d' ' -f4)"
+                                  da="$(echo $us | cut -d' ' -f5)"
                                   useradd -M -s /bin/false $usr -e $d
                                   (echo "$pas" ; echo "$pas" ) |passwd $usr\
                                    > /dev/null 2>/dev/null
-                                  echo -e '\033[33mConcluido. usuario: '$usr' senha: '$pas\
-                                  'maxlogin '$lm' Restaurado.\nExpira: $da\033[m'
-                                  echo -e $usr $lm >> /root/usuarios.db
-                                  echo -e $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
-                                  echo -e $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                                  echo '\033[33mConcluido. usuario: '$usr' senha: '$pas\
+                                  'maxlogin '$lm' Restaurado.\nExpira:' $da'\033[m'
+                                  echo $usr $lm >> /root/usuarios.db
+                                  echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                                  echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
                                   grep -v ^$usr[[:space:]] /etc/setup/users\
                                    > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
                                   grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                    > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
                                   rm -rf /etc/setup/bkp/$usr
-                                  echo -e $usr $lm $pas $dx >> /etc/setup/users
-                                  echo -e $usr $lm $pas $dx >> /etc/setup/bkp/$usr
+                                  echo $usr $lm $pas $d $da >> /etc/setup/users
+                                  echo $usr $lm $pas $d $da >> /etc/setup/bkp/$usr
                                 done < $backup''')
                          system('rm -rf /etc/setup/backup/bkp/%s' %(us))
                          case()
@@ -741,13 +741,16 @@ def case():
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
                          \necho '\033[32mExpira:\033[92m '$da'\033[m'\
-                         \necho '"+sn+"' > /etc/setup/senhas/"+n)
+                         \necho '"+sn+"' > /etc/setup/senhas/"+n+"\
+                         \necho "+n+" "+lm+" "+sn+" $d $da >> /etc/setup/users\
+                         \necho "+n+" "+lm+" "+sn+" $d $da > /etc/setup/bkp/"+n)
+                         
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
                   system('''echo '%s' >> /etc/setup/ario''' %(n))
                   system('''echo '%s %s' >> /root/usuarios.db''' %(n,lm))
-                  system('''echo '%s %s %s %s' >> /etc/setup/users''' %(n,lm,sn,dx))
-                  system('''echo '%s %s %s %s' >> /etc/setup/bkp/%s''' %(n,lm,sn,dx,n))
+                  system('''''' %(n,lm,sn))
+                  system('''''' %(n,lm,sn,n))
                   system('''echo '%s - maxlogins %s' >> /etc/setup/limite/%s''' %(n,lm,n))
                   system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
                   %(n,lm))
@@ -812,12 +815,14 @@ def case():
                              do
                                usr="$(echo $us | cut -d' ' -f1)"
                                lm="$(echo $us | cut -d' ' -f2)"
-                               dx="$(echo $us | cut -d' ' -f4)"
+                               d="$(echo $us | cut -d' ' -f4)"
+                               da="$(echo $us | cut -d' ' -f5)"
                                (echo "'''+sna+'''" ; echo "'''+sna\
                                +'''" ) |passwd '+rd+' > /dev/null 2>/dev/null
-                               echo $usr $lm '''+sna+''' $dx >> /etc/setup/users
-                               echo $usr $lm '''+sna+''' $dx > /etc/setup/bkp/$usr
+                               echo $usr $lm '''+sna+''' $d $da >> /etc/setup/users
+                               echo $usr $lm '''+sna+''' $d $da > /etc/setup/bkp/$usr
                              done < $backe''')
+                             
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
                       print ('\033[33mConcluido. nova senha aplicada para %s' %(rd))
@@ -838,8 +843,8 @@ def case():
                                echo -e '\033[32mExpira:\033[m' $da
                                grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
                                 > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
-                               echo $usr  $lm $pas '''+dt+''' >> /etc/setup/users
-                               echo $usr  $lm $pas '''+dt+''' > /etc/setup/bkp/$usr
+                               echo $usr  $lm $pas $d $da >> /etc/setup/users
+                               echo $usr  $lm $pas $d $da > /etc/setup/bkp/$usr
                              done < $backe''')
                       case()
                    if md == '3':
@@ -848,15 +853,16 @@ def case():
                              while read us
                                usr="$(echo $us | cut -d' ' -f1)"
                                pas="$(echo $us | cut -d' ' -f3)"
-                               dx="$(echo $us | cut -d' ' -f4)"
+                               d="$(echo $us | cut -d' ' -f4)"
+                               da="$(echo $us | cut -d' ' -f5)"
                                grep -v ^'+rd+'[[:space:]] /etc/security/limits.conf\
                                 > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf
                                grep -v ^'+rd+'[[:space:]] /root/usuarios.db\
                                 > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db
                                grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
                                 > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
-                               echo $usr '''+mt+''' $pas $dx >> /etc/setup/users
-                               echo $usr '''+mt+''' $pas $dx > /etc/setup/bkp/$usr
+                               echo $usr '''+mt+''' $pas $d $da >> /etc/setup/users
+                               echo $usr '''+mt+''' $pas $d $da > /etc/setup/bkp/$usr
                              done < $backe''')
                              
                       system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
@@ -868,36 +874,42 @@ def case():
                       case()
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
-                      system('''lm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
-                             pas="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f3)"\
-                             dx="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
-                             d=$(date '+%C%y-%m-%d' -d '+$dx days')\
-                             da=$(date '+%d/%m/%Y' -d '+$dx days')\
-                             userdel --force '''+rd+''' > /dev/null 2>/dev/null\
-                             useradd -M -s /bin/false '''+no+''' -e $d\
-                             (echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
-                              > /dev/null 2>/dev/null\
+
+                      system('''backup="/etc/setup/bkp/'''+rd+'''"
+                             while read we
+                             do
+                               lm="$(cat $we | cut -d' ' -f2)"\
+                               pas="$(cat $we | cut -d' ' -f3)"\
+                               d="$(cat $we | cut -d' ' -f4)"\
+                               da="$(cat $we | cut -d' ' -f5)"\
+                               userdel --force '''+rd+''' > /dev/null 2>/dev/null\
+                               useradd -M -s /bin/false '''+no+''' -e $d\
+                               (echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
+                                > /dev/null 2>/dev/null\
                                                           
-                             grep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
-                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/ario\
-                             grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
-                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/users\
-                             grep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
-                              > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf\
-                             grep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
-                              > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db\
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/ario\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/ario\
+                               grep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/setup/users\
+                               grep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf\
+                               grep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
+                                > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db\
                               
-                             echo -e '''+no+''' >> /etc/setup/ario\
-                             echo -e $pas >> /etc/setup/senhas/'''+no+'''\
-                             echo -e '''+no+''' $lm $pas $dx > /etc/setup/bkp/'''+no+'''\
-                             echo -e '''+no+''' $lm >> /root/usuarios.db\
-                             echo -e '''+no+''' '- maxlogins '$lm >> /etc/setup/limite/'''\
-                             +no+'''\
-                             echo -e '''+no+''' '- maxlogins '$lm >> /etc/security/limits.conf\
-                             echo -e '''+no+''' $lm $pas $dx >> /etc/setup/users\
-                             echo -e '''+no+''' $lm $pas $dx >> /etc/setup/bkp/'''+no+'''\
-                             rm -rf /etc/setup/senhas/'''+rd+'''\
-                             rm -rf /etc/setup/bkp/'''+rd)
+                               echo '''+no+''' >> /etc/setup/ario\
+                               echo $pas >> /etc/setup/senhas/'''+no+'''\
+                               echo  '''+no+''' $lm $pas $d $da > /etc/setup/bkp/'''+no+'''\
+                               echo '''+no+''' $lm >> /root/usuarios.db\
+                               echo '''+no+''' '- maxlogins '$lm >> /etc/setup/limite/'''\
+                               +no+'''\
+                               echo '''+no+''' '- maxlogins '$lm >> /etc/security/limits.conf\
+                               echo '''+no+''' $lm $pas $d $da >> /etc/setup/users\
+                               echo '''+no+''' $lm $pas $d $da >> /etc/setup/bkp/'''+no+'''\
+                               rm -rf /etc/setup/senhas/'''+rd+'''\
+                               rm -rf /etc/setup/bkp/'''+rd+'''
+                               
+                             done < $backup''')
+                             
                       print ('\033[33mConcluido. '+rd+' agora se chama '+no+'.\033[m')
                       case()
               rdf()
