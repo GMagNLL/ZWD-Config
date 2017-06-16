@@ -170,16 +170,18 @@ def case():
                          if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
                             print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
                             bsck()
+                         if os.path.isfile('/etc/setup/backup/0dir') == False:
+                            system('mkdir /etc/setup/backup')
+                            system('touch /etc/setup/backup/0dir')
+                            
+                         if os.path.isfile('/etc/setup/backup/bkp/0dir') == False:
+                            system('mkdir /etc/setup/backup/bkp')
+                            system('touch /etc/setup/backup/bkp/0dir')
+                            
                          if os.path.isfile('/etc/setup/backup/users') == False:
                             system('touch /etc/setup/backup/users')
                          if os.path.isfile('/etc/setup/backup/ario') == False:
                             system('touch /etc/setup/backup/ario')
-                         if os.path.isfile('/etc/setup/backup/0dir') == False:
-                            system('mkdir /etc/setup/backup')
-                            system('touch /etc/setup/backup/0dir')
-                         if os.path.isfile('/etc/setup/backup/bkp/0dir') == False:
-                            system('mkdir /etc/setup/backup/bkp')
-                            system('touch /etc/setup/backup/bkp/0dir')
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
                             print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
                             %(us))
@@ -873,9 +875,9 @@ def case():
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
 
-                      system('''backup="/etc/setup/bkp/'''+rd+'''"
-                             while read we
-                             do
+                      system('''backup="/etc/setup/bkp/'''+rd+'''"\
+                             while read we\
+                             do\
                                lm="$(cat $we | cut -d' ' -f2)"\
                                pas="$(cat $we | cut -d' ' -f3)"\
                                d="$(cat $we | cut -d' ' -f4)"\
@@ -904,7 +906,7 @@ def case():
                                echo '''+no+''' $lm $pas $d $da >> /etc/setup/users\
                                echo '''+no+''' $lm $pas $d $da >> /etc/setup/bkp/'''+no+'''\
                                rm -rf /etc/setup/senhas/'''+rd+'''\
-                               rm -rf /etc/setup/bkp/'''+rd+'''
+                               rm -rf /etc/setup/bkp/'''+rd+'''\
                                
                              done < $backup''')
                              
