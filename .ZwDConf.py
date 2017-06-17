@@ -247,10 +247,11 @@ def case():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem Backup.\033[m')
                            case()
-                         us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
                          print ('\033[33mUsuarios no Backup:')
                          system('cat /etc/setup/backup/ario')
                          print ('\n\033[m')
+                         
+                         us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
