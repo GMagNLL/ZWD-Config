@@ -85,7 +85,7 @@ try:
              +'10 = Monitor do Sistema\n'\
              +'11 = Informacoes do IP\n'\
              +'12 = Server Speed Test\n'\
-             +'13 = Back Up users\n'\
+             +'13 = Backup dos usuarios\n'\
              +'14 = Mais Opcoes\n'\
              +'0) = Sair\n\n\n\033[m'
 
@@ -186,20 +186,19 @@ def case():
                             print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
                             %(us))
                          system('''xdif='/etc/setup/bkp/'''+bus+''''
-                                while read n
-                                do
-                                  usr="$(echo $n | cut -d' ' -f1)"
-                                  lm="$(echo $n | cut -d' ' -f2)"
-                                  pas="$(echo $n | cut -d' ' -f3)"
-                                  d="$(echo $n | cut -d' ' -f4)"
-                                  da="$(echo $n | cut -d' ' -f5)"
-                                  echo $usr $lm $pas $d $da > /etc/setup/backup/bkp/$usr
-                                  echo $usr $lm $pas $d $da >> /etc/setup/backup/users
-                                  echo $usr >> /etc/setup/backup/ario
-                                  
-                                done < $xdif''')
-                                
-                         print ('\033[33mConcluido. usuario %s adicionado ao Backup\033[m'\
+                         while read n
+                         do
+                           usr="$(echo $n | cut -d' ' -f1)"
+                           lm="$(echo $n | cut -d' ' -f2)"
+                           pas="$(echo $n | cut -d' ' -f3)"
+                           d="$(echo $n | cut -d' ' -f4)"
+                           dx="$(echo $n | cut -d' ' -f5)"
+                           echo $usr $lm $pas $d $dx > /etc/setup/backup/bkp/$usr
+                           echo $usr $lm $pas $d $dx >> /etc/setup/backup/users
+                           echo $usr >> /etc/setup/backup/ario
+                          
+                         done < $xdif''')     
+                         print ('\033[33mConcluido. usuario %s adicionado ao Backup.\033[m'\
                          %(bus))
                          case()
                      bsck()
@@ -216,8 +215,9 @@ def case():
                                \nusr="$(echo $us | cut -d' ' -f1)"\
                                \nlm="$(echo $us | cut -d' ' -f2)"\
                                \npas="$(echo $us | cut -d' ' -f3)"\
-                               \nd="$(echo $us | cut -d' ' -f4)"\
-                               \nda="$(echo $us | cut -d' ' -f5)"\
+                               \ndx="$(echo $us | cut -d' ' -f5)"\
+                               \nd=$(date '+%C%y-%m-%d' -d '+'$dx' days')\
+                               \nda=$(date '+%d/%m/%Y' -d '+'$dx' days')\
                                \nuseradd -M -s /bin/false $usr -e $d\
                                \n(echo "$pas" ; echo "$pas" ) |passwd $usr\
                                 > /dev/null 2>/dev/null\
@@ -230,8 +230,8 @@ def case():
                                 > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
                                \ngrep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                 > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users\
-                               \necho $usr $lm $pas $d $da >> /etc/setup/users\
-                               \necho $usr $lm $pas $d $da >> /etc/setup/bkp/$usr\
+                               \necho $usr $lm $pas $d $dx >> /etc/setup/users\
+                               \necho $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr\
                                \nrm -rf /etc/setup/backup/bkp/$usr\
                                \ndone < $backup''')
                                
@@ -254,30 +254,32 @@ def case():
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
                             userrs()
-                         system('''backup="/etc/setup/backup/bkp/'''+us+'''"\
-                                \nwhile read us\
-                                \ndo\
-                                \nusr="$(echo $us | cut -d' ' -f1)"\
-                                \nlm="$(echo $us | cut -d' ' -f2)"\
-                                \npas="$(echo $us | cut -d' ' -f3)"\
-                                \nd="$(echo $us | cut -d' ' -f4)"\
-                                \nda="$(echo $us | cut -d' ' -f5)"\
+                         system('''usr="$(cat /etc/setup/backup/bkp/'''+us\
+                               +''' | cut -d' ' -f1)"\
+                                \nlm="$(cat /etc/setup/backup/bkp/'''+us+''' | cut -d' ' -f2)"\
+                                \npas="$(cat /etc/setup/backup/bkp/'''+us+''' | cut -d' ' -f3)"\
+                                \ndx="$(cat /etc/setup/backup/bkp/'''+us+''' | cut -d' ' -f5)"\                              
+                                \nd=$(date '+%C%y-%m-%d' -d '+'$dx' days')\
+                                \nda=$(date '+%d/%m/%Y' -d '+'$dx' days')\
+                               
                                 \nuseradd -M -s /bin/false $usr -e $d\
                                 \n(echo "$pas" ; echo "$pas" ) |passwd $usr\
                                  > /dev/null 2>/dev/null\
                                 \necho '\033[33mConcluido. usuario: '$usr' senha: '$pas\
                                  'maxlogin '$lm' Restaurado.\nExpira:' $da'\033[m'\
                                 \necho $usr $lm >> /root/usuarios.db\
-                                \necho $usr' - maxlogins '$lm >> /etc/setup/limite/$usr\
+                                \necho $usr' - maxlogins '$lm > /etc/setup/limite/$usr\
                                 \necho $usr' - maxlogins '$lm >> /etc/security/limits.conf\
+                                
                                 \ngrep -v ^$usr[[:space:]] /etc/setup/users\
                                  > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
                                 \ngrep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                  > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users\
                                 \nrm -rf /etc/setup/bkp/$usr\
-                                \necho $usr $lm $pas $d $da >> /etc/setup/users\
-                                \necho $usr $lm $pas $d $da >> /etc/setup/bkp/$usr\
+                                \necho $usr $lm $pas $d $dx >> /etc/setup/users\
+                                \necho $usr $lm $pas $d $dx > /etc/setup/bkp/$usr\
                                 \ndone < $backup''')
+                                
                          system('rm -rf /etc/setup/backup/bkp/%s' %(us))
                          case()
                      userrs()
@@ -305,8 +307,9 @@ def case():
                            +'ativos e criados por este progama.\033[m')
                      dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
                      if dlt == 'y' or dlt == 'Y':
-                        if os.path.isfile('/etc/setup/backup/users') == False:
-                           print (f1+'Error: Voce ainda nao tem Backup.\033[m')
+                        if os.path.isfile('/etc/setup/limite') == False:
+                           print (f1+'Error: Voce ainda nao fez usuarios com este script.'\
+                                 +'\033[m')
                            case()
                         up = input('\033[33mVoce fez ou Deseja fazer o Backup de algum\n'\
                                   +'desses usuarios futuramente. [y/n]\033[36m :: _\033[92m'\
@@ -314,7 +317,7 @@ def case():
          
                         system('rm -rf /etc/setup/limite && mkdir /etc/setup/limite')
                         if up == 'y' or up == 'Y':
-                           print ('Certo.. as informacoes ficaram preservadas.')
+                           print ('Certo.. as informacoes ficaram Preservadas.')
                         system('''exc='/etc/setup/ario'
                         while read ex
                         do
@@ -324,6 +327,7 @@ def case():
                           rm -rf /tmp/dx
                                  
                           echo 'Usuario' $ex '.. Deletado.'
+                          
                         done < exc''')
                                
                         if up == 'n' or up == 'N':
@@ -334,6 +338,7 @@ def case():
                         print ('\033[33mConcluido.. Todos os usuarios foram excluidos.\033[m')
                         sleep(2)
                         case()
+                        
                      if dlt == 'n' or dlt == 'N':
                         case()
                   if sbm == '6':
@@ -357,25 +362,25 @@ def case():
               mopt()
            if w == '11':
               url = 'http://ip-api.com/json/%s' % (__ip__)
-              req = urlopen(url).read()                  
+              req = urlopen(url).read()
               json_data = simplejson.loads(req)
               if ':' not in json_data:
                   if json_data['zip'] == '':
                      json_data['zip'] = 'Null'
-              __ADD__ = '\033[92m\nIPAddress\033[92m: ' + str(json_data['query'])\
-                       +'\033[32m\nPais\033[92m: ' + str(json_data['country'])\
-                       +'\033[92m\nPais Code\033[32m: ' + str(json_data['countryCode'])\
-                       +'\033[32m\nHospedado por\033[92m: ' + str(json_data['as'])\
-                       +'\033[92m\nProvedor\033[32m: ' + str(json_data['isp'])\
-                       +'\033[32m\nCidade\033[92m: ' + str(json_data['city'])\
-                       +'\033[92m\nRegiao:\033[32m ' + str(json_data['regionName'])\
-                       +'\033[32m\nRegiao Code\033[92m: ' + str(json_data['region'])\
-                       +'\033[92m\nFuso horario\033[32m: ' + str(json_data['timezone'])\
-                       +'\033[32m\nZip\033[92m: ' + str(json_data['zip'])\
-                       +'\033[92m\nStatus\033[32m: ' + str(json_data['status'])\
-                       +'\033[32m\nLat/Long\033[32m: ' + str(json_data['lat'])\
-                       +', '+str(json_data['lon'])
-                       
+              __ADD__ = '\033[92m\nIPAddress\033[92m: '+ str(json_data['query'])\
+                       +'\033[32m\nPais\033[92m: '+ str(json_data['country'])\
+                       +'\033[92m\nPais Code\033[32m: '+ str(json_data['countryCode'])\
+                       +'\033[32m\nHospedado por\033[92m: '+ str(json_data['as'])\
+                       +'\033[92m\nProvedor\033[32m: '+ str(json_data['isp'])\
+                       +'\033[32m\nCidade\033[92m: '+ str(json_data['city'])\
+                       +'\033[92m\nRegiao:\033[32m '+ str(json_data['regionName'])\
+                       +'\033[32m\nRegiao Code\033[92m: '+ str(json_data['region'])\
+                       +'\033[92m\nFuso horario\033[32m: '+ str(json_data['timezone'])\
+                       +'\033[32m\nZip\033[92m: '+ str(json_data['zip'])\
+                       +'\033[92m\nStatus\033[32m: '+ str(json_data['status'])\
+                       +'\033[32m\nLat/Long\033[32m: '+ str(json_data['lat'])\
+                                                    +', '+ str(json_data['lon'])
+                                                    
               print (__ADD__+'\n')
               w = input(f6+' :: _\033[92m'+' ')
            if w == '10':
@@ -413,10 +418,9 @@ def case():
                    OSSTR="${OS} ${DIST} ${REV}(${PSUEDONAME}${MACH})"
                    echo '\033[32mVersao do OS\033[92m:' $OSSTR
               fi''')
-              system('''v=$(uname -o)\necho '\033[92mSistema Operacional\033[32m:' $v''')
+              system('''echo '\033[92mSistema Operacional\033[32m:' $(uname -o)''')
               if os.path.isfile('/etc/debian_version') == True:
-                 system('''deb=$(cat /etc/debian_version)\necho\
-                        '\033[32mVersao Debian\033[92m:' $deb''')
+                 system('''echo '\033[32mVersao Debian\033[92m:' $(cat /etc/debian_version)''')
               system('''echo '\033[32mProcessador ..\n\033[92mModelo:' $(cat /proc/cpuinfo\
                |grep "model name" |uniq |awk -F : {'print $2'})''')
               system('''echo '\033[32mNucleos:' $(cat /proc/cpuinfo |grep "cpu cores"\
@@ -428,11 +432,14 @@ def case():
               system('''host=$(hostname)\necho '\033[32mHostName\033[92m:' $host''')
               system('''internal=$(hostname -i)\necho '\033[92mIP Interno\033[32m:'\
                 $internal''')
-              system('''free -h | grep -v + > /tmp/ramcache''')
-              system('''echo '\033[92mRam Usages\033[32m:'  && cat /tmp/ramcache\
-               | grep -v 'Swap' ''')
-              system('''echo '\033[92mSwap Usages\033[32m:' && cat /tmp/ramcache\
-               | grep -v 'Mem' ''')
+              print ('\033[92mMemoria Ram\033[32m')
+              system('''echo 'Total:' $(free -h |grep -i mem |awk {'print $2'})''')
+              system('''echo 'Usada:' $(free -h |grep -i mem |awk {'print $3'})''')
+              system('''echo 'Livre:' $(free -h |grep -i mem |awk {'print $4'})''')
+              print ('\033[92mSwap ..\033[32m')
+              system('''echo 'Total:' $(free -h |grep -i swap |awk {'print $2'})''')
+              system('''echo 'Usada:' $(free -h |grep -i swap |awk {'print $3'})''')
+              system('''echo 'Livre:' $(free -h |grep -i swap |awk {'print $4'})''')
               print ('\033[92mUsuarios Conectados:\033[m')
               if os.path.isfile('/root/usuarios.db') == False:
                  system('touch /root/usuarios.db')
@@ -443,8 +450,7 @@ def case():
                 ss1="$(echo $us | cut -d' ' -f2)"
                 ps x | grep [[:space:]]$usr[[:space:]] | grep -v grep | \
                 grep -v pts > /tmp/tmp4
-                ss2="$(cat /tmp/tmp4 | wc -l)"
-                printf ' %-35s%s\n' $usr $ss2/$ss1; tput sgr0
+                printf ' %-35s%s\n' $usr $(cat /tmp/tmp4 | wc -l)/$ss1; tput sgr0
               done < $database
               rm -rf /tmp/tmp4''')
               system('''load=$(top -n 1 -b | grep 'load average:'\
@@ -774,13 +780,13 @@ def case():
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d\
-                         \necho '\033[92m\nConcluido .. usuario criado.'\n\
+                         \necho '\033[33m\nConcluido .. usuario criado.'\n\
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
                          \necho '\033[32mExpira:\033[92m '$da'\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n+"\
-                         \necho "+n+" "+lm+" "+sn+" $d $da >> /etc/setup/users\
-                         \necho "+n+" "+lm+" "+sn+" $d $da > /etc/setup/bkp/"+n)
+                         \necho "+n+" "+lm+" "+sn+" $d "+dx+" >> /etc/setup/users\
+                         \necho "+n+" "+lm+" "+sn+" $d "+dx+" > /etc/setup/bkp/"+n)
                          
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
@@ -825,13 +831,13 @@ def case():
               dex()
               
            if w == '8':
+              main = '\n\033[36m1) = Mudar senha\n'\
+                    +'2) = Mudar Data de expiracao\n'\
+                    +'3) = Mudar limite de logins\n'\
+                    +'4) = Mudar Nome de usuario\n'\
+                    +'0) = Home\n\n\033[m'
+              print (main)
               def rdf():
-                   main = '\n\033[36m1) = Mudar senha\n'\
-                         +'2) = Mudar Data de expiracao\n'\
-                         +'3) = Mudar limite de logins\n'\
-                         +'4) = Mudar Nome de usuario\n'\
-                         +'0) = Home\n\n\033[m'
-                   print (main)
                    rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
                       case()
@@ -847,12 +853,13 @@ def case():
                        > /tmp/bkp; cat /tmp/bkp > /etc/setup/users')
                       system('''usr="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f1)"\
                              \nlm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
+                             
                              \nd="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
-                             \nda="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
+                             \ndx="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
                              \n(echo "'''+sna+'''" ; echo "'''+sna\
                              +'''" ) |passwd '+rd+' > /dev/null 2>/dev/null\
-                             \necho $usr $lm '''+sna+''' $d $da >> /etc/setup/users\
-                             \necho $usr $lm '''+sna+''' $d $da > /etc/setup/bkp/$usr''')
+                             \necho $usr $lm '''+sna+''' $d $dx >> /etc/setup/users\
+                             \necho $usr $lm '''+sna+''' $d $dx > /etc/setup/bkp/$usr''')
                              
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
@@ -860,8 +867,9 @@ def case():
                       case()
                    if md == '2':
                       dt = input(f6+'Quantos dias '+rd+' deve durar :: _\033[92m'+' ')
-                      system('''d=$(date '+%C%y-%m-%d' -d '+'''+dt+''' days')\
-                             \nda=$(date '+%d/%m/%Y' -d '+'''+dt+''' days')\
+                      system('''d=$(date '+%C%y-%m-%d' -d "+"'''+dt+'''" days")\
+                             \nda=$(date '+%d/%m/%Y' -d "+"'''+dt+'''" days")\
+                             
                              \nusr="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f1)"\
                              \nlm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
                              \npas="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f3)"\
@@ -871,23 +879,24 @@ def case():
                              \necho -e '\033[32mExpira:\033[m' $da\
                              \ngrep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
                               > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
-                             \necho $usr $lm $pas $d $da >> /etc/setup/users\
-                             \necho $usr $lm $pas $d $da > /etc/setup/bkp/$usr''')
+                             \necho $usr $lm $pas $d '''+dt+''' >> /etc/setup/users\
+                             \necho $usr $lm $pas $d '''+dt+''' > /etc/setup/bkp/$usr''')
                       case()
                    if md == '3':
                       mt = input(f6+'Qual o novo limite para '+rd+' :: _\033[92m'+' ')
                       system('''usr="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f1)"\
                              \npas="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f3)"\
                              \nd="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
-                             \nda="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
-                             \ngrep -v ^'+rd+'[[:space:]] /etc/security/limits.conf\
+                             \ndx="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
+                             
+                             \ngrep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
                               > /tmp/mite; cat /tmp/mite > /etc/security/limits.conf\
-                             \ngrep -v ^'+rd+'[[:space:]] /root/usuarios.db\
+                             \ngrep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
                               > /tmp/usdb; cat /tmp/usdb > /root/usuarios.db\
                              \ngrep -v ^'''+rd+'''[[:space:]] /etc/setup/users\
                               > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
-                             \necho $usr '''+mt+''' $pas $d $da >> /etc/setup/users\
-                             \necho $usr '''+mt+''' $pas $d $da > /etc/setup/bkp/$usr''')
+                             \necho $usr '''+mt+''' $pas $d $dx >> /etc/setup/users\
+                             \necho $usr '''+mt+''' $pas $d $dx > /etc/setup/bkp/$usr''')
                              
                       system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
                       system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
@@ -898,11 +907,10 @@ def case():
                       case()
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
-
                       system('''lm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
                              \npas="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f3)"\
                              \nd="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
-                             \nda="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
+                             \ndx="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
                              \nuserdel --force '''+rd+''' > /dev/null 2>/dev/null\
                              \nuseradd -M -s /bin/false '''+no+''' -e $d\
                              \n(echo "$pas" ; echo "$pas" ) |passwd '''+no+'''\
@@ -914,16 +922,17 @@ def case():
                              \ngrep -v ^'''+rd+'''[[:space:]] /etc/security/limits.conf\
                               > /tmp/tmp4; cat /tmp/tmp4 > /etc/security/limits.conf\
                              \ngrep -v ^'''+rd+'''[[:space:]] /root/usuarios.db\
-                              > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db\ 
+                              > /tmp/tmp4; cat /tmp/tmp4 > /root/usuarios.db\
+                              
                              \necho '''+no+''' >> /etc/setup/ario\
                              \necho $pas >> /etc/setup/senhas/'''+no+'''\
-                             \necho  '''+no+''' $lm $pas $d $da > /etc/setup/bkp/'''+no+'''\
+                             \necho  '''+no+''' $lm $pas $d $dx > /etc/setup/bkp/'''+no+'''\
                              \necho '''+no+''' $lm >> /root/usuarios.db\
                              \necho '''+no+''' '- maxlogins '$lm >> /etc/setup/limite/'''\
                              +no+'''\
                              \necho '''+no+''' '- maxlogins '$lm >> /etc/security/limits.conf\
-                             \necho '''+no+''' $lm $pas $d $da >> /etc/setup/users\
-                             \necho '''+no+''' $lm $pas $d $da >> /etc/setup/bkp/'''+no+'''\
+                             \necho '''+no+''' $lm $pas $d $dx >> /etc/setup/users\
+                             \necho '''+no+''' $lm $pas $d $dx >> /etc/setup/bkp/'''+no+'''\
                              \nrm -rf /etc/setup/senhas/'''+rd+'''\
                              \nrm -rf /etc/setup/bkp/'''+rd)
                              
