@@ -134,6 +134,8 @@ def case():
                  print (f1+'Isto excluirar todo o Backup antigo ..\033[m')
               bk = input(f6+'Deseja fazer o Backup de todos os usuarios'\
                         +' [y/n] :: _\033[32m'+' ')
+              if bk == '0':
+                 case()
               if bk == 'y' or bk == 'Y':
                  print ('\033[32mfazendo o Backup dos usuarios .. aguarde.\033[m')
                  if os.path.isfile('/etc/setup/backup/users') == True:
@@ -167,6 +169,8 @@ def case():
                      def bsck():
                          bus = input(f6+'De qual usuario voce quer fazer Backup :: _\033[92m'\
                                     +' ')
+                         if bus == '0':
+                            case()
                          if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
                             print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
                             bsck()
@@ -206,6 +210,8 @@ def case():
                   if sbm == '2':
                      rst = input(f6+'Voce quer restaura todos os usuarios do'\
                                 +' Backup [y/n] :: _\033[92m'+' ')
+                     if rst == '0':
+                        case()
                      if rst == 'y' or rst == 'Y':
                         if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: voce ainda nao tem Backup.\033[m')
@@ -252,6 +258,8 @@ def case():
                          print ('\n\033[m')
                          
                          us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
+                         if us == '0':
+                            case()
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
@@ -292,6 +300,8 @@ def case():
                            case()
                          rtb = input(f6+'Qual usuario voce quer tirar do Backup :: _\033[92m'\
                                     +' ')
+                         if rtb == '0':
+                            case()
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
@@ -308,8 +318,10 @@ def case():
                      print (f1+'\nEsta funcao Deletarar todos os usuarios ..\n'\
                            +'ativos e criados por este progama.\033[m')
                      dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
+                     if dlt == '0':
+                        case()
                      if dlt == 'y' or dlt == 'Y':
-                        if os.path.isfile('/etc/setup/limite') == False:
+                        if os.path.isfile('/etc/setup/limite/lm') == False:
                            print (f1+'Error: Voce ainda nao fez usuarios com este script.'\
                                  +'\033[m')
                            case()
@@ -345,11 +357,11 @@ def case():
                         case()
                   if sbm == '6':
                      print (f1+'Esta funcao excluirar todos os usuarios\n'\
-                           +'que estao no Backup.')
+                           +'que estao no Backup deseja continuar.')
                      def rtu():
                          bex = input(f6+'... [y/n] :: _\033[92m'+' ')
-                         if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
-                            rtu()
+                         if bex == '0':
+                            case()
                          if bex == 'y' or bex == 'Y':
                             system('rm -rf /etc/setup/backup')
                          if bex == 'n' or bex == 'N':
@@ -357,6 +369,8 @@ def case():
                          print ('\033[33mConcluido. todo o Backup foi Deletado.\033[m')
                          sleep(2)
                          case()
+                         if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
+                            rtu()
                      rtu()
                   if sbm != '1' or sbm != '2' or sbm != '0' or sbm != '4' or sbm != '3'\
                    or sbm != '5' or sbm != '6':
