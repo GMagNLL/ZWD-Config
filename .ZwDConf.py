@@ -185,6 +185,7 @@ def case():
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
                             print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
                             %(bus))
+                            bsck()
                          system('''xdif='/etc/setup/bkp/'''+bus+''''
                          while read n
                          do
@@ -276,9 +277,9 @@ def case():
                                 \ngrep -v ^$usr[[:space:]] /etc/setup/backup/users\
                                  > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users\
                                 \nrm -rf /etc/setup/bkp/$usr\
+                                
                                 \necho $usr $lm $pas $d $dx >> /etc/setup/users\
-                                \necho $usr $lm $pas $d $dx > /etc/setup/bkp/$usr\
-                                \ndone < $backup''')
+                                \necho $usr $lm $pas $d $dx > /etc/setup/bkp/$usr''')
                                 
                          system('rm -rf /etc/setup/backup/bkp/%s' %(us))
                          case()
