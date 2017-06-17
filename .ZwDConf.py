@@ -184,7 +184,7 @@ def case():
                             system('touch /etc/setup/backup/ario')
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
                             print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
-                            %(us))
+                            %(bus))
                          system('''xdif='/etc/setup/bkp/'''+bus+''''
                          while read n
                          do
