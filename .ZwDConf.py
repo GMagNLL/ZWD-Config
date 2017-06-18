@@ -174,6 +174,7 @@ def case():
                           +'5) = Deletar Todos os usuarios\n'\
                           +'6) = Deletar Backup\n'\
                           +'0) = Home\033[m\n'
+              system('clear')
               print (__sbm__)
               # 1 = True
               # 5 = True
