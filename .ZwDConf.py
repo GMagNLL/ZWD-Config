@@ -823,7 +823,7 @@ def case():
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d\
-                         \nclear
+                         \nclear\
                          \necho '\033[33m\nConcluido .. usuario criado.'\n\
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
