@@ -88,6 +88,21 @@ try:
              +'13 = Backup dos usuarios\n'\
              +'14 = Mais Opcoes\n'\
              +'0) = Sair\n\n\n\033[m'
+# 1 = True
+# 2 = True
+# 3 = True
+# 4 = True
+# 5 = True
+# 6 = True
+# 7 = True
+# 8 = True
+# 9 = True
+# 10 = True
+# 11 = True
+# 12 = True
+# 13 = True
+# 14 = True
+# 0 = True
 
    __info__ = '\033[32mAuthor:\033[36m %s\n\033[m' %(__author__)\
              +'\033[32mVersion:\033[36m %s\033[m\n' %(__version__)
@@ -160,7 +175,8 @@ def case():
                           +'6) = Deletar Backup\n'\
                           +'0) = Home\033[m\n'
               print (__sbm__)
-              
+              # 6 = True
+              # 0 = True
               def mopt():
                   sbm = input(f6+' :: _\033[92m'+' ')
                   if sbm == '0':
@@ -342,7 +358,7 @@ def case():
                                  
                           echo 'Usuario' $ex '.. Deletado.'
                           
-                        done < exc''')
+                        done < $exc''')
                                
                         if up == 'n' or up == 'N':
                            system('rm -rf /etc/setup/bkp && mkdir /etc/setup/bkp')
@@ -853,6 +869,9 @@ def case():
                     +'4) = Mudar Nome de usuario\n'\
                     +'0) = Home\n\n\033[m'
               print (main)
+              # 4 = True
+              # 0 = True
+              
               def rdf():
                    rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
