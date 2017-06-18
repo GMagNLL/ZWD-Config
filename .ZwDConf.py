@@ -248,7 +248,7 @@ def case():
                                 > /dev/null 2>/dev/null\
                                \necho '\033[33mUsuario: '$usr'\nsenha: '$pas\
                                '\nmaxlogin '$lm '\nRestaurado ..\nExpira:' $da'\n\033[m'\
-                               sleep(1)
+                               sleep 1
                                \necho $usr $lm >> /root/usuarios.db\
                                \necho $usr' - maxlogins '$lm >> /etc/setup/limite/$usr\
                                \necho $usr' - maxlogins '$lm >> /etc/security/limits.conf\
@@ -331,7 +331,8 @@ def case():
                          system('grep -v ^'+rtb+'[[:space:]] /etc/setup/backup/users\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users')
                           
-                         print ('\033[33mConcluido. o usuario %s foi deletado do Backup.\033[m'\
+                         print ('\033[33mConcluido. o usuario %s foi deletado'\
+                               +' do Backup.\033[m'\
                          %(rtb))
                          case()
                      bacf()
@@ -822,6 +823,7 @@ def case():
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d\
+                         clear
                          \necho '\033[33m\nConcluido .. usuario criado.'\n\
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
