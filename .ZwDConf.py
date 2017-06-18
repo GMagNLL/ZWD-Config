@@ -113,7 +113,7 @@ try:
 except IOError:
    print (f1+'Erro: Por favor connecte-se a uma Rede de Dados ..\033[m')
    exit()
-
+   
 def case():
   try:
      print (__main__)
@@ -817,6 +817,7 @@ def case():
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Error: o usuario %s ja existe.\033[m' %(n))
                      user()
+                  system('clear')
                   sn = input(f6+'Senha Para '+n+' :: _\033[92m'+' ')
                   dx = input(f6+'Quantos dias '+n+' deve durar :: _\033[92m'+' ')
                   lm = input(f6+'Maximo de conexoes simultaneas :: _\033[92m'+' ')
@@ -829,8 +830,8 @@ def case():
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
                          \necho '\033[32mExpira:\033[92m '$da'\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n+"\
-                         \necho '"+n+" "+lm+" "+sn+" '$d' "+dx+"' >> /etc/setup/users\
-                         \necho '"+n+" "+lm+" "+sn+" '$d' "+dx+"' > /etc/setup/bkp/"+n)
+                         \necho '"+n+"' '"+lm+"' '"+sn+"' '$d' '"+dx+"' >> /etc/setup/users\
+                         \necho '"+n+"' '"+lm+"' '"+sn+"' '$d' '"+dx+"' > /etc/setup/bkp/"+n)
                          
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
