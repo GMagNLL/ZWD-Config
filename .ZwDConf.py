@@ -827,8 +827,8 @@ def case():
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
                          \necho '\033[32mExpira:\033[92m '$da'\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n+"\
-                         \necho '"+n+" "+lm+" "+sn+" $d "+dx+"' >> /etc/setup/users\
-                         \necho '"+n+" "+lm+" "+sn+" $d "+dx+"' > /etc/setup/bkp/"+n)
+                         \necho '"+n+" "+lm+" "+sn+" '$d' "+dx+"' >> /etc/setup/users\
+                         \necho '"+n+" "+lm+" "+sn+" '$d' "+dx+"' > /etc/setup/bkp/"+n)
                          
                   system('(echo "'+sn+'" ; echo "'+sn\
                         +'" ) |passwd '+n+' > /dev/null 2>/dev/null')
