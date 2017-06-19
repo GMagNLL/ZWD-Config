@@ -238,27 +238,28 @@ def case():
                            sleep(3)
                            casa()
                            
-                        system('''backup=''
-                        while true
+                        system('''backup='/etc/setup/backup/users'
+                        while read er
                         do
-                          usr="$(cat /etc/setup/backup/users | cut -d' ' -f1)"
-                          lm="$(cat /etc/setup/backup/users | cut -d' ' -f2)"
-                          pas="$(cat /etc/setup/backup/users | cut -d' ' -f3)"
-                          dx="$(cat /etc/setup/backup/users | cut -d' ' -f5)"
-                          
+                          usr="$(echo $er | cut -d' ' -f1)"
+                          lm="$(echo $er | cut -d' ' -f2)"
+                          pas="$(echo $er | cut -d' ' -f3)"
+                          dx="$(echo $er | cut -d' ' -f5)"
+    
                           d=$(date '+%C%y-%m-%d' -d '+'$dx' days')
                           da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                           useradd -M -s /bin/false $usr -e $d
                           (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
-                          echo 'usuario:' $usr
-                          echo 'senha:' $pas
-                          echo 'maxlogin:' $lm
+                          
+                          echo 'Usuario:' $usr
+                          echo 'Senha:' $pas
+                          echo 'Maxlogin:' $lm
                           echo 'Restaurado.'
                           echo 'Expira:' $da
                           echo
                           sleep 1
                           echo $usr $lm >> /root/usuarios.db
-                          echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                          echo $usr' - maxlogins '$lm > /etc/setup/limite/$usr
                           echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
                           
                           grep -v ^$usr[[:space:]] /etc/setup/users\
@@ -270,9 +271,9 @@ def case():
                            
                           echo $pas > /etc/setup/senhas/$usr
                           echo $usr $lm $pas $d $dx >> /etc/setup/users
-                          echo $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr
+                          echo $usr $lm $pas $d $dx > /etc/setup/bkp/$usr
                           rm -rf /etc/setup/backup/bkp/$usr
-                        done''')
+                        done < $backup''')
                                
                         system('rm -rf /etc/setup/backup/users')
                         system('rm -rf /etc/setup/backup')
@@ -310,7 +311,7 @@ def case():
                          da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                          useradd -M -s /bin/false $usr -e $d
                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
-                         echo '\033[33mConcluido..'
+                         echo '\033[33mConcluido..\033[32m'
                          echo 'usuario:' $usr
                          echo 'senha:' $pas
                          echo 'maxlogin:' $lm
