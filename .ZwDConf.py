@@ -210,6 +210,7 @@ def case():
                           +'0) = Home\033[m\n'
                           
               print (__sbm__)
+              # 2 = True
               # 3 = True
               # 4 = True
               # 5 = True
@@ -223,42 +224,44 @@ def case():
                      rst = input(f6+'Voce quer restaurar todos os usuarios do'\
                                 +' Backup [y/n] :: _\033[92m'+' ')
                      if rst == '0':
-                        system('clear')
                         casa()
+                        
                      if rst == 'y' or rst == 'Y':
                         if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: voce ainda nao tem um Backup.\033[m')
                            sleep(3)
                            casa()
                            
-                        system('''backup='/etc/setup/backup/users'\
-                               \nwhile read us\
-                               \ndo\
-                               \nusr="$(echo $us | cut -d' ' -f1)"\
-                               \nlm="$(echo $us | cut -d' ' -f2)"\
-                               \npas="$(echo $us | cut -d' ' -f3)"\
-                               \ndx="$(echo $us | cut -d' ' -f5)"\
-                               \nd=$(date '+%C%y-%m-%d' -d '+'$dx' days')\
-                               \nda=$(date '+%d/%m/%Y' -d '+'$dx' days')\
-                               \nuseradd -M -s /bin/false $usr -e $d\
-                               \n(echo "$pas" ; echo "$pas" ) |passwd $usr\
-                                > /dev/null 2>/dev/null\
-                               \necho '\033[33mUsuario: '$usr'\nsenha: '$pas\
-                               '\nmaxlogin '$lm '\nRestaurado ..\nExpira:' $da'\n\033[m'\
-                               \nsleep 1\
-                               \necho $usr $lm >> /root/usuarios.db\
-                               \necho $usr' - maxlogins '$lm >> /etc/setup/limite/$usr\
-                               \necho $usr' - maxlogins '$lm >> /etc/security/limits.conf\
-                               
-                               \ngrep -v ^$usr[[:space:]] /etc/setup/users\
-                                > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
-                               \ngrep -v ^$usr[[:space:]] /etc/setup/backup/users\
-                                > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users\
-                                
-                               \necho $usr $lm $pas $d $dx >> /etc/setup/users\
-                               \necho $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr\
-                               \nrm -rf /etc/setup/backup/bkp/$usr\
-                               \ndone < $backup''')
+                        system('''backup='/etc/setup/backup/users'
+                        while read us
+                        do
+                          usr="$(echo $us | cut -d' ' -f1)"
+                          lm="$(echo $us | cut -d' ' -f2)"
+                          pas="$(echo $us | cut -d' ' -f3)"
+                          dx="$(echo $us | cut -d' ' -f5)"
+                          d=$(date '+%C%y-%m-%d' -d '+'$dx' days')
+                          da=$(date '+%d/%m/%Y' -d '+'$dx' days')
+                          useradd -M -s /bin/false $usr -e $d
+                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null\
+                          echo 'usuario:' $usr
+                          echo 'senha:' $pas
+                          echo 'maxlogin:' $lm
+                          echo 'Restaurado.'
+                          echo 'Expira:' $da
+                          sleep 1
+                          echo $usr $lm >> /root/usuarios.db
+                          echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
+                          echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                          grep -v ^$usr[[:space:]] /etc/setup/users\
+                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
+                          grep -v ^$usr[[:space:]] /etc/setup/backup/users\
+                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
+                          grep -v ^$usr[[:space:]] /etc/setup/backup/ario
+                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
+                          echo $usr $lm $pas $d $dx >> /etc/setup/users
+                          echo $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr
+                          rm -rf /etc/setup/backup/bkp/$usr
+                        done < $backup''')
                                
                         system('rm -rf /etc/setup/backup/users')
                         system('rm -rf /etc/setup/backup')
@@ -309,6 +312,8 @@ def case():
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
                          grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
+                         grep -v ^$usr[[:space:]] /etc/setup/backup/ario\
+                          > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
                          rm -rf /etc/setup/bkp/$usr
                          echo $usr $lm $pas $d $dx >> /etc/setup/users
                          echo $usr $lm $pas $d $dx > /etc/setup/bkp/$usr''')
