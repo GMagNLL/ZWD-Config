@@ -30,7 +30,7 @@ from sys import *
 from time import *
 
 if sys.version_info.major < 3:
-   print ('\033[31mError: Progama suportado somente em Python3\033[m')
+   print ('\033[31mError: Progama suportado somente em Python3.\033[m')
    sleep(2)
    exit()
    
@@ -95,6 +95,7 @@ try:
    __info__ = '\033[32mAuthor:\033[36m %s\n\033[m' %(__author__)\
              +'\033[32mVersion:\033[36m %s\033[m\n' %(__version__)
    __Banner__ = '\033[32m{= \033[92mZwDConfig /SSH/SQUID3\033[32m =}_\n\033[m'
+   
    print (__Banner__)
    print (__info__)
    print ('\033[32mIP:\033[36m %s\033[m' %(__ip__))
@@ -109,6 +110,7 @@ def case():
      def casa():
          print (f6+'\n'+__main__)
          case()
+         
      w = input(f6+' :: _\033[92m'+' ')
      
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6' or w != '13'\
@@ -174,8 +176,8 @@ def case():
                  if os.path.isfile('/root/nohup.out') == True:
                     system('rm -rf /root/nohup.out')
               system('python3 /etc/setup/speedtest.py')
-              
-              w = input(f6+'\n :: _\033[92m'+' ')
+              case()
+
            if w == '14':
               if os.path.isfile('/etc/setup/backup/0dir') == True:
                  print (f1+'Isto excluirar todo o Backup antigo ..\033[m')
@@ -189,18 +191,22 @@ def case():
                     system('rm -rf /etc/setup/backup')
                     
                  system('mkdir /etc/setup/backup')
+                 sleep(1)
                  system('touch /etc/setup/backup/0dir')
-                 sleep(3)
+                 sleep(1)
                  system('cp /etc/setup/users /etc/setup/backup')
+                 sleep(1)
                  system('cp -r /etc/setup/bkp /etc/setup/backup')
+                 sleep(1)
                  system('touch /etc/setup/backup/bkp/0dir')
+                 sleep(1)
                  system('cp /etc/setup/ario /etc/setup/backup')
                  print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
-                 sleep(2)
+                 sleep(1)
                  case()
                  
               if bk == 'n' or bk == 'N':
-                 w = input(f6+'\n :: _\033[92m'+' ')
+                 case()
            if w == '15':
               __sbm__ = f6+'\n1) = Restaurar usuarios\n'\
                           +'2) = Restaurar um usuario\n'\
@@ -451,8 +457,7 @@ def case():
                        +'\033[32m\nZip\033[92m: '+ str(json_data['zip'])\
                        +'\033[92m\nStatus\033[32m: '+ str(json_data['status'])\
                        +'\033[32m\nLat/Long\033[32m: '+ str(json_data['lat'])\
-                                                    +', '+ str(json_data['lon'])
-                                                    
+                                                    +', '+ str(json_data['lon'])                                             
               print (__ADD__+'\n')
               case()
 
@@ -878,7 +883,7 @@ def case():
                          \necho '\033[33m\nConcluido .. usuario criado.'\n\
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
-                         \necho '\033[32mExpira:\033[92m '$da'\033[m'\
+                         \necho '\033[32mExpira:\033[92m '$da'\n\033[m'\
                          \necho '"+sn+"' > /etc/setup/senhas/"+n+"\
                          \necho '"+n+"' '"+lm+"' '"+sn+"' $d '"+dx+"' >> /etc/setup/users\
                          \necho '"+n+"' '"+lm+"' '"+sn+"' $d '"+dx+"' > /etc/setup/bkp/"+n)
@@ -938,7 +943,7 @@ def case():
                       casa()
                       
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
-                      print (f1+'\nErro: o usuario %s nao existe ..\033[m' %(rd))
+                      print (f1+'\nError: o usuario %s nao existe ..\033[m' %(rd))
                       rdf()
                    md = input(f6+' :: _\033[92m'+' ')
                    if md == '0':
