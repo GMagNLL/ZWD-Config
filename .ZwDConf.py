@@ -210,6 +210,7 @@ def case():
                           +'0) = Home\033[m\n'
                           
               print (__sbm__)
+              # 3 = True
               # 4 = True
               # 5 = True
               # 0 = True
@@ -324,9 +325,9 @@ def case():
                            sleep(3)
                            casa()
                            
-                         print ('\033[33mUsuarios no Backup:')
+                         print ('\033[33mUsuarios no Backup:\033[36m')
                          system('cat /etc/setup/backup/ario')
-                         print ('\n\033[m')
+                         print ('\033[m')
                          
                          rtb = input(f6+'Qual usuario voce quer tirar do Backup :: _\033[92m'\
                                     +' ')
@@ -334,11 +335,13 @@ def case():
                             casa()
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(rtb)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
-                            %(us))
+                            %(rtb))
                             bacf()
                          system('rm -rf /etc/setup/backup/bkp/'+rtb)
                          system('grep -v ^'+rtb+'[[:space:]] /etc/setup/backup/users\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users')
+                         system('grep -v ^'+rtb+'[[:space:]] /etc/setup/backup/ario\
+                          > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario')
                           
                          print ('\033[33mConcluido. o usuario '+rtb+' foi deletado'\
                                +' do Backup.\033[m')
