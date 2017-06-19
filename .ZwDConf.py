@@ -254,6 +254,7 @@ def case():
                           echo 'maxlogin:' $lm
                           echo 'Restaurado.'
                           echo 'Expira:' $da
+                          echo
                           sleep 1
                           echo $usr $lm >> /root/usuarios.db
                           echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
