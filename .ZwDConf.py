@@ -288,14 +288,13 @@ def case():
                                 \nusr="$(cat $ss | cut -d' ' -f1)"\
                                 \nlm="$(cat $ss | cut -d' ' -f2)"\
                                 \npas="$(cat $ss | cut -d' ' -f3)"\
-                                \ndx="$(cat $ss | cut -d' ' -f5)"\                              
+                                \ndx="$(cat $ss | cut -d' ' -f5)"\ 
                                 \nd=$(date '+%C%y-%m-%d' -d '+'$dx' days')\
-                                \nda=$(date '+%d/%m/%Y' -d'+'$dx' days')\
+                                \nda=$(date '+%d/%m/%Y' -d '+'$dx' days')\
                                
                                 \nuseradd -M -s /bin/false $usr -e $d\
                                 \n(echo "$pas" ; echo "$pas" ) |passwd $usr\
                                  > /dev/null 2>/dev/null\
-                                \nclear\
                                 \necho '\033[33mConcluido. usuario: '$usr' senha: '$pas\
                                  'maxlogin '$lm' Restaurado.\nExpira:' $da'\033[m'\
                                 \necho $usr $lm >> /root/usuarios.db\
@@ -663,16 +662,17 @@ def case():
            if w == '2':
               rc = input(f6+'Deseja Remover todas as Modificacoes. [y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
-                 system('''exc='/etc/setup/ario'
-                 while read ex
-                 do
-                   userdel --force $ex > /dev/null 2>/dev/null
-                   grep -v ^$ex[[:space:]] /etc/security/limits.conf\
-                    > /tmp/dx; cat /tmp/dx > /etc/security/limits.conf
-                   rm -rf /tmp/dx
-                   echo 'Usuario' $ex '.. Deletado.'
-                   sleep 1            
-                 done < $exc''')
+                 if os.path.isfile('/etc/setup/ario') == True:
+                    system('''exc='/etc/setup/ario'
+                    while read ex
+                    do
+                      userdel --force $ex > /dev/null 2>/dev/null
+                      grep -v ^$ex[[:space:]] /etc/security/limits.conf\
+                       > /tmp/dx; cat /tmp/dx > /etc/security/limits.conf
+                      rm -rf /tmp/dx
+                      echo 'Usuario' $ex '.. Deletado.'
+                      sleep 1            
+                    done < $exc''')
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
                  d = os.path.isfile('/usr/sbin/squid')
