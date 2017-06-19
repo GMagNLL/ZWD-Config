@@ -152,7 +152,7 @@ def case():
                     echo $usr $lm $pas $d $dx >> /etc/setup/backup/users
                     echo $usr >> /etc/setup/backup/ario                         
                   done < $xdif''')
-                  print ('\033[33mConcluido. usuario %s adicionado ao Backup.\033[m' %(bus))
+                  print ('\033[33mConcluido. usuario %s adicionado ao Backup.\n\033[m' %(bus))
                   sleep(1)
                   case()
               bsck()
@@ -201,7 +201,7 @@ def case():
                  system('touch /etc/setup/backup/bkp/0dir')
                  sleep(1)
                  system('cp /etc/setup/ario /etc/setup/backup')
-                 print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
+                 print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\n\033[m')
                  sleep(1)
                  case()
                  
@@ -248,7 +248,7 @@ def case():
                           d=$(date '+%C%y-%m-%d' -d '+'$dx' days')
                           da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                           useradd -M -s /bin/false $usr -e $d
-                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null\
+                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
                           echo 'usuario:' $usr
                           echo 'senha:' $pas
                           echo 'maxlogin:' $lm
