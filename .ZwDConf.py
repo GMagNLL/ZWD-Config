@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 __author__ = 'Zwdeff'
-__version__ = '1.2'
+__version__ = '1.3'
 __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 
 # Github https://github.com/Xdwnff-04x/ZwD-Config
@@ -56,7 +56,7 @@ except ImportError:
    system('clear')
    
 f0 = '\033[90m'
-f1 = '\033[91m'
+f1 = '\033[31m'
 f2 = '\033[92m'
 f3 = '\033[93m'
 f4 = '\033[94m'
@@ -215,11 +215,7 @@ def case():
                           +'0) = Home\033[m\n'
                           
               print (__sbm__)
-              # 1 = True
-              # 2 = True
-              # 3 = True
-              # 4 = True
-              # 0 = True
+ 
               def mopt():
                   sbm = input(f6+' :: _\033[92m'+' ')
                   if sbm == '0':
@@ -232,7 +228,7 @@ def case():
                            sleep(2)
                            casa()
                            
-                         print ('\033[33mUsuarios no Backup:')
+                         print ('\033[33mUsuarios no Backup:\033[32m')
                          system('cat /etc/setup/backup/ario')
                          print ('\n\033[m')
                          
@@ -244,6 +240,8 @@ def case():
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
                             userrs()
+                         system('grep -v ^'+us+' /etc/setup/backup/ario\
+                          > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario')
                          system('''echo
                          usr="$(cat /etc/setup/backup/bkp/'''+us+''' | cut -d' ' -f1)"
                          lm="$(cat /etc/setup/backup/bkp/'''+us+''' | cut -d' ' -f2)"
@@ -254,11 +252,11 @@ def case():
                          useradd -M -s /bin/false $usr -e $d
                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
                          echo '\033[33mConcluido ..\033[32m'
-                         echo 'usuario:' $usr
-                         echo 'senha:' $pas
-                         echo 'maxlogin:' $lm
-                         echo 'Restaurado.'
-                         echo 'Expira:' $da
+                         echo 'Usuario:' $usr
+                         echo 'Senha:' $pas
+                         echo 'Maxlogin:' $lm
+                         echo '\033[33mRestaurado.\033[m'
+                         echo '\033[32mExpira:' $da
                          echo $usr $lm >> /root/usuarios.db
                          echo $usr' - maxlogins '$lm > /etc/setup/limite/$usr
                          echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
@@ -266,8 +264,7 @@ def case():
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
                          grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
-                         grep -v ^$usr[[:space:]] /etc/setup/backup/ario\
-                          > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
+                          
                          rm -rf /etc/setup/bkp/$usr
                          echo $pas > /etc/setup/senhas/$usr
                          echo $usr $lm $pas $d $dx >> /etc/setup/users
