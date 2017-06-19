@@ -296,7 +296,7 @@ def case():
                          da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                          useradd -M -s /bin/false $usr -e $d
                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
-                         echo '\033[33mConcluido.. 
+                         echo '\033[33mConcluido..'
                          echo 'usuario:' $usr
                          echo 'senha:' $pas
                          echo 'maxlogin:' $lm
