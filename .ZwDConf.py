@@ -123,7 +123,7 @@ def case():
                   if bus == '0':
                      casa()
                   if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
-                     print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
+                     print (f1+'Error: o usuario %s nao existe.\033[m' %(bus))
                      bsck()
                   if os.path.isfile('/etc/setup/backup/0dir') == False:
                      system('mkdir /etc/setup/backup')
@@ -258,6 +258,7 @@ def case():
                            > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
                           grep -v ^$usr[[:space:]] /etc/setup/backup/ario
                            > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
+                          echo $pas > /etc/setup/senhas/$usr
                           echo $usr $lm $pas $d $dx >> /etc/setup/users
                           echo $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr
                           rm -rf /etc/setup/backup/bkp/$usr
@@ -315,6 +316,7 @@ def case():
                          grep -v ^$usr[[:space:]] /etc/setup/backup/ario\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
                          rm -rf /etc/setup/bkp/$usr
+                         echo $pas > /etc/setup/senhas/$usr
                          echo $usr $lm $pas $d $dx >> /etc/setup/users
                          echo $usr $lm $pas $d $dx > /etc/setup/bkp/$usr''')
                                 
