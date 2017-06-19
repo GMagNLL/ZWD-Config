@@ -238,13 +238,14 @@ def case():
                            sleep(3)
                            casa()
                            
-                        system('''backup='/etc/setup/backup/users'
-                        while read us
+                        system('''backup=''
+                        while true
                         do
-                          usr="$(echo $us | cut -d' ' -f1)"
-                          lm="$(echo $us | cut -d' ' -f2)"
-                          pas="$(echo $us | cut -d' ' -f3)"
-                          dx="$(echo $us | cut -d' ' -f5)"
+                          usr="$(cat /etc/setup/backup/users | cut -d' ' -f1)"
+                          lm="$(cat /etc/setup/backup/users | cut -d' ' -f2)"
+                          pas="$(cat /etc/setup/backup/users | cut -d' ' -f3)"
+                          dx="$(cat /etc/setup/backup/users | cut -d' ' -f5)"
+                          
                           d=$(date '+%C%y-%m-%d' -d '+'$dx' days')
                           da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                           useradd -M -s /bin/false $usr -e $d
@@ -259,17 +260,19 @@ def case():
                           echo $usr $lm >> /root/usuarios.db
                           echo $usr' - maxlogins '$lm >> /etc/setup/limite/$usr
                           echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
+                          
                           grep -v ^$usr[[:space:]] /etc/setup/users\
                            > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
                           grep -v ^$usr[[:space:]] /etc/setup/backup/users\
                            > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
                           grep -v ^$usr[[:space:]] /etc/setup/backup/ario
                            > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
+                           
                           echo $pas > /etc/setup/senhas/$usr
                           echo $usr $lm $pas $d $dx >> /etc/setup/users
                           echo $usr $lm $pas $d $dx >> /etc/setup/bkp/$usr
                           rm -rf /etc/setup/backup/bkp/$usr
-                        done < $backup''')
+                        done''')
                                
                         system('rm -rf /etc/setup/backup/users')
                         system('rm -rf /etc/setup/backup')
