@@ -208,18 +208,17 @@ def case():
               if bk == 'n' or bk == 'N':
                  case()
            if w == '15':
-              __sbm__ = f6+'\n1) = Restaurar usuarios\n'\
-                          +'2) = Restaurar um usuario\n'\
-                          +'3) = Deletar um usuario do Backup\n'\
-                          +'4) = Deletar Todos os usuarios\n'\
-                          +'5) = Deletar Backup\n'\
+              __sbm__ = f6+'\n1) = Restaurar usuario\n'\
+                          +'2) = Deletar um usuario do Backup\n'\
+                          +'3) = Deletar Todos os usuarios\n'\
+                          +'4) = Deletar Backup\n'\
                           +'0) = Home\033[m\n'
                           
               print (__sbm__)
+              # 1 = True
               # 2 = True
               # 3 = True
               # 4 = True
-              # 5 = True
               # 0 = True
               def mopt():
                   sbm = input(f6+' :: _\033[92m'+' ')
@@ -227,63 +226,6 @@ def case():
                      casa()
 
                   if sbm == '1':
-                     rst = input(f6+'Voce quer restaurar todos os usuarios do'\
-                                +' Backup [y/n] :: _\033[92m'+' ')
-                     if rst == '0':
-                        casa()
-                        
-                     if rst == 'y' or rst == 'Y':
-                        if os.path.isfile('/etc/setup/backup/users') == False:
-                           print (f1+'Error: voce ainda nao tem um Backup.\033[m')
-                           sleep(3)
-                           casa()
-                           
-                        system('''backup='/etc/setup/backup/users'
-                        while read er
-                        do
-                          usr="$(echo $er | cut -d' ' -f1)"
-                          lm="$(echo $er | cut -d' ' -f2)"
-                          pas="$(echo $er | cut -d' ' -f3)"
-                          dx="$(echo $er | cut -d' ' -f5)"
-    
-                          d=$(date '+%C%y-%m-%d' -d '+'$dx' days')
-                          da=$(date '+%d/%m/%Y' -d '+'$dx' days')
-                          useradd -M -s /bin/false $usr -e $d
-                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
-                          
-                          echo 'Usuario:' $usr
-                          echo 'Senha:' $pas
-                          echo 'Maxlogin:' $lm
-                          echo 'Restaurado.'
-                          echo 'Expira:' $da
-                          echo
-                          sleep 1
-                          echo $usr $lm >> /root/usuarios.db
-                          echo $usr' - maxlogins '$lm > /etc/setup/limite/$usr
-                          echo $usr' - maxlogins '$lm >> /etc/security/limits.conf
-                          
-                          grep -v ^$usr[[:space:]] /etc/setup/users\
-                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/users
-                          grep -v ^$usr[[:space:]] /etc/setup/backup/users\
-                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users
-                          grep -v ^$usr[[:space:]] /etc/setup/backup/ario
-                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/ario
-                           
-                          echo $pas > /etc/setup/senhas/$usr
-                          echo $usr $lm $pas $d $dx >> /etc/setup/users
-                          echo $usr $lm $pas $d $dx > /etc/setup/bkp/$usr
-                          rm -rf /etc/setup/backup/bkp/$usr
-                        done < $backup''')
-                               
-                        system('rm -rf /etc/setup/backup/users')
-                        system('rm -rf /etc/setup/backup')
-                        print ('\033[33mConcluido. Restauracao do Backup completa.\033[m')
-                        sleep(2)
-                        casa()
-                        
-                     if rst == 'n' or rst == 'N':
-                        mopt()
-                  if sbm == '2':
                      def userrs():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
@@ -311,7 +253,7 @@ def case():
                          da=$(date '+%d/%m/%Y' -d '+'$dx' days')
                          useradd -M -s /bin/false $usr -e $d
                          (echo "$pas" ; echo "$pas" ) |passwd $usr > /dev/null 2>/dev/null
-                         echo '\033[33mConcluido..\033[32m'
+                         echo '\033[33mConcluido ..\033[32m'
                          echo 'usuario:' $usr
                          echo 'senha:' $pas
                          echo 'maxlogin:' $lm
@@ -336,7 +278,7 @@ def case():
                          casa()
                          
                      userrs()
-                  if sbm == '3':
+                  if sbm == '2':
                      def bacf():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
@@ -367,7 +309,7 @@ def case():
                          casa()
                          
                      bacf()
-                  if sbm == '4':
+                  if sbm == '3':
                      print (f1+'\nEsta funcao Deletarar todos os usuarios ..\n'\
                            +'ativos e criados por este progama.\033[m')
                      dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
@@ -419,7 +361,7 @@ def case():
                      if dlt == 'n' or dlt == 'N':
                         casa()
                         
-                  if sbm == '5':
+                  if sbm == '4':
                      print (f1+'Esta funcao excluirar todos os usuarios\n'\
                            +'que estao no Backup deseja continuar.')
                      def rtu():
@@ -439,8 +381,7 @@ def case():
                          if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
                             rtu()
                      rtu()
-                  if sbm != '1' or sbm != '2' or sbm != '0' or sbm != '4' or sbm != '3'\
-                   or sbm != '5' or sbm != '6':
+                  if sbm != '1' or sbm != '2' or sbm != '0' or sbm != '4' or sbm != '3':
                      mopt()
               mopt()
            if w == '11':
