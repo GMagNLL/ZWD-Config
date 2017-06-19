@@ -20,7 +20,7 @@
     <td width="100px" class="main2"><b>Termo:</b></td><td width="780px">Bom? Eu fiz este script sem nenhuma intenção maliciosa ... Podem usar sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro duvida, ou sujestão contacte meu telegram.</td>
   </tr>
   <tr>
-    <td width="100px" class="main2"><b>Novidades v1.3</b></td><td width="780px">Correções de erros, Melhorias, Funções Novas: 1) Mudar nome de usuario, 2) Backup dos usuarios, 3) Restauração de usuarios, 4) Remover todos os usuarios, 5) Excluir Backup, 6) SpeedTest, 7) Excluir um usuario do Backup.</td>
+    <td width="100px" class="main2"><b>Novidades v1.3</b></td><td width="780px">Correções de erros, Melhorias, Funções Novas: (1) Mudar nome de usuario, (2) Backup dos usuarios, (3) Restaurar usuario do Backup, (4) Remover todos os usuarios, (5) Excluir Backup, (6) SpeedTest, (7) Excluir um usuario do Backup.</td>
   </tr>
   <tr>
     <td width="100px" class="main2"><b>Telegram:</b></td><td width="780px">@nZwdeff</td>
