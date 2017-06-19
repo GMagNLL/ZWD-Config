@@ -287,11 +287,14 @@ def case():
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
                             userrs()
-                         system('''ss="/etc/setup/backup/bkp/'''+us+'''"\
-                                \nusr="$(cat $ss | cut -d' ' -f1)"\
-                                \nlm="$(cat $ss | cut -d' ' -f2)"\
-                                \npas="$(cat $ss | cut -d' ' -f3)"\
-                                \ndx="$(cat $ss | cut -d' ' -f5)"\ 
+                         system('''usr="$(cat /etc/setup/backup/bkp/'''+us\
+                               +''' | cut -d' ' -f1)"\
+                                \nlm="$(cat /etc/setup/backup/bkp/'''+us\
+                               +''' | cut -d' ' -f2)"\
+                                \npas="$(cat /etc/setup/backup/bkp/'''+us\
+                               +''' | cut -d' ' -f3)"\
+                                \ndx="$(cat /etc/setup/backup/bkp/'''+us\
+                               +''' | cut -d' ' -f5)"\ 
                                 \nd=$(date '+%C%y-%m-%d' -d '+'$dx' days')\
                                 \nda=$(date '+%d/%m/%Y' -d '+'$dx' days')\
                                
@@ -346,7 +349,7 @@ def case():
                          print ('\033[33mConcluido. o usuario '+rtb+' foi deletado'\
                                +' do Backup.\033[m')
                          sleep(2)
-                         case()
+                         casa()
                          
                      bacf()
                   if sbm == '4':
