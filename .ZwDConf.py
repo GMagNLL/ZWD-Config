@@ -20,15 +20,6 @@ __copyright__ = 'Copyright (c) 2017 @nZwdeff\n'# All Rights Reserved.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-f0 = '\033[90m'
-f1 = '\033[91m'
-f2 = '\033[92m'
-f3 = '\033[93m'
-f4 = '\033[94m'
-f5 = '\033[95m'
-f6 = '\033[36m'
-f7 = '\033[97m'
-f8 = '\033[96m'
 
 import sys
 import time
@@ -39,9 +30,10 @@ from sys import *
 from time import *
 
 if sys.version_info.major < 3:
-   print (f1+'Error: Progama suportado somente em Python3\033[m')
+   print ('\033[31mError: Progama suportado somente em Python3\033[m')
    sleep(2)
    exit()
+   
 try:
    import simplejson
 except ImportError:
@@ -63,6 +55,16 @@ except ImportError:
    sleep(4)
    system('clear')
    
+f0 = '\033[90m'
+f1 = '\033[91m'
+f2 = '\033[92m'
+f3 = '\033[93m'
+f4 = '\033[94m'
+f5 = '\033[95m'
+f6 = '\033[36m'
+f7 = '\033[97m'
+f8 = '\033[96m'
+
 from urllib.request import *
   
 v = sys.version_info.major
@@ -70,10 +72,10 @@ H = strftime('%d/%m/%Y %H:%M:%S')
 print ('\033[92m\033[92mConnecting .. from python%s /%s\033[m' % (v,H))
 sleep(0.9)
 try:
-   url = str(urlopen('http://check-host.net/ip').read())
-   __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(url).group()
+   __url_ = str(urlopen('http://check-host.net/ip').read())
+   __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(__url_).group()
   
-   __main__ = f6+'\n1) = Configurar VPS\n'\
+   __main__ = '1) = Configurar VPS\n'\
              +'2) = Desconfigurar /SSH/SQUID3\n'\
              +'3) = Adicionar Domain\n'\
              +'4) = Remover Domain\n'\
@@ -85,8 +87,9 @@ try:
              +'10 = Monitor do Sistema\n'\
              +'11 = Informacoes do IP\n'\
              +'12 = Server Speed Test\n'\
-             +'13 = Backup dos usuarios\n'\
-             +'14 = Mais Opcoes\n'\
+             +'13 = Backup de um usuario\n'\
+             +'14 = Backup dos usuarios\n'\
+             +'15 = Mais Opcoes\n'\
              +'0) = Sair\n\n\n\033[m'
 
    __info__ = '\033[32mAuthor:\033[36m %s\n\033[m' %(__author__)\
@@ -102,28 +105,61 @@ except IOError:
    
 def case():
   try:
-     def casa():
-         print (__Banner__)
-         print (__info__)
-         print ('\033[32mIP:\033[36m %s\033[m' %(__ip__))
-         case()
-     print (__main__)
+     print (f6+'\n'+__main__)
          
      w = input(f6+' :: _\033[92m'+' ')
      
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6' or w != '13'\
       or w != '7' or w != '8' or w != '9' or w != '0' or w != '10' or w != '11' or w != '12'\
-       or w == '14':
+       or w != '14' or w != '15':
         if w == '1' or w == '2' or w == '3' or w == '4' or w == '5' or w == '6' or w == '7'\
          or w == '8' or w == '9' or w == '0' or w == '10' or w == '11' or w == '00'\
-          or w == '12' or w == '13' or w == '14':
+          or w == '12' or w == '13' or w == '14' or w == '15':
+           if w == '13':
+              def bsck():
+                  bus = input(f6+'De qual usuario voce quer fazer Backup :: _\033[92m'+' ')
+                  if bus == '0':
+                     case()
+                  if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
+                     print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
+                     bsck()
+                  if os.path.isfile('/etc/setup/backup/0dir') == False:
+                     system('mkdir /etc/setup/backup')
+                     system('touch /etc/setup/backup/0dir')                      
+                  if os.path.isfile('/etc/setup/backup/bkp/0dir') == False:
+                     system('mkdir /etc/setup/backup/bkp')
+                     system('touch /etc/setup/backup/bkp/0dir')                           
+                  if os.path.isfile('/etc/setup/backup/users') == False:
+                     system('touch /etc/setup/backup/users')
+                  if os.path.isfile('/etc/setup/backup/ario') == False:
+                     system('touch /etc/setup/backup/ario')
+                  if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
+                     print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m' %(bus))
+                     bsck()
+                  system('''xdif='/etc/setup/bkp/'''+bus+''''
+                  while read n
+                  do
+                    usr="$(echo $n | cut -d' ' -f1)"
+                    lm="$(echo $n | cut -d' ' -f2)"
+                    pas="$(echo $n | cut -d' ' -f3)"
+                    d="$(echo $n | cut -d' ' -f4)"
+                    dx="$(echo $n | cut -d' ' -f5)"
+                    echo $usr $lm $pas $d $dx > /etc/setup/backup/bkp/$usr
+                    echo $usr $lm $pas $d $dx >> /etc/setup/backup/users
+                    echo $usr >> /etc/setup/backup/ario                         
+                  done < $xdif''')
+                  print ('\033[33mConcluido. usuario %s adicionado ao Backup.\033[m' %(bus))
+                  sleep(1)
+                  case()
+              bsck()
+                     
            if w == '12':
               if os.path.isfile('/etc/setup/senhas/except') == False:
                  print ('\033[31mError: Para utilizar esta funcao.. antes e\n'\
                        +'preciso configurar sua VPS com este script.')
-                 sleep(8)
-                 system('clear')
-                 casa()
+                 sleep(2)
+                 case()
+                 
               if os.path.isfile('/etc/setup/speedtest.py') == False:
                  print ('\033[30m')
                  system('nohup wget -qc \
@@ -138,18 +174,18 @@ def case():
               system('python3 /etc/setup/speedtest.py')
               
               w = input(f6+'\n :: _\033[92m'+' ')
-           if w == '13':
+           if w == '14':
               if os.path.isfile('/etc/setup/backup/0dir') == True:
                  print (f1+'Isto excluirar todo o Backup antigo ..\033[m')
               bk = input(f6+'Deseja fazer o Backup de todos os usuarios'\
                         +' [y/n] :: _\033[32m'+' ')
               if bk == '0':
-                 casa()
-                 system('clear')
+                 case()
               if bk == 'y' or bk == 'Y':
                  print ('\033[32mfazendo o Backup dos usuarios .. aguarde.\033[m')
                  if os.path.isfile('/etc/setup/backup/users') == True:
                     system('rm -rf /etc/setup/backup')
+                    
                  system('mkdir /etc/setup/backup')
                  system('touch /etc/setup/backup/0dir')
                  sleep(3)
@@ -158,88 +194,40 @@ def case():
                  system('touch /etc/setup/backup/bkp/0dir')
                  system('cp /etc/setup/ario /etc/setup/backup')
                  print ('\n\033[33mConcluido. Backup feito em /etc/setup/backup.\033[m')
-                 sleep(3)
-                 system('clear')
-                 casa()
+                 sleep(2)
+                 case()
                  
               if bk == 'n' or bk == 'N':
                  w = input(f6+'\n :: _\033[92m'+' ')
-           if w == '14':
-              __sbm__ = f6+'\n1) = fazer Backup de um usuario\n'\
-                          +'2) = Restaurar usuarios\n'\
-                          +'3) = Restaurar um usuario\n'\
-                          +'4) = Deletar um usuario do Backup\n'\
-                          +'5) = Deletar Todos os usuarios\n'\
-                          +'6) = Deletar Backup\n'\
+           if w == '15':
+              __sbm__ = f6+'\n1) = Restaurar usuarios\n'\
+                          +'2) = Restaurar um usuario\n'\
+                          +'3) = Deletar um usuario do Backup\n'\
+                          +'4) = Deletar Todos os usuarios\n'\
+                          +'5) = Deletar Backup\n'\
                           +'0) = Home\033[m\n'
-              system('clear')
+                          
               print (__sbm__)
-              # 1 = True
+              # 4 = True
               # 5 = True
-              # 6 = True
               # 0 = True
               def mopt():
                   sbm = input(f6+' :: _\033[92m'+' ')
                   if sbm == '0':
-                     system('clear')
-                     casa()
+                     case()
+
                   if sbm == '1':
-                     def bsck():
-                         bus = input(f6+'De qual usuario voce quer fazer Backup :: _\033[92m'\
-                                    +' ')
-                         if bus == '0':
-                            system('clear')
-                            casa()
-                         if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
-                            print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
-                            bsck()
-                         if os.path.isfile('/etc/setup/backup/0dir') == False:
-                            system('mkdir /etc/setup/backup')
-                            system('touch /etc/setup/backup/0dir')
-                            
-                         if os.path.isfile('/etc/setup/backup/bkp/0dir') == False:
-                            system('mkdir /etc/setup/backup/bkp')
-                            system('touch /etc/setup/backup/bkp/0dir')
-                            
-                         if os.path.isfile('/etc/setup/backup/users') == False:
-                            system('touch /etc/setup/backup/users')
-                         if os.path.isfile('/etc/setup/backup/ario') == False:
-                            system('touch /etc/setup/backup/ario')
-                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(bus)) == True:
-                            print (f1+'Error: o usuario %s ja se encontra no Backup.\033[m'\
-                            %(bus))
-                            bsck()
-                         system('''xdif='/etc/setup/bkp/'''+bus+''''
-                         while read n
-                         do
-                           usr="$(echo $n | cut -d' ' -f1)"
-                           lm="$(echo $n | cut -d' ' -f2)"
-                           pas="$(echo $n | cut -d' ' -f3)"
-                           d="$(echo $n | cut -d' ' -f4)"
-                           dx="$(echo $n | cut -d' ' -f5)"
-                           echo $usr $lm $pas $d $dx > /etc/setup/backup/bkp/$usr
-                           echo $usr $lm $pas $d $dx >> /etc/setup/backup/users
-                           echo $usr >> /etc/setup/backup/ario
-                          
-                         done < $xdif''')     
-                         print ('\033[33mConcluido. usuario %s adicionado ao Backup.\033[m'\
-                         %(bus))
-                         sleep(1)
-                         system('clear')
-                         casa()
-                     bsck()
-                  if sbm == '2':
                      rst = input(f6+'Voce quer restaurar todos os usuarios do'\
                                 +' Backup [y/n] :: _\033[92m'+' ')
                      if rst == '0':
                         system('clear')
-                        casa()
+                        case()
                      if rst == 'y' or rst == 'Y':
                         if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: voce ainda nao tem um Backup.\033[m')
                            sleep(3)
-                           system('clear')
-                           casa()
+                           case()
+                           
                         system('''backup='/etc/setup/backup/users'\
                                \nwhile read us\
                                \ndo\
@@ -274,23 +262,24 @@ def case():
                         print ('\033[33mConcluido. Restauracao do Backup completa.\033[m')
                         sleep(2)
                         case()
+                        
                      if rst == 'n' or rst == 'N':
                         mopt()
-                  if sbm == '3':
+                  if sbm == '2':
                      def userrs():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
-                           sleep(3)
-                           system('clear')
-                           casa()
+                           sleep(2)
+                           case()
+                           
                          print ('\033[33mUsuarios no Backup:')
                          system('cat /etc/setup/backup/ario')
                          print ('\n\033[m')
                          
                          us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
                          if us == '0':
-                            system('clear')
-                            casa()
+                            case()
+                            
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
@@ -325,14 +314,15 @@ def case():
                          system('rm -rf /etc/setup/backup/bkp/%s' %(us))
                          sleep(1)
                          case()
+                         
                      userrs()
-                  if sbm == '4':
+                  if sbm == '3':
                      def bacf():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
                            sleep(3)
-                           system('clear')
                            case()
+                           
                          rtb = input(f6+'Qual usuario voce quer tirar do Backup :: _\033[92m'\
                                     +' ')
                          if rtb == '0':
@@ -349,23 +339,23 @@ def case():
                                +' do Backup.\033[m'\
                          %(rtb))
                          sleep(2)
-                         system('clear')
-                         casa()
+                         case()
+                         
                      bacf()
-                  if sbm == '5':
+                  if sbm == '4':
                      print (f1+'\nEsta funcao Deletarar todos os usuarios ..\n'\
                            +'ativos e criados por este progama.\033[m')
                      dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
                      if dlt == '0':
-                        system('clear')
-                        casa()
+                        case()
+                        
                      if dlt == 'y' or dlt == 'Y':
                         if os.path.isfile('/etc/setup/limite/lm') == False:
                            print (f1+'Error: Voce ainda nao fez usuarios com este script.'\
                                  +'\033[m')
-                           sleep(3)
-                           system('clear')
-                           casa()
+                           sleep(2)
+                           case()
+                           
                         up = input('\033[33mVoce fez ou Deseja fazer o Backup de algum\n'\
                                   +'desses usuarios futuramente. [y/n]\033[36m :: _\033[92m'\
                                   +' ')
@@ -392,35 +382,35 @@ def case():
                            system('rm -rf /etc/setup/bkp && mkdir /etc/setup/bkp')
                            system('rm -rf /etc/setup/users && touch /etc/setup/users')
                            system('rm -rf /etc/setup/ario && touch /etc/setup/ario')
+                           
                         system('rm -rf /root/usuarios.db && touch /root/usuarios.db')
                         system('rm -rf /etc/setup/senhas && mkdir /etc/setup/senhas')
                         
                         print ('\033[33m\nConcluido.. Todos os usuarios foram excluidos.'\
                               +'\033[m')
-                        sleep(3)
-                        system('clear')
-                        casa()
+                        sleep(2)
+                        case()
                         
                      if dlt == 'n' or dlt == 'N':
-                        system('clear')
-                        casa()
-                  if sbm == '6':
+                        case()
+                        
+                  if sbm == '5':
                      print (f1+'Esta funcao excluirar todos os usuarios\n'\
                            +'que estao no Backup deseja continuar.')
                      def rtu():
                          bex = input(f6+' ... [y/n] :: _\033[92m'+' ')
                          if bex == '0':
                             system('clear')
-                            casa()
+                            case()
                          if bex == 'y' or bex == 'Y':
                             system('rm -rf /etc/setup/backup')
                          if bex == 'n' or bex == 'N':
                             system('clear')
-                            casa()
+                            case()
                          print ('\033[33mConcluido. todo o Backup foi Deletado.\033[m')
-                         sleep(3)
-                         system('clear')
-                         casa()
+                         sleep(2)
+                         case()
+                         
                          if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
                             rtu()
                      rtu()
@@ -451,7 +441,7 @@ def case():
                                                     
               print (__ADD__+'\n')
               w = input(f6+' :: _\033[92m'+' ')
-              system('clear')
+
            if w == '10':
               print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
               system('''OS=`uname -s` && REV=`uname -r` && MACH=`uname -m` &&
@@ -512,6 +502,7 @@ def case():
               print ('\033[92mUsuarios Conectados:\033[m')
               if os.path.isfile('/root/usuarios.db') == False:
                  system('touch /root/usuarios.db')
+                 
               system('''database='/root/usuarios.db'
               while read us
               do
@@ -528,7 +519,7 @@ def case():
               system('''time=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)\n
                      echo '\033[32mTempo de Atividade\033[92m:' $time''')
               w = input(f6+'\n :: _\033[92m'+' ')
-              system('clear')
+
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
               s = os.path.isfile('/usr/sbin/squid3')
@@ -541,8 +532,9 @@ def case():
                  system('cp /etc/security/limits.conf /etc/setup/limits')
                  system('mkdir /etc/setup/senhas')
                  system('touch /etc/setup/senhas/except')
-                 system('''echo 'Ola anqui fica armazenado todas as senhas '''\
+                 system('''echo 'Ola, anqui fica armazenado todas as senhas '''\
                        +'''criadas por este progama.' > /etc/setup/senhas/except''')
+                       
               if os.path.isfile('/etc/setup/users') == False:
                  system('touch /etc/setup/users')
                  system('touch /etc/setup/ario')
@@ -605,6 +597,7 @@ def case():
                                
                     print ('\033[32mPortas SQUID: 80, 8080, 8799, 3128 Ativadas.\n\033[m')
                     sleep(2)
+                    
               else:
                  system('rm -rf /etc/squid3/squid.conf')
                  system('touch /etc/squid3/squid.conf')
@@ -642,6 +635,7 @@ def case():
                     
                     print ('\033[32mPortas SQUID3: 80, 8080, 8799, 3128 Ativadas.\033[m')
                     sleep(2)
+                    
               print ('\033[33mConfigurando Portas SSH.\033[m')
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
@@ -669,6 +663,16 @@ def case():
            if w == '2':
               rc = input(f6+'Deseja Remover todas as Modificacoes. [y/n] :: _\033[92m'+' ')
               if rc == 'y' or rc == 'Y':
+                 system('''exc='/etc/setup/ario'
+                 while read ex
+                 do
+                   userdel --force $ex > /dev/null 2>/dev/null
+                   grep -v ^$ex[[:space:]] /etc/security/limits.conf\
+                    > /tmp/dx; cat /tmp/dx > /etc/security/limits.conf
+                   rm -rf /tmp/dx
+                   echo 'Usuario' $ex '.. Deletado.'
+                   sleep 1            
+                 done < $exc''')
                  t = os.path.isfile('/usr/bin/ssh')
                  s = os.path.isfile('/usr/sbin/squid3')
                  d = os.path.isfile('/usr/sbin/squid')
@@ -686,10 +690,12 @@ def case():
                        inplace=1)):
                            sys.stdout.write(line.replace('Banner /etc/Banner',\
                            '#Banner /etc/issue.net'))
+                           
                  if os.path.isfile('/etc/setup/senhas/except') == True:
                     for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config',\
                      inplace=1)):
                         sys.stdout.write(line.replace('Port 443\n', ''))
+                        
                     system('rm -rf  /etc/security/limits.conf')
                     system('cp /etc/setup/limits/limits.conf /etc/security')
                     system('rm -rf /etc/setup')
@@ -708,8 +714,9 @@ def case():
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
                  case()
+                 
               if rc == 'n' or rc == 'N':
-                case()
+                 case()
               if rc == '0':
                  print (f1+'\n Going out ..\033[m')
                  sleep(2)
@@ -766,6 +773,7 @@ def case():
                  system('cat /etc/squid/domains/domain')
               else:
                  system('cat /etc/squid3/domains/domain')
+                 
               print ('\n')
               def delet():
                   de = input(f6+'Deletar Domain :: _\033[92m'+' ')
@@ -774,8 +782,8 @@ def case():
                         system('cd /etc && service squid restart')
                      else:
                         system('cd /etc && service squid3 restart')
-                     system('clear')
-                     casa()
+                     case()
+                     
                   if os.path.isfile('/etc/squid/domains/domain') == True:
                      if os.path.isfile('/etc/squid/domains/%s' %(de)) == False:
                         print (f1+'Erro: o domain %s nao existe.\033[m' %(de))
@@ -808,18 +816,17 @@ def case():
                  for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                      sys.stdout.write(line.replace('#Banner /etc/issue.net',\
                       'Banner /etc/Banner'))
+                      
               nb = input(f6+'Adicionar ao Banner :: _ \033[92m'+' ')
               system('''echo '%s' > /etc/Banner''' % (nb))
               system('cd /etc && service ssh restart')
               print ('\033[32mBanner:\033[92m %s \033[32m\nAdicionado com Sucesso.\033[m'\
                % (nb))
               sleep(2)
-              system('clear')
-              casa()
+              case()
               
            if w == '6':
-              rb = input(f6+'Deseja deletar o Banner por completo ficarar\ncomo de'\
-                        +' fabrica. [y/n] :: _\033[92m'+' ')
+              rb = input(f6+'Deseja deletar o Banner por completo. [y/n] :: _\033[92m'+' ')
               if rb == 'Y' or rb == 'y':
                  if os.path.isfile('/etc/Banner') == True:
                     system('rm -rf /etc/Banner')
@@ -832,11 +839,10 @@ def case():
                     system('cd /etc && service ssh restart')
                     print ('\033[33mConcluido .. Banner Retirado.\033[m')
                     sleep(2)
-                    system('clear')
-                    casa()
+                    case()
+                    
               if rb == 'n' or rb == 'N':
-                 system('clear')
-                 casa()
+                 case()
                  
            if w == '7':
               if os.path.isfile('/etc/setup/senhas/except') == False:
@@ -848,14 +854,12 @@ def case():
                   if os.path.isfile('/etc/setup/senhas/%s' %(n)) == True:
                      print (f1+'Error: o usuario %s ja existe.\033[m' %(n))
                      user()
-                  system('clear')
                   sn = input(f6+'Senha Para '+n+' :: _\033[92m'+' ')
                   dx = input(f6+'Quantos dias '+n+' deve durar :: _\033[92m'+' ')
                   lm = input(f6+'Maximo de conexoes simultaneas :: _\033[92m'+' ')
                   system("d=$(date '+%C%y-%m-%d' -d '+"+dx+" days')\
                          \nda=$(date '+%d/%m/%Y' -d '+"+dx+" days')\
                          \nuseradd -M -s /bin/false "+n+" -e $d\
-                         \nclear\
                          \necho '\033[33m\nConcluido .. usuario criado.'\n\
                          \necho '\033[32mUsuario:\033[92m "+n+"'\
                          \necho '\033[32mSenha:\033[92m "+sn+"'\
@@ -877,8 +881,8 @@ def case():
               def dex():
                   df = input(f6+'Que usuario voce deseja deletar :: _\033[92m'+' ')
                   if df == '0':
-                     system('clear')
-                     casa()
+                     case()
+                     
                   if os.path.isfile('/etc/setup/senhas/'+df) == False:
                      print (f1+'Error: o usuario %s nao existe.. ou nao '%(df)\
                           +'foi criado por este progama.\033[m')
@@ -890,7 +894,7 @@ def case():
                      system('grep -v ^'+df+'[[:space:]] /etc/setup/users\
                       > /tmp/bkp; cat /tmp/bkp > /etc/setup/users')
                   if cup == 'Y' or cup == 'y':
-                     print ('\033[32mCerto? informacoes do usuario guardadas.\033[m')
+                     print ('\033[32mCerto? informacoes do usuario Guardadas.\033[m')
                   for i, line in enumerate(fileinput.input('/etc/setup/ario', inplace=1)):
                         sys.stdout.write(line.replace(df, ''))
                   system('userdel --force %s > /dev/null 2>/dev/null' %(df))
@@ -913,24 +917,18 @@ def case():
                     +'0) = Home\n\n\033[m'
               print (main)
               
-              # 1 = True
-              # 2 = True
-              # 3 = True
-              # 4 = True
-              # 0 = True
-              
               def rdf():
                    rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
-                      system('clear')
-                      casa()
+                      case()
+                      
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
                       print (f1+'\nErro: o usuario %s nao existe ..\033[m' %(rd))
                       rdf()
                    md = input(f6+' :: _\033[92m'+' ')
                    if md == '0':
-                      system('clear')
-                      casa()
+                      case()
+                      
                    if md == '1':
                       sna = input(f6+'\nNova senha para '+rd+' :: _\033[92m'+' ')
                       system('grep -v ^'+rd+'[[:space:]] /etc/setup/users\
@@ -948,9 +946,9 @@ def case():
                       system('rm -rf /etc/setup/senhas/'+rd)
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
                       print ('\033[33mConcluido. nova senha aplicada para %s' %(rd))
-                      sleep(3)
-                      system('clear')
-                      casa()
+                      sleep(2)
+                      case()
+                      
                    if md == '2':
                       dt = input(f6+'Quantos dias '+rd+' deve durar :: _\033[92m'+' ')
                       system('''d=$(date '+%C%y-%m-%d' -d "+"'''+dt+'''" days")\
@@ -967,7 +965,9 @@ def case():
                               > /tmp/bkp; cat /tmp/bkp > /etc/setup/users\
                              \necho $usr $lm $pas $d '''+dt+''' >> /etc/setup/users\
                              \necho $usr $lm $pas $d '''+dt+''' > /etc/setup/bkp/$usr''')
+                      sleep(2)
                       case()
+                      
                    if md == '3':
                       mt = input(f6+'Qual o novo limite para '+rd+' :: _\033[92m'+' ')
                       system('''usr="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f1)"\
@@ -987,12 +987,12 @@ def case():
                       system('''echo '%s %s' >> /root/usuarios.db''' %(rd,mt))
                       system('''echo '%s - maxlogins %s' > /etc/setup/limite/%s''' %(rd,mt,rd))
                       system('''echo '%s - maxlogins %s' >> /etc/security/limits.conf'''\
-                       %(rd,mt))
+                      %(rd,mt))
                       print ('\033[33mConcluido. novo limete de '+mt+' conexoes aplicado'\
                             +' para '+rd+'.\033[m')
                       sleep(2)
-                      system('clear')
-                      casa()
+                      case()
+                      
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
                       system('''lm="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f2)"\
@@ -1025,9 +1025,9 @@ def case():
                              \nrm -rf /etc/setup/bkp/'''+rd)
                              
                       print ('\033[33mConcluido. '+rd+' agora se chama '+no+'.\033[m')
-                      sleep(3)
-                      system('clear')
-                      casa()
+                      sleep(2)
+                      case()
+                      
               rdf()
            if w == '0':
               print (f1+' Going out ..\033[m')
