@@ -208,7 +208,7 @@ def case():
               if bk == 'n' or bk == 'N':
                  case()
            if w == '15':
-              __sbm__ = f6+'\n1) = Restaurar usuario\n'\
+              __sbm__ = f6+'\n1) = Restaurar usuario do Backup\n'\
                           +'2) = Deletar um usuario do Backup\n'\
                           +'3) = Deletar Todos os usuarios\n'\
                           +'4) = Deletar Backup\n'\
