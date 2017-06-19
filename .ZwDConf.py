@@ -103,6 +103,7 @@ except IOError:
    print (f1+'Erro: Por favor connecte-se a uma Rede de Dados ..\033[m')
    exit()
    
+print (f6+'\n'+__main__)
 def case():
   try:
      def casa():
