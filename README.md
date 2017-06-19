@@ -14,7 +14,7 @@
     <td width="100px" class="main2"><b>Author:</b></td><td width="780px">Zwdeff</td>
   </tr>
   <tr>
-    <td width="100px" class="main2"><b>Versão:</b></td><td width="780px">1.2</td>
+    <td width="100px" class="main2"><b>Versão:</b></td><td width="780px">1.3</td>
   </tr>
   <tr>
     <td width="100px" class="main2"><b>Termo:</b></td><td width="780px">Bom? Eu fiz este script sem nenhuma intenção maliciosa ... Podem usar sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro duvida, ou sujestão contacte meu telegram.</td>
