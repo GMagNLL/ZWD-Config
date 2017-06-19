@@ -340,9 +340,8 @@ def case():
                          system('grep -v ^'+rtb+'[[:space:]] /etc/setup/backup/users\
                           > /tmp/bkp; cat /tmp/bkp > /etc/setup/backup/users')
                           
-                         print ('\033[33mConcluido. o usuario %s foi deletado'\
-                               +' do Backup.\033[m'\
-                         %(rtb))
+                         print ('\033[33mConcluido. o usuario '+rtb+' foi deletado'\
+                               +' do Backup.\033[m')
                          sleep(2)
                          case()
                          
