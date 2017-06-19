@@ -105,8 +105,9 @@ except IOError:
    
 def case():
   try:
-     print (f6+'\n'+__main__)
-         
+     def casa():
+         print (f6+'\n'+__main__)
+         case()
      w = input(f6+' :: _\033[92m'+' ')
      
      while w != '1' or w != '2' or w != '3' or w != '4' or w != '5' or w != '6' or w != '13'\
@@ -119,7 +120,7 @@ def case():
               def bsck():
                   bus = input(f6+'De qual usuario voce quer fazer Backup :: _\033[92m'+' ')
                   if bus == '0':
-                     case()
+                     casa()
                   if os.path.isfile('/etc/setup/senhas/%s' %(bus)) == False:
                      print (f1+'Error: o usuario %s nao existe.\033[m' %(n))
                      bsck()
@@ -158,7 +159,7 @@ def case():
                  print ('\033[31mError: Para utilizar esta funcao.. antes e\n'\
                        +'preciso configurar sua VPS com este script.')
                  sleep(2)
-                 case()
+                 casa()
                  
               if os.path.isfile('/etc/setup/speedtest.py') == False:
                  print ('\033[30m')
@@ -180,7 +181,7 @@ def case():
               bk = input(f6+'Deseja fazer o Backup de todos os usuarios'\
                         +' [y/n] :: _\033[32m'+' ')
               if bk == '0':
-                 case()
+                 casa()
               if bk == 'y' or bk == 'Y':
                  print ('\033[32mfazendo o Backup dos usuarios .. aguarde.\033[m')
                  if os.path.isfile('/etc/setup/backup/users') == True:
@@ -214,19 +215,19 @@ def case():
               def mopt():
                   sbm = input(f6+' :: _\033[92m'+' ')
                   if sbm == '0':
-                     case()
+                     casa()
 
                   if sbm == '1':
                      rst = input(f6+'Voce quer restaurar todos os usuarios do'\
                                 +' Backup [y/n] :: _\033[92m'+' ')
                      if rst == '0':
                         system('clear')
-                        case()
+                        casa()
                      if rst == 'y' or rst == 'Y':
                         if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: voce ainda nao tem um Backup.\033[m')
                            sleep(3)
-                           case()
+                           casa()
                            
                         system('''backup='/etc/setup/backup/users'\
                                \nwhile read us\
@@ -261,7 +262,7 @@ def case():
                         system('rm -rf /etc/setup/backup')
                         print ('\033[33mConcluido. Restauracao do Backup completa.\033[m')
                         sleep(2)
-                        case()
+                        casa()
                         
                      if rst == 'n' or rst == 'N':
                         mopt()
@@ -270,7 +271,7 @@ def case():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
                            sleep(2)
-                           case()
+                           casa()
                            
                          print ('\033[33mUsuarios no Backup:')
                          system('cat /etc/setup/backup/ario')
@@ -278,7 +279,7 @@ def case():
                          
                          us = input(f6+'Qual usuario voce Deseja Restaurar :: _'+' ')
                          if us == '0':
-                            case()
+                            casa()
                             
                          if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
@@ -312,7 +313,7 @@ def case():
                                 
                          system('rm -rf /etc/setup/backup/bkp/%s' %(us))
                          sleep(1)
-                         case()
+                         casa()
                          
                      userrs()
                   if sbm == '3':
@@ -320,13 +321,17 @@ def case():
                          if os.path.isfile('/etc/setup/backup/users') == False:
                            print (f1+'Error: Voce ainda nao tem um Backup.\033[m')
                            sleep(3)
-                           case()
+                           casa()
                            
+                         print ('\033[33mUsuarios no Backup:')
+                         system('cat /etc/setup/backup/ario')
+                         print ('\n\033[m')
+                         
                          rtb = input(f6+'Qual usuario voce quer tirar do Backup :: _\033[92m'\
                                     +' ')
                          if rtb == '0':
-                            case()
-                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(us)) == False:
+                            casa()
+                         if os.path.isfile('/etc/setup/backup/bkp/%s' %(rtb)) == False:
                             print (f1+'Error: o usuario %s nao se encontra no Backup.\033[m'\
                             %(us))
                             bacf()
@@ -346,14 +351,14 @@ def case():
                            +'ativos e criados por este progama.\033[m')
                      dlt = input(f6+'Deseja deletar mesmo assim [y/n] :: _\033[92m'+' ')
                      if dlt == '0':
-                        case()
+                        casa()
                         
                      if dlt == 'y' or dlt == 'Y':
                         if os.path.isfile('/etc/setup/limite/lm') == False:
                            print (f1+'Error: Voce ainda nao fez usuarios com este script.'\
                                  +'\033[m')
                            sleep(2)
-                           case()
+                           casa()
                            
                         up = input('\033[33mVoce fez ou Deseja fazer o Backup de algum\n'\
                                   +'desses usuarios futuramente. [y/n]\033[36m :: _\033[92m'\
@@ -388,10 +393,10 @@ def case():
                         print ('\033[33m\nConcluido.. Todos os usuarios foram excluidos.'\
                               +'\033[m')
                         sleep(2)
-                        case()
+                        casa()
                         
                      if dlt == 'n' or dlt == 'N':
-                        case()
+                        casa()
                         
                   if sbm == '5':
                      print (f1+'Esta funcao excluirar todos os usuarios\n'\
@@ -400,15 +405,15 @@ def case():
                          bex = input(f6+' ... [y/n] :: _\033[92m'+' ')
                          if bex == '0':
                             system('clear')
-                            case()
+                            casa()
                          if bex == 'y' or bex == 'Y':
                             system('rm -rf /etc/setup/backup')
                          if bex == 'n' or bex == 'N':
                             system('clear')
-                            case()
+                            casa()
                          print ('\033[33mConcluido. todo o Backup foi Deletado.\033[m')
                          sleep(2)
-                         case()
+                         casa()
                          
                          if bex != 'n' or bex != 'N' or bex != 'y' or bex != 'Y':
                             rtu()
@@ -439,7 +444,7 @@ def case():
                                                     +', '+ str(json_data['lon'])
                                                     
               print (__ADD__+'\n')
-              w = input(f6+' :: _\033[92m'+' ')
+              case()
 
            if w == '10':
               print ('\033[92mMonitor do Sistema\033[32m ..\033[m')
@@ -517,7 +522,7 @@ def case():
                      echo '\033[92mCarga Media\033[92m:' $load''')
               system('''time=$(uptime | awk '{print $3,$4}' | cut -f1 -d,)\n
                      echo '\033[32mTempo de Atividade\033[92m:' $time''')
-              w = input(f6+'\n :: _\033[92m'+' ')
+              case()
 
            if w == '1':
               t = os.path.isfile('/usr/bin/ssh')
@@ -657,7 +662,7 @@ def case():
               print ('\033[32mConcluido. Portas 22/443/80/8080/8799/3128 100% ativas ..\033[m')
               print ('\033[32mCrie um usuario e teste.\033[m')
               sleep(2)
-              case()
+              casa()
               
            if w == '2':
               rc = input(f6+'Deseja Remover todas as Modificacoes. [y/n] :: _\033[92m'+' ')
@@ -713,10 +718,10 @@ def case():
                  print ('\n\033[33mConcluido.. Pode reconfigurar sua vps com um script da\n'\
                        +'sua Preferencia. Desculpe desapontalo(a).\033[m')
                  sleep(2)
-                 case()
+                 casa()
                  
               if rc == 'n' or rc == 'N':
-                 case()
+                 casa()
               if rc == '0':
                  print (f1+'\n Going out ..\033[m')
                  sleep(2)
@@ -742,7 +747,7 @@ def case():
                         system('cd /etc && service squid restart')
                      else:
                         system('cd /etc && service squid3 restart')
-                     case()
+                     casa()
                   if os.path.isfile('/etc/squid3/domains/domain') == True:
                      if os.path.isfile('/etc/squid3/domains/%s' %(do)) == True:
                         print (f1+'Error: o domain %s ja existe.\033[m' %(do))
@@ -782,7 +787,7 @@ def case():
                         system('cd /etc && service squid restart')
                      else:
                         system('cd /etc && service squid3 restart')
-                     case()
+                     casa()
                      
                   if os.path.isfile('/etc/squid/domains/domain') == True:
                      if os.path.isfile('/etc/squid/domains/%s' %(de)) == False:
@@ -839,10 +844,10 @@ def case():
                     system('cd /etc && service ssh restart')
                     print ('\033[33mConcluido .. Banner Retirado.\033[m')
                     sleep(2)
-                    case()
+                    casa()
                     
               if rb == 'n' or rb == 'N':
-                 case()
+                 casa()
                  
            if w == '7':
               if os.path.isfile('/etc/setup/senhas/except') == False:
@@ -881,7 +886,7 @@ def case():
               def dex():
                   df = input(f6+'Que usuario voce deseja deletar :: _\033[92m'+' ')
                   if df == '0':
-                     case()
+                     casa()
                      
                   if os.path.isfile('/etc/setup/senhas/'+df) == False:
                      print (f1+'Error: o usuario %s nao existe.. ou nao '%(df)\
@@ -920,14 +925,14 @@ def case():
               def rdf():
                    rd = input(f6+'Que usuario voce deseja redefinir :: _\033[92m'+' ')
                    if rd == '0':
-                      case()
+                      casa()
                       
                    if os.path.isfile('/etc/setup/senhas/%s' %(rd)) == False:
                       print (f1+'\nErro: o usuario %s nao existe ..\033[m' %(rd))
                       rdf()
                    md = input(f6+' :: _\033[92m'+' ')
                    if md == '0':
-                      case()
+                      casa()
                       
                    if md == '1':
                       sna = input(f6+'\nNova senha para '+rd+' :: _\033[92m'+' ')
@@ -947,7 +952,7 @@ def case():
                       system('echo "'+sna+'" > /etc/setup/senhas/'+rd)
                       print ('\033[33mConcluido. nova senha aplicada para %s' %(rd))
                       sleep(2)
-                      case()
+                      casa()
                       
                    if md == '2':
                       dt = input(f6+'Quantos dias '+rd+' deve durar :: _\033[92m'+' ')
@@ -966,7 +971,7 @@ def case():
                              \necho $usr $lm $pas $d '''+dt+''' >> /etc/setup/users\
                              \necho $usr $lm $pas $d '''+dt+''' > /etc/setup/bkp/$usr''')
                       sleep(2)
-                      case()
+                      casa()
                       
                    if md == '3':
                       mt = input(f6+'Qual o novo limite para '+rd+' :: _\033[92m'+' ')
@@ -991,7 +996,7 @@ def case():
                       print ('\033[33mConcluido. novo limete de '+mt+' conexoes aplicado'\
                             +' para '+rd+'.\033[m')
                       sleep(2)
-                      case()
+                      casa()
                       
                    if md == '4':
                       no = input(f6+'Qual o novo nome para '+rd+' :: _\033[92m'+' ')
@@ -1026,7 +1031,7 @@ def case():
                              
                       print ('\033[33mConcluido. '+rd+' agora se chama '+no+'.\033[m')
                       sleep(2)
-                      case()
+                      casa()
                       
               rdf()
            if w == '0':
