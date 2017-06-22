@@ -34,20 +34,13 @@
 <br />
     </table>
 <table border="0" cellpadding="2" cellspacing="5" width="100%">
-  <tr>
-    <td class="main3" width="890px">&#9733; <b>Download:</b></td>
-  </tr>
-  <tr>
-    <td class="main">
-      wget https://raw.githubusercontent.com/Xdwnff-04x/ZwD-Config/master/.ZwDConf.py <br/>
-    </td>
 </table>
 <table border="0" cellpadding="2" cellspacing="5" width="100%">
   <tr>
     <td class="main3" width="890px">&#9733; <b>Como usar:</b></td>
   </tr>
   <tr>
-    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZwD-Config/master/.ZwDConf.py<br/> <br>chmod +x .ZwDConf.py<br/> <br>python3 .ZwDConf.py<br/> <b> Caso o python3 não estiver instalado : apt-get install python3</td>
+    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZwD-Config/master/.config.py<br/> <br>chmod +x .config.py<br/> <br>python3 .config.py<br/> <b> Caso o python3 não estiver instalado : apt-get install python3</td>
   </tr>
 </body>
 </html>
