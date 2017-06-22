@@ -27,10 +27,7 @@
   </tr>
 <table border="0" cellpadding="2" cellspacing="5" width="100%">
   <tr>
-    <td class="main3">&#9733; <b>:</b></td>
-  </tr>
-    <tr>
-    <td width="120px" class="main2"><b>Descrição</b></td><td width="780px">ZwDConfig é um script em python3 que ao configurar uma vps, ele detecta se a pasta do squid é squid ou squid3, configurando(a) assim qualquer vps. para editrar o arquivo /ssh/sshd_config ele substitue no meio do arquivo Port 22 por Port 22,443 deixando o arquivo sshd intacto, ao contrario de outros scripts em shell, que alterão todo o arquivo para alterar um simples texto, é outros que escrevem Port 443 no final do arquivo ocasionando erros em sua VPS.</td>
+    <td width="100px" class="main2">&#9733;<b>Descrição:</b></td><td width="780px">ZwDConfig é um script em python3 que ao configurar uma vps, ele detecta se a pasta do squid é squid ou squid3, configurando(a) assim qualquer vps. para editrar o arquivo /ssh/sshd_config ele substitue no meio do arquivo Port 22 por Port 22,443 deixando o arquivo sshd intacto, ao contrario de outros scripts em shell, que alterão todo o arquivo para alterar um simples texto, é outros que escrevem Port 443 no final do arquivo ocasionando erros em sua VPS.</td>
   </tr>
     </table>
 <table border="0" cellpadding="2" cellspacing="5" width="100%">
