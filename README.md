@@ -9,7 +9,7 @@
 <table border="0" cellpadding="0" cellspacing="2" width="100%">
   <tr>
     <td width="100px" class="main2"><b>Ferramenta:</b></td>
-    <td width="780px" class="main2"><b>ZwDConfig V1.3</b></td>
+    <td width="780px" class="main2"><b>ZWDConfig V1.3</b></td>
   <tr>
     <td width="100px" class="main2"><b>Author:</b></td><td width="780px">Zwdeff</td>
   </tr>
@@ -17,10 +17,10 @@
     <td width="100px" class="main2"><b>Versão:</b></td><td width="780px">1.3</td>
   </tr>
   <tr>
-    <td width="100px" class="main2"><b>Termo:</b></td><td width="780px">Bom? Eu fiz este script sem nenhuma intenção maliciosa ... Podem usar sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro duvida, ou sujestão contacte meu telegram.</td>
+    <td width="100px" class="main2"><b>Termo:</b></td><td width="780px">Eu fiz este script sem nenhuma intenção maliciosa ... Podem usar sem medo, mais não asumirei nenhuma responsabilidade por usarem meu scripts alterado por terceiros .. Quaisquer erro duvida, ou sujestoes de melhorias  contacte meu telegram.</td>
   </tr>
   <tr>
-    <td width="100px" class="main2"><b>Novidades v1.3</b></td><td width="780px">Correções de erros, Melhorias, Funções Novas: (1) Mudar nome de usuario, (2) Backup dos usuarios, (3) Restaurar usuario do Backup, (4) Remover todos os usuarios, (5) Excluir Backup, (6) SpeedTest, (7) Excluir um usuario do Backup.</td>
+    <td width="100px" class="main2"><b>Novidades v1.3</b></td><td width="780px">Correções de erros, Melhorias.</td>
   </tr>
   <tr>
     <td width="100px" class="main2"><b>Telegram:</b></td><td width="780px">@nZwdeff</td>
@@ -37,7 +37,7 @@
     <td class="main3" width="890px">&#9733; <b>Como usar:</b></td>
   </tr>
   <tr>
-    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZwD-Config/master/.config.py<br/> <br>chmod +x .config.py<br/> <br>python3 .config.py<br/> <b> Caso o python3 não estiver instalado : apt-get install python3</td>
+    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZWD-Config/master/.config.py<br/> <br>chmod +x .config.py<br/> <br>python3 .config.py<br/> <b> Caso o python3 não estiver instalado : apt-get install python3</td>
   </tr>
 </body>
 </html>
