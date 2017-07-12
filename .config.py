@@ -4,8 +4,8 @@
 __author__ = 'Zwdeff'
 __version__ = '1.4'
 
-# [Github] www.github.com/Xdwnff-04x
-# [Telegram - Channel] t.me/joinchat/AAAAAEANZwsT9F2Y-aBVIQ
+# [Github] https://www.github.com/Xdwnff-04x
+# [Telegram - Channel] https://telegram.me/ZWDChannel
 # 
 # [Sobre - v1.4] Correcoes de erros e melhorias.
 # [License]
@@ -30,19 +30,26 @@ from os import system
 from sys import *
 from time import *
 
-n0 = '\033[90m'
-n1 = '\033[31m'
-n2 = '\033[92m'
-n3 = '\033[33m'
-n4 = '\033[94m'
-n5 = '\033[95m'
-n6 = '\033[36m'
-n7 = '\033[97m'
-n8 = '\033[96m'
+n0='\033[90m'
+n1='\033[91m'
+n2='\033[92m'
+n3='\033[93m'
+n4='\033[94m'
+n5='\033[95m'
+n6='\033[96m'
+n7='\033[97m'
+
+u1='\033[31m'
+u2='\033[32m'
+u3='\033[33m'
+u4='\033[34;1m'
+u5='\033[35m'
+u6='\033[36m'
+u0='\033[m'
 
 if argv[1:]:
    if argv[1] == '--help':
-      help = '?Para utilizar com perfeicao todas as funcoes, antes e preciso\n'\
+      help = 'Para utilizar com perfeicao todas as funcoes, antes e preciso\n'\
             +'configurar sua VPS com a funcao 1) deste script. para mais\n'\
             +'Informacoes, Duvidas, Relatar Erros, ou sugestoes de '\
             +'melhorias.\nentre em contato comigo.\nTelegram: @nZwdeff'
@@ -52,8 +59,8 @@ if argv[1:]:
       print('Comando invalido? Use --help.')
       exit()
 
-if sys.version_info.major < 3:
-   print(n1+'mError: Progama suportado somente em Python3.\033[m')
+if version_info < (3, 0):
+   print(u1+'Error: Progama suportado somente em Python3x.'+u0)
    sleep(2)
    exit()
    
@@ -88,6 +95,10 @@ try:
    __url_ = str(urlopen('http://check-host.net/ip').read())
    __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(__url_).group()
   
+   __information__ ='\n'\
+   +n2+'Author: '+u6+'%s\n' % __author__ + u0\
+   +n2+'Versao: '+u6+'%s\n' % __version__ + u0
+   
    __main__ = '1) = Configurar VPS\n'\
              +'2) = Desconfigurar /SSH/SQUID3\n'\
              +'3) = Adicionar Domain\n'\
@@ -105,23 +116,21 @@ try:
              +'15 = Mais Opcoes\n'\
              +'0) = Sair\n\n\n\033[m'
 
-   __info__ = n2+'Author:\033[36m %s\n\033[m' %(__author__)\
-             +n2+'\033[32mVersion:\033[36m %s\033[m\n' %(__version__)
-   __Banner__ = '\033[32m{= \033[92mZwDConfig /SSH/SQUID3\033[32m =}_\n\033[m'
+   __Banner__ = u2+'{= : ZWD Config & MANAGER : =}' +u0
    
    print(__Banner__)
-   print(__info__)
+   print(__information__)
    print(n2+'IP:\033[36m %s\033[m' %(__ip__))
    
 except IOError:
-   print(n1+'Erro: Por favor connecte-se a uma Rede de Dados ..\033[m')
+   print(n1+'Erro: Por favor connecte-se a uma Rede de Dados ..'+u0)
    exit()
    
-print(n6+'\n'+__main__)
+print(u2+'\n'+__main__)
 def case():
   try:
      def casa():
-         print(n6+'\n'+__main__)
+         print(u2+'\n'+__main__)
          case()
          
      w = input(n6+' :: _\033[92m'+' ')
@@ -220,7 +229,7 @@ def case():
               if bk == 'n' or bk == 'N':
                  case()
            if w == '15':
-              __sbm__ = n6+'\n1) = Restaurar usuario do Backup\n'\
+              __sbm__ = u2+'\n1) = Restaurar usuario do Backup\n'\
                           +'2) = Deletar um usuario do Backup\n'\
                           +'3) = Deletar Todos os usuarios\n'\
                           +'4) = Deletar Backup\n'\
@@ -886,7 +895,7 @@ def case():
               dex()
               
            if w == '8':
-              main = '\n\033[36m1) = Mudar senha\n'\
+              main = u2+'\n1) = Mudar senha\n'\
                     +'2) = Mudar Data de expiracao\n'\
                     +'3) = Mudar limite de logins\n'\
                     +'4) = Mudar Nome de usuario\n'\
