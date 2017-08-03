@@ -936,7 +936,7 @@ def case():
                              \nd="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f4)"\
                              \ndx="$(cat /etc/setup/bkp/'''+rd+''' | cut -d' ' -f5)"\
                              \n(echo "'''+sna+'''" ; echo "'''+sna\
-                             +'''" ) |passwd '+rd+' > /dev/null 2>/dev/null\
+                             +'''" ) |passwd '''+rd+''' > /dev/null 2>/dev/null\
                              \necho $usr $lm '''+sna+''' $d $dx >> /etc/setup/users\
                              \necho $usr $lm '''+sna+''' $d $dx > /etc/setup/bkp/$usr''')
                              
@@ -1033,6 +1033,8 @@ def case():
         else:
             w = input(u6+' :: '+u0)
 
+  except SyntaxError:
+     case()
   except EOFError:
      ex = input(u3+'Deseja sair do progama (y/n)?'+u6+' :: '+u0)
      if ex == 'y' or ex == 'Y':
