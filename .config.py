@@ -631,6 +631,8 @@ def case():
               print(u3+'Configurando Portas SSH 22/443.'+u0)
               sleep(2)
               for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
+                  sys.stdout.write(line.replace('#Port 22', 'Port 22'))
+              for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                   sys.stdout.write(line.replace('Port 22', 'Port 22\nPort 443'))
               print(u2+'Reiniciando Servidor SSH.\033[m')
               system('cd /etc && service ssh restart')
@@ -811,6 +813,8 @@ def case():
                  system('touch /etc/Banner')
               if os.path.isfile('/etc/issue.net') == True:
                  system('rm -rf /etc/issue.net')
+                 for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
+                     sys.stdout.write(line.replace('#Banner none', '#Banner /etc/issue.net'))
                  for i, line in enumerate(fileinput.input('/etc/ssh/sshd_config', inplace=1)):
                      sys.stdout.write(line.replace('#Banner /etc/issue.net',\
                       'Banner /etc/Banner'))
