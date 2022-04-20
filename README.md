@@ -41,7 +41,7 @@
     <td class="main3" width="890px">&#9733; <b>Modo de usar:</b></td>
   </tr>
   <tr>
-    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZWD-Config/master/.config.py<br/> <br>chmod +x .config.py<br/> <br>python3 .config.py<br/> <b> Caso o python3 não estiver instalado : apt-get install python3</td>
+    <td class="main"> <br>wget https://raw.githubusercontent.com/Xdwnff-04x/ZWD-Config/master/.config.py<br/> <br>chmod +x .config.py<br/> <br>python3 .config.py<br/> <b> Caso o python3 não estiver instalado:</b><br>apt-get install python3<br/></td>
   </tr>
 </body>
 </html>
