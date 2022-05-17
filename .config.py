@@ -4,7 +4,7 @@
 __author__ = 'Zwdeff'
 __version__ = '1.5'
 
-# [Github] https://www.github.com/Xdwnff-04x
+# [Github] https://www.github.com/GMagNLL
 # [Telegram - Channel] https://telegram.me/ZWDChannel
 # [Telegram - PV] @nZwdeff
 # 
