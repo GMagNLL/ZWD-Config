@@ -100,7 +100,7 @@ H = strftime('%d/%m/%Y %H:%M:%S')
 print(n2+'Connecting .. from python%s ' % (v)+u2+'/%s' %(H)+u0)
 sleep(0.6)
 try:
-   __url_ = str(urlopen('http://check-host.net/ip').read())
+   __url_ = str(urlopen('https://check-host.net/ip').read())
    __ip__ = re.compile(r'(\d+\.\d+\.\d+\.\d+)').search(__url_).group()
   
    __information__ ='\n'\
